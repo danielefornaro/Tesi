@@ -1,0 +1,51 @@
+% Chapter 1
+
+\chapter{Elliptic Curve Geometry} % Main chapter title
+
+\label{EC} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+%----------------------------------------------------------------------------------------
+
+% Define some commands to keep the formatting separated from the content 
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}
+
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+Bitcoin security is based on public and private key cryptograpy. The main concept is that it is simple to compute the public key, knowing the private, but it is infeasible to calculate the private key, knowing the public. \\ \\
+In order to obtain this result a particular Elliptic Curve is used.
+
+\section{Point on an Elliptic Curve}
+
+A point $P$, which coordinates are $x$ and $y$, belong to a particular Elliptic Curve if and only if $P$ satisfies the following equation:
+\begin{equation}\label{GeneralEC}
+y^2=x^3+ax+b
+\end{equation}
+over a certain field $\mathbb{F}$, where $a$ and $b$ are the coefficients of the curve. \\ \\
+The curve is specified by the definition of the coefficients and the field $\mathbb{F}$.
+
+\subsection{Bitcoin Elliptic Curve}
+Bitcoin uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$. \\ \\
+The equation \ref{GeneralEC} becomes:
+\begin{equation}\label{BitcoinEC}
+y^2=x^3+7 \quad \textrm{mod} \ p
+\end{equation}
+The \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p$, where $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
