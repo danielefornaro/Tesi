@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  8 JAN 2018 16:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  8 JAN 2018 18:10
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -2044,26 +2044,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--34
 
  []
 
-)
 1: section
 [1
 
 
-]
+]) [2]
 \openout2 = `Appendices/AppendixA.aux'.
 
- (Appendices/AppendixA.tex [2
-
-
-
-]
+ (Appendices/AppendixA.tex
 Appendix A.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 1: section
-[3] [4
+[3
+
+
+
+] [4
 
 
 ]
@@ -2076,19 +2075,19 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 287.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 287.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 287.
 Package rerunfilecheck Info: File `tesi.out' has not changed.
-(rerunfilecheck)             Checksum: C04D8671701049A3A0E9DEF69C46A583;1585.
+(rerunfilecheck)             Checksum: A3AC985E3F0F8887C61D995359029175;1937.
 Package logreq Info: Writing requests to 'tesi.run.xml'.
 \openout1 = `tesi.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33915 strings out of 493312
- 688513 string characters out of 3138891
- 902687 words of memory out of 3000000
- 37060 multiletter control sequences out of 15000+200000
- 581617 words of font info for 109 fonts, out of 3000000 for 9000
+ 33928 strings out of 493312
+ 688656 string characters out of 3138891
+ 904687 words of memory out of 3000000
+ 37065 multiletter control sequences out of 15000+200000
+ 583615 words of font info for 113 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 52i,19n,71p,10379b,1648s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 52i,19n,75p,10379b,1913s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
 00\ectt1095.pk> <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
 appen\ec\dpi600\ectt1000.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8
@@ -2100,9 +2099,9 @@ sers/dfornaro/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmri.pfb
 iles/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 urw/palatino/uplri8a.pfb>
-Output written on tesi.pdf (29 pages, 144853 bytes).
+Output written on tesi.pdf (29 pages, 151649 bytes).
 PDF statistics:
- 311 PDF objects out of 1000 (max. 8388607)
- 55 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 328 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 500000)
+ 105 words of extra memory for PDF output out of 10000 (max. 10000000)
 

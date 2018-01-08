@@ -8,6 +8,9 @@
 \contentsline {section}{\numberline {1.1}Introduction}{1}{section.15}
 \contentsline {section}{\numberline {1.2}Point on an Elliptic Curve}{1}{section.16}
 \contentsline {subsection}{\numberline {1.2.1}Bitcoin Elliptic Curve}{1}{subsection.18}
-\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{3}{appendix.20}
-\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{3}{section.21}
-\contentsline {chapter}{Bibliography}{5}{appendix*.22}
+\contentsline {subsection}{\numberline {1.2.2}Proprierties}{1}{subsection.20}
+\contentsline {subsubsection}{Symmetry}{2}{section*.21}
+\contentsline {subsubsection}{Point addition}{2}{section*.22}
+\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{3}{appendix.24}
+\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{3}{section.25}
+\contentsline {chapter}{Bibliography}{5}{appendix*.26}

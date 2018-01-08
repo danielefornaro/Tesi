@@ -21,26 +21,41 @@ In order to obtain this result a particular Elliptic Curve is used.
 
 \section{Point on an Elliptic Curve}
 
-A point $P$, which coordinates are $x$ and $y$, belong to a particular Elliptic Curve if and only if $P$ satisfies the following equation:
+A point $Q$, which coordinates are $x$ and $y$, belong to an Elliptic Curve if and only if $Q$ satisfies the following equation:
 \begin{equation}\label{GeneralEC}
 y^2=x^3+ax+b
 \end{equation}
-over a certain field $\mathbb{F}$, where $a$ and $b$ are the coefficients of the curve. \\ \\
-The curve is specified by the definition of the coefficients and the field $\mathbb{F}$.
+over a certain field $\mathbb{F}_p$, where $a$ and $b$ are the coefficients of the curve. Here we want to analyse only the  \\ \\
+The curve is specified by the definition of the coefficients and the field $\mathbb{F}_p$ should be consider for simplicity the 
 
 \subsection{Bitcoin Elliptic Curve}
 Bitcoin uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$. \\ \\
 The equation \ref{GeneralEC} becomes:
+
 \begin{equation}\label{BitcoinEC}
 y^2=x^3+7 \quad \textrm{mod} \ p
 \end{equation}
+
 The \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p$, where $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$
 
+\subsection{Proprierties}
+A point on the Bitcoin Elliptic Curve has some particular proprierties:
+\begin{itemize}
+	\item Symmetry
+	\item Point addition
+	\item Scalar multiplication
+\end{itemize}
 
+\subsubsection{Symmetry}
+For every point in the $x$ axis exists two points in the $y$ axis. Suppose that a point $P(x,y)$ belongs to the Elliptic Curve, then it must satisfy the equation \ref{BitcoinEC}.
+So it is easy to prove that the point $Q(x,p-y)$ belongs to the curve too.
 
+\subsubsection{Point addition}
+Suppose that \textit{A}, \textit{B} and \textit{C} are points of an Elliptic Curve that satisfy
 
-
-
+\begin{equation}\label{Point addition}
+A+B+C=0 \quad \textrm{mod} \ p
+\end{equation}
 
 
 
