@@ -19,14 +19,83 @@
 Bitcoin security is based on public and private key cryptograpy. The main concept is that it is simple to compute the public key, knowing the private, but it is infeasible to calculate the private key, knowing the public. \\ \\
 In order to obtain this result a particular Elliptic Curve is used.
 
-\section{Point on an Elliptic Curve}
+\section{Elliptic Curve over $\mathbb{F}_p$}
 
 A point $Q$, which coordinates are $x$ and $y$, belong to an Elliptic Curve if and only if $Q$ satisfies the following equation:
 \begin{equation}\label{GeneralEC}
-y^2=x^3+ax+b
+y^2=x^3+ax+b \quad \textrm{over} \ \mathbb{F}_p
 \end{equation}
-over a certain field $\mathbb{F}_p$, where $a$ and $b$ are the coefficients of the curve. Here we want to analyse only the  \\ \\
-The curve is specified by the definition of the coefficients and the field $\mathbb{F}_p$ should be consider for simplicity the 
+Where $\mathbb{F}_p$ is the finite field defined over the set of integers modulo $p$ and $a$ and $b$ are the coefficients of the curve. \\ \\
+We can rewrite the equation \ref{GeneralEC} in the following way:
+
+\begin{equation}\label{GeneralECmodp}
+y^2=x^3+ax+b \quad \textrm{mod} \ p
+\end{equation}
+Figure \ref{fig:EC_ex} shows some examples of Elliptic Curve over $\mathbb{F}_p$ with $a=-7$ and $b=10$
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=9cm]{Figures/EC_ex.jpg}
+	\caption{Points on the Elliptic Curve $y^2=x^3-7x+10 \; \textrm{mod} \ p$, with $p=19,97,127,487$ }
+	\label{fig:EC_ex}
+\end{figure}
+
+
+
+
+
+
+\subsection{Operations}
+A point on the Elliptic Curve has some particular properties:
+\begin{itemize}
+	\item Symmetry
+	\item Point addition
+	\item Scalar multiplication
+\end{itemize}
+
+\subsubsection{Symmetry}
+For every point in the $x$ axis exists two points in the $y$ axis. Suppose that a point $P(x,y)$ belongs to the Elliptic Curve, then it must satisfy the equation \ref{GeneralEC}.
+So it is easy to prove that the point $Q(x,p-y)$ belongs to the curve too. \\ \\
+Furthermore we have $P=-Q$, from the moment that $P+Q=0$ (see addition below).
+
+\subsubsection{Point addition}
+We need to change our definition of addition in order to make it works in $\mathbb{F}_p$. 
+In this framework we claim that if three points are aligned over the finite field $\mathbb{F}_p$, then they have zero sum. \\
+So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense\ shown in figure \ref{fig:EC_aligned}
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=9cm]{Figures/EC_aligned.jpg}
+	\caption{Elliptic Curve $y^2=x^3-7x+10 \; \textrm{mod} \ 97$}
+	\label{fig:EC_aligned}
+\end{figure}
+
+
+The equations for calculating point additions are the follow: \\
+Suppose that \textit{A} and \textit{B} belong to the Elliptic Curve.
+
+\begin{center}
+	$ A=(x_1,y_1) \quad B=(x_2,y_2)$
+\end{center}
+Let's defined $ A+B :=(x_3,y_3) $ \\
+So we have: 
+
+\begin{center} 
+	$s=\begin{cases} \dfrac{y_2-y_1}{x_2-x_1}, & \mbox{if } x_1\neq x_2 \\ \\ \dfrac{3x_1^2+a}{2y_1}, & \mbox{if } x_1= x_2\end{cases}$ 
+\end{center}
+\begin{center} 
+	$ x_3=s^2-x_1-x_2  \quad$ mod $p$\\
+	$y_3=s(x_1-x_3)-y_1  \quad$mod $p$
+\end{center}
+
+\subsubsection{Scalar multiplication}
+Once defined the addition, any multiplication can be defined as:
+\begin{center} 
+	$ nP=\underbrace{
+		P+P+\cdot \cdot \cdot+P
+	}_{n\text{ times}}$
+\end{center}
+When $n$ is a very large number can be difficult or even infeasible to compute $nP$ in this way, but we can use the \textit{double and add algorithm} in order to perform multiplication in $\mathcal{O}(\log{}n)$ steps.
+
+\subsection{Group order}
 
 \subsection{Bitcoin Elliptic Curve}
 Bitcoin uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$. \\ \\
@@ -36,30 +105,9 @@ The equation \ref{GeneralEC} becomes:
 y^2=x^3+7 \quad \textrm{mod} \ p
 \end{equation}
 
-The \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p$, where $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$
+The \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$.
 
-\subsection{Proprierties}
-A point on the Bitcoin Elliptic Curve has some particular proprierties:
-\begin{itemize}
-	\item Symmetry
-	\item Point addition
-	\item Scalar multiplication
-\end{itemize}
-
-\subsubsection{Symmetry}
-For every point in the $x$ axis exists two points in the $y$ axis. Suppose that a point $P(x,y)$ belongs to the Elliptic Curve, then it must satisfy the equation \ref{BitcoinEC}.
-So it is easy to prove that the point $Q(x,p-y)$ belongs to the curve too.
-
-\subsubsection{Point addition}
-Suppose that \textit{A}, \textit{B} and \textit{C} are points of an Elliptic Curve that satisfy
-
-\begin{equation}\label{Point addition}
-A+B+C=0 \quad \textrm{mod} \ p
-\end{equation}
-
-
-
-
+\section{Bitcoin private-public key cryptography}
 
 
 
