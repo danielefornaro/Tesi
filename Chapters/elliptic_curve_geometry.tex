@@ -96,6 +96,30 @@ Once defined the addition, any multiplication can be defined as:
 When $n$ is a very large number can be difficult or even infeasible to compute $nP$ in this way, but we can use the \textit{double and add algorithm} in order to perform multiplication in $\mathcal{O}(\log{}n)$ steps.
 
 \subsection{Group order}
+An elliptic curve defined over a finite field is a group and so it has a finite number of points. This number is called order of the group.\\
+If the prime order is a very large number, it is impossible to count all the point in that field, but there is an algorithm that allows to calculate the order of a group in a fast and efficient way: Schoof's algorithm.
+
+\subsubsection{Cyclic subgroups}
+Let's consider a generic point $P$, we have:
+\begin{center} 
+	$ nP+mP=\underbrace{
+		P+\cdot \cdot \cdot+P
+	}_{n\text{ times}}+
+		\underbrace{
+		P+\cdot \cdot \cdot+P
+	}_{m\text{ times}}=
+	\underbrace{
+		P+\cdot \cdot \cdot+P
+	}_{n+m\text{ times}} = 
+	(n+m)P$
+\end{center}
+So multiple of $P$ are closed under addition and this is enough to prove that the set of the multiples of $P$ is a cyclic subgroup of the group formed by the elliptic curve.
+\\ \\
+The point $P$ is called generator of the cyclic subgroup. The order of a subgroup is a divisor of the order of the parent group. 
+
+\begin{remark}
+	The order of $P$ is linked to the order of the elliptic curve by Lagrange's theorem, which states that the order of a subgroup is a divisor of the order of the parent group.
+\end{remark}
 
 \subsection{Bitcoin Elliptic Curve}
 Bitcoin uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$. \\ \\
