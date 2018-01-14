@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  14 JAN 2018 11:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  14 JAN 2018 15:11
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -1646,6 +1646,7 @@ Package: ntheorem 2011/08/15 1.33
 \thm@topsepadd=\skip84
 )
 \c@remark=\count414
+\c@definition=\count415
  ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
 Package: hyperref 2017/03/14 v6.85a Hypertext links for LaTeX
 
@@ -1685,15 +1686,15 @@ Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen193
-\Hy@linkcounter=\count415
-\Hy@pagecounter=\count416
+\Hy@linkcounter=\count416
+\Hy@pagecounter=\count417
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
 File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count417
+\Hy@SavedSpaceFactor=\count418
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -1705,10 +1706,10 @@ Package hyperref Info: Plain pages OFF on input line 4513.
 Package hyperref Info: Backreferencing OFF on input line 4518.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4751.
-\c@Hy@tempcnt=\count418
+\c@Hy@tempcnt=\count419
 LaTeX Info: Redefining \url on input line 5104.
 \XeTeXLinkMargin=\dimen194
-\Fld@menulength=\count419
+\Fld@menulength=\count420
 \Field@Width=\dimen195
 \Fld@charsize=\dimen196
 Package hyperref Info: Hyper figures OFF on input line 6358.
@@ -1720,21 +1721,21 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6383.
 Package hyperref Info: PDF/A mode OFF on input line 6388.
 LaTeX Info: Redefining \ref on input line 6428.
 LaTeX Info: Redefining \pageref on input line 6432.
-\Hy@abspage=\count420
-\c@Item=\count421
-\c@Hfootnote=\count422
+\Hy@abspage=\count421
+\c@Item=\count422
+\c@Hfootnote=\count423
 )
 Package scrhack Info: hyperref hack deactivated because of
 (scrhack)             detection of hyperref version, that doesn't
-(scrhack)             need that hack, on input line 94.
+(scrhack)             need that hack, on input line 95.
 
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
 File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
-\Fld@listcount=\count423
-\c@bookmark@seq@number=\count424
+\Fld@listcount=\count424
+\c@bookmark@seq@number=\count425
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -1743,17 +1744,17 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip85
 )
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 94.
-Package hyperref Info: Option `hypertexnames' set `false' on input line 94.
-Package hyperref Info: Option `colorlinks' set `true' on input line 94.
-Package hyperref Info: Option `unicode' set `true' on input line 94.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 95.
+Package hyperref Info: Option `hypertexnames' set `false' on input line 95.
+Package hyperref Info: Option `colorlinks' set `true' on input line 95.
+Package hyperref Info: Option `unicode' set `true' on input line 95.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\puenc.def"
 File: puenc.def 2017/03/14 v6.85a Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 94.
+Package hyperref Info: Option `breaklinks' set `true' on input line 95.
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
@@ -1766,23 +1767,23 @@ Package csquotes Info: ... found 'babel' package.
  (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Appendices/AppendixA.aux))
 \openout1 = `tesi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 94.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 95.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ppl.fd"
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
@@ -1871,16 +1872,16 @@ File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 )
 (C:\Users\dfornaro\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count425
+\scratchcounter=\count426
 \scratchdimen=\dimen197
 \scratchbox=\box55
-\nofMPsegments=\count426
-\nofMParguments=\count427
+\nofMPsegments=\count427
+\nofMParguments=\count428
 \everyMPshowfont=\toks44
-\MPscratchCnt=\count428
+\MPscratchCnt=\count429
 \MPscratchDim=\dimen198
-\MPnumerator=\count429
-\makeMPintoPDFobject=\count430
+\MPnumerator=\count430
+\makeMPintoPDFobject=\count431
 \everyMPtoPDFconversion=\toks45
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -1935,14 +1936,14 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package scrlayer Info: Setting magic \footheight to \baselineskip while
-(scrlayer)             \begin{document} on input line 94.
-Package scrbase Info: activating english \abbrevname on input line 94.
-Package scrbase Info: activating english \byname on input line 94.
-Package scrbase Info: activating english \acknowledgementname on input line 94.
+(scrlayer)             \begin{document} on input line 95.
+Package scrbase Info: activating english \abbrevname on input line 95.
+Package scrbase Info: activating english \byname on input line 95.
+Package scrbase Info: activating english \acknowledgementname on input line 95.
 
-Package scrbase Info: activating english \authorshipname on input line 94.
-Package scrbase Info: activating english \constantsname on input line 94.
-Package scrbase Info: activating english \symbolsname on input line 94.
+Package scrbase Info: activating english \authorshipname on input line 95.
+Package scrbase Info: activating english \constantsname on input line 95.
+Package scrbase Info: activating english \symbolsname on input line 95.
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
@@ -1954,59 +1955,59 @@ Package biblatex Info: Data encoding 'utf8' specified.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'tesi.bbl' found.
 (tesi.bbl)
-Package biblatex Info: Reference section=0 on input line 94.
-Package biblatex Info: Reference segment=0 on input line 94.
+Package biblatex Info: Reference section=0 on input line 95.
+Package biblatex Info: Reference segment=0 on input line 95.
 \AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring ON on input line 94.
+Package hyperref Info: Link coloring ON on input line 95.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count431
+\c@section@level=\count432
 )
-LaTeX Info: Redefining \ref on input line 94.
-LaTeX Info: Redefining \pageref on input line 94.
-LaTeX Info: Redefining \nameref on input line 94.
+LaTeX Info: Redefining \ref on input line 95.
+LaTeX Info: Redefining \pageref on input line 95.
+LaTeX Info: Redefining \nameref on input line 95.
 
 (tesi.out) (tesi.out)
 \@outlinefile=\write5
 \openout5 = `tesi.out'.
 
-\c__siunitx_mathsf_int=\count432
-LaTeX Font Info:    Try loading font information for OT1+ppl on input line 94.
+\c__siunitx_mathsf_int=\count433
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 95.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ppl.fd"
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 94.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 95.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omlzplm.fd"
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 94.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 95.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omszplm.fd"
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 94.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 95.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omxzplm.fd"
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 94.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 95.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1zplm.fd"
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-\c__siunitx_mathtt_int=\count433
+\c__siunitx_mathtt_int=\count434
 
 1: section
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 112.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 113.
 [1
 
 
@@ -2018,15 +2019,15 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
 --------------------
  Declaration of Authorship
 --------------------
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 152.
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 153.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsppl.fd"
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 152.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 153.
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 158--159
 
  []
 
@@ -2040,7 +2041,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 157--158
  Abstract
 --------------------
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 183.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 184.
 1: section
 [7] [8
 
@@ -2053,7 +2054,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
 
 ]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 201.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 202.
  (tesi.toc
 LaTeX Font Info:    Try loading font information for U+fplmbb on input line 9.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ufplmbb.fd"
@@ -2132,7 +2133,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--30
 
  []
 
-<Figures/EC_ex.jpg, id=221, 468.24937pt x 467.49657pt>
+<Figures/EC_ex.jpg, id=241, 468.24937pt x 467.49657pt>
 File: Figures/EC_ex.jpg Graphic file (type jpg)
 <use Figures/EC_ex.jpg>
 Package pdftex.def Info: Figures/EC_ex.jpg  used on input line 37. on input lin
@@ -2146,7 +2147,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--59
 
  []
 
-<Figures/EC_aligned.jpg, id=224, 467.49657pt x 463.7325pt>
+<Figures/EC_aligned.jpg, id=244, 467.49657pt x 463.7325pt>
 File: Figures/EC_aligned.jpg Graphic file (type jpg)
 <use Figures/EC_aligned.jpg>
 Package pdftex.def Info: Figures/EC_aligned.jpg  used on input line 66. on inpu
@@ -2165,51 +2166,121 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--119
 Package hyperref Info: bookmark level for unknown remark defaults to 0 on input
  line 121.
 
-Underfull \hbox (badness 10000) in paragraph at lines 129--131
+Underfull \hbox (badness 10000) in paragraph at lines 133--135
 
  []
 
-[3]) [4]
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Overfull \hbox (1.95178pt too wide) in paragraph at lines 145--145
+ \OT1/ppl/m/n/10.95 79\OML/zplm/m/it/10.95 BE\OT1/ppl/m/n/10.95 667\OML/zplm/m/
+it/10.95 EF\OT1/ppl/m/n/10.95 9\OML/zplm/m/it/10.95 DCBBAC\OT1/ppl/m/n/10.95 55
+\OML/zplm/m/it/10.95 A\OT1/ppl/m/n/10.95 06295\OML/zplm/m/it/10.95 CE\OT1/ppl/m
+/n/10.95 870\OML/zplm/m/it/10.95 B\OT1/ppl/m/n/10.95 07029\OML/zplm/m/it/10.95 
+BFCDB\OT1/ppl/m/n/10.95 2\OML/zplm/m/it/10.95 DCE\OT1/ppl/m/n/10.95 28\OML/zplm
+/m/it/10.95 D\OT1/ppl/m/n/10.95 959\OML/zplm/m/it/10.95 F\OT1/ppl/m/n/10.95 281
+5\OML/zplm/m/it/10.95 B\OT1/ppl/m/n/10.95 16\OML/zplm/m/it/10.95 F\OT1/ppl/m/n/
+10.95 81798$ 
+ []
+
+
+Overfull \hbox (5.45613pt too wide) in paragraph at lines 146--147
+ \OT1/ppl/m/n/10.95 483\OML/zplm/m/it/10.95 ADA\OT1/ppl/m/n/10.95 7726\OML/zplm
+/m/it/10.95 A\OT1/ppl/m/n/10.95 3\OML/zplm/m/it/10.95 C\OT1/ppl/m/n/10.95 4655\
+OML/zplm/m/it/10.95 DA\OT1/ppl/m/n/10.95 4\OML/zplm/m/it/10.95 FBFC\OT1/ppl/m/n
+/10.95 0\OML/zplm/m/it/10.95 E\OT1/ppl/m/n/10.95 1108\OML/zplm/m/it/10.95 A\OT1
+/ppl/m/n/10.95 8\OML/zplm/m/it/10.95 FD\OT1/ppl/m/n/10.95 17\OML/zplm/m/it/10.9
+5 B\OT1/ppl/m/n/10.95 448\OML/zplm/m/it/10.95 A\OT1/ppl/m/n/10.95 68554199\OML/
+zplm/m/it/10.95 C\OT1/ppl/m/n/10.95 47\OML/zplm/m/it/10.95 D\OT1/ppl/m/n/10.95 
+08\OML/zplm/m/it/10.95 FFB\OT1/ppl/m/n/10.95 10\OML/zplm/m/it/10.95 D\OT1/ppl/m
+/n/10.95 4\OML/zplm/m/it/10.95 B\OT1/ppl/m/n/10.95 8$ 
+ []
+
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
+nput line 152.
+LaTeX Font Info:    Font shape `T1/ppl/bx/it' in size <10.95> not available
+(Font)              Font shape `T1/ppl/b/it' tried instead on input line 152.
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--177
+
+ []
+
+
+Overfull \hbox (398.40538pt too wide) in paragraph at lines 174--177
+\T1/ppl/m/n/10.95 0450863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5
+B23522CD470243453A299FA9E77237716103ABC11A1DF38855ED6F2EE187E9C582BA6 
+ []
+
+[4]) [5]
 \openout2 = `Appendices/AppendixA.aux'.
 
- (Appendices/AppendixA.tex
+ (Appendices/AppendixA.tex [6
+
+
+
+]
 Appendix A.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 1: section
-[5
-
-
-
-] [6
+[7] [8
 
 
 ]
 \tf@thm=\write9
 \openout9 = `tesi.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 291.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 292.
 
 1: section
-[7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 291.
+[9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 292.
  (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Appendices/AppendixA.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 291.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 291.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 292.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 292.
 Package rerunfilecheck Info: File `tesi.out' has not changed.
-(rerunfilecheck)             Checksum: 9E938D00BFB98AA9785B0F0E4B6E719F;2592.
+(rerunfilecheck)             Checksum: 651DD891C586236A68D9CE4B1DCA8D47;3361.
 Package logreq Info: Writing requests to 'tesi.run.xml'.
 \openout1 = `tesi.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34795 strings out of 493312
- 699505 string characters out of 3138891
- 920529 words of memory out of 3000000
- 37889 multiletter control sequences out of 15000+200000
- 597854 words of font info for 151 fonts, out of 3000000 for 9000
+ 34833 strings out of 493312
+ 700044 string characters out of 3138891
+ 921912 words of memory out of 3000000
+ 37915 multiletter control sequences out of 15000+200000
+ 599450 words of font info for 153 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,21n,77p,10379b,1984s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
@@ -2221,12 +2292,13 @@ r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C
 AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/dfo
 rnaro/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pala
-tino/uplri8a.pfb>
-Output written on tesi.pdf (31 pages, 348309 bytes).
+TeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pal
+atino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.
+pfb>
+Output written on tesi.pdf (33 pages, 365644 bytes).
 PDF statistics:
- 375 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
- 147 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 414 PDF objects out of 1000 (max. 8388607)
+ 79 named destinations out of 1000 (max. 500000)
+ 179 words of extra memory for PDF output out of 10000 (max. 10000000)
 
