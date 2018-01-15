@@ -173,14 +173,35 @@ A public key, a point in the EC, can be rapresented in two way: \textit{uncompre
 \subsubsection{Uncompressed public key}
 An uncompressed public key is rapresented in hexadecimal digits, and it is obtained simply concatenating the $x$ coordinate with the $y$ coordinate and adding $04$ at the beginning, for a total of $130$ hexadecimal digits. \\ \\
 Example of an uncompressed public key: \\
-0450863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B23522CD470243453A299FA9E77237716103ABC11A1DF38855ED6F2EE187E9C582BA6
+0450863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B235 22CD470243453A299FA9E77237716103ABC11A1DF38855ED6F2EE187E9C582BA6
 
 
 \subsubsection{Compressed public key}
+A compressed public key is obtained simply taking the $x$ coordinate and adding $02$ at the begging if the $y$ coordinate is even, $03$ otherwise. \\
+This is due to the \textit{symmetry properties} of a point of the EC.
+\\ \\
+Example of a public key compressed:\\
+0250863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B2352
 
 
-\subsubsection{Private Key WIF}
-WIF stands for wallet import format and is the standard way used to write down a private key. 
+\subsubsection{WIF Private Key}
+WIF stands for wallet import format and is the standard way used to write down a private key.
+\begin{itemize}
+	\item Add a version number ($80$ for Bitcoin) in front of the private key, in order to recognize quickly for what cryptocurrency that private key was used.
+	\item Add $01$ at the end of the private key if you want a WIF \textit{compressed}, none if you want a WIF \textit{uncompressed}. The difference between these two types is that from a \textit{compressed} private key a \textit{compressed} public key is expected and from a \textit{uncompressed} private key a \textit{uncompressed} public key is expected.
+	\item Addd a checksum at the end, obtained applying the SHA256 function twice to the string previously obtained, take the first 4 bytes (8 hexadecimal digits) and put them at the end of the string.
+	\item Compute the Base58Encode, obtaining a 52 digit string.
+\end{itemize}
+Example of private key WIF: \\ KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617
+
+\subsubsection{Address}
+Among the Bitcoin transactions, one of the most used is a \textit{Pay-to-PubkeyHash}, meaning that in the transaction you will not write directly the public key, but the hash of that public key.
+\\
+The hash function used in this freamwork is the HASH160 function, applied to the \textit{compressed} public key. This is an irreversible procedure, so you cannot obtain the public key from the public key hash. \\ \\
+In order to obtain a valid Bitcoin address, it is needed to encode the \textit{PubkeyHash} in base58, adding first the version in front, the checksum at the end and then encode everything with Base58Encode, obtaining a 34 digit string. 
+\\ \\
+Example of an Address: \\
+1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
 
 
 
