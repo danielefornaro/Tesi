@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  15 JAN 2018 15:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  18 JAN 2018 17:44
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -1764,8 +1764,24 @@ File: english.lbx 2017/12/19 v3.10 biblatex localization (PK/JW/AB)
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
- (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Chapters/BIP32.aux)
-(Appendices/AppendixA.aux))
+ (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Chapters/Wallet.aux)
+(Chapters/From_seed_to_xprv.aux
+
+LaTeX Warning: Label `bip32' multiply defined.
+
+) (Chapters/child_key_derivation.aux
+
+LaTeX Warning: Label `bip32' multiply defined.
+
+) (Chapters/Mnemonic_to_seed.aux
+
+LaTeX Warning: Label `bip32' multiply defined.
+
+) (Chapters/how_to_use_wallets.aux
+
+LaTeX Warning: Label `bip32' multiply defined.
+
+) (Appendices/AppendixA.aux))
 \openout1 = `tesi.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
@@ -2061,20 +2077,21 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
 LaTeX Font Info:    Try loading font information for U+fplmbb on input line 9.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ufplmbb.fd"
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-))
+)
+1: section
+[11])
 \tf@toc=\write6
 \openout6 = `tesi.toc'.
 
-1: section
-[11] [12
-
-] (tesi.lof)
+ [12] (tesi.lof)
 \tf@lof=\write7
 \openout7 = `tesi.lof'.
 
 
 1: section
-[13] [14
+[13
+
+] [14
 
 ] (tesi.lot)
 \tf@lot=\write8
@@ -2135,7 +2152,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--30
 
  []
 
-<Figures/EC_ex.jpg, id=256, 468.24937pt x 467.49657pt>
+<Figures/EC_ex.jpg, id=406, 468.24937pt x 467.49657pt>
 File: Figures/EC_ex.jpg Graphic file (type jpg)
 <use Figures/EC_ex.jpg>
 Package pdftex.def Info: Figures/EC_ex.jpg  used on input line 37. on input lin
@@ -2149,7 +2166,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--59
 
  []
 
-<Figures/EC_aligned.jpg, id=259, 467.49657pt x 463.7325pt>
+<Figures/EC_aligned.jpg, id=409, 467.49657pt x 463.7325pt>
 File: Figures/EC_aligned.jpg Graphic file (type jpg)
 <use Figures/EC_aligned.jpg>
 Package pdftex.def Info: Figures/EC_aligned.jpg  used on input line 66. on inpu
@@ -2264,25 +2281,69 @@ Underfull \hbox (badness 10000) in paragraph at lines 198--205
  []
 
 ) [5]
-\openout2 = `Chapters/BIP32.aux'.
+\openout2 = `Chapters/Wallet.aux'.
 
- (Chapters/BIP32.tex [6
+ (Chapters/Wallet.tex [6
 
 
 
 ]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--20
+Underfull \hbox (badness 10000) in paragraph at lines 19--21
 
  []
 
 )
 1: section
 [7]
+\openout2 = `Chapters/From_seed_to_xprv.aux'.
+
+ (Chapters/From_seed_to_xprv.tex [8
+
+
+
+]
+Chapter 3.
+)
+1: section
+[9]
+\openout2 = `Chapters/child_key_derivation.aux'.
+
+ (Chapters/child_key_derivation.tex [10
+
+
+
+]
+Chapter 4.
+)
+1: section
+[11]
+\openout2 = `Chapters/Mnemonic_to_seed.aux'.
+
+ (Chapters/Mnemonic_to_seed.tex [12
+
+
+
+]
+Chapter 5.
+)
+1: section
+[13]
+\openout2 = `Chapters/how_to_use_wallets.aux'.
+
+ (Chapters/how_to_use_wallets.tex [14
+
+
+
+]
+Chapter 6.
+)
+1: section
+[15]
 \openout2 = `Appendices/AppendixA.aux'.
 
- (Appendices/AppendixA.tex [8
+ (Appendices/AppendixA.tex [16
 
 
 
@@ -2293,36 +2354,42 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 1: section
-[9] [10
+[17] [18
 
 
 ]
 \tf@thm=\write9
 \openout9 = `tesi.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 293.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 294.
 
 1: section
-[11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 293.
- (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Chapters/BIP32.aux)
+[19]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 294.
+ (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Chapters/Wallet.aux)
+(Chapters/From_seed_to_xprv.aux) (Chapters/child_key_derivation.aux)
+(Chapters/Mnemonic_to_seed.aux) (Chapters/how_to_use_wallets.aux)
 (Appendices/AppendixA.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 293.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 293.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 294.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 294.
 Package rerunfilecheck Info: File `tesi.out' has not changed.
-(rerunfilecheck)             Checksum: 1004F050953D88F01CCF8E2BC955F2C2;3729.
+(rerunfilecheck)             Checksum: ED6D6BCA60EFD386F425F5707C3A891E;8312.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package logreq Info: Writing requests to 'tesi.run.xml'.
 \openout1 = `tesi.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34854 strings out of 493312
- 700462 string characters out of 3138891
+ 34966 strings out of 493312
+ 703096 string characters out of 3138891
  921912 words of memory out of 3000000
- 37923 multiletter control sequences out of 15000+200000
+ 37969 multiletter control sequences out of 15000+200000
  599450 words of font info for 153 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,21n,77p,10379b,1984s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 57i,21n,77p,10379b,2394s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
 00\ectt1095.pk> <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
 appen\ec\dpi600\ectt1000.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8
@@ -2336,9 +2403,9 @@ TeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.
 pfb>
-Output written on tesi.pdf (35 pages, 371145 bytes).
+Output written on tesi.pdf (43 pages, 397178 bytes).
 PDF statistics:
- 439 PDF objects out of 1000 (max. 8388607)
- 85 named destinations out of 1000 (max. 500000)
- 203 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 632 PDF objects out of 1000 (max. 8388607)
+ 123 named destinations out of 1000 (max. 500000)
+ 443 words of extra memory for PDF output out of 10000 (max. 10000000)
 

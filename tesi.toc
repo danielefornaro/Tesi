@@ -20,8 +20,38 @@
 \contentsline {subsubsection}{Compressed public key}{5}{section*.38}
 \contentsline {subsubsection}{WIF Private Key}{5}{section*.39}
 \contentsline {subsubsection}{Address}{5}{section*.40}
-\contentsline {chapter}{\numberline {2}HD Wallet}{7}{chapter.41}
-\contentsline {section}{\numberline {2.1}Nondeterministic Wallets}{7}{section.43}
-\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{9}{appendix.44}
-\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{9}{section.45}
-\contentsline {chapter}{Bibliography}{11}{appendix*.46}
+\contentsline {chapter}{\numberline {2}Wallet}{7}{chapter.41}
+\contentsline {section}{\numberline {2.1}Waht is a Bitcoin Wallet}{7}{section.42}
+\contentsline {section}{\numberline {2.2}Random Wallets}{7}{section.44}
+\contentsline {subsection}{\numberline {2.2.1}Pros and Cons}{7}{subsection.45}
+\contentsline {section}{\numberline {2.3}Deterministic Wallets}{7}{section.46}
+\contentsline {subsection}{\numberline {2.3.1}Pros and Cons}{7}{subsection.47}
+\contentsline {section}{\numberline {2.4}Hierarchical deterministic Wallets}{7}{section.48}
+\contentsline {subsection}{\numberline {2.4.1}Key Concept}{7}{subsection.49}
+\contentsline {subsubsection}{Seed}{7}{section*.50}
+\contentsline {subsubsection}{Extended Key}{7}{section*.51}
+\contentsline {subsubsection}{Mnemonic and Passphrase}{7}{section*.52}
+\contentsline {subsection}{\numberline {2.4.2}Pros and Cons}{7}{subsection.53}
+\contentsline {chapter}{\numberline {3}Seed to Master Private Key}{9}{chapter.54}
+\contentsline {section}{\numberline {3.1}Functional explanation}{9}{section.55}
+\contentsline {section}{\numberline {3.2}Code implementation}{9}{section.56}
+\contentsline {chapter}{\numberline {4}Child Key Derivation}{11}{chapter.57}
+\contentsline {section}{\numberline {4.1}Functional explanation}{11}{section.58}
+\contentsline {section}{\numberline {4.2}Normal derivation}{11}{section.59}
+\contentsline {subsection}{\numberline {4.2.1}Derive public child from public parent}{11}{subsection.60}
+\contentsline {subsection}{\numberline {4.2.2}Possible Risk}{11}{subsection.61}
+\contentsline {section}{\numberline {4.3}Hardened derivation}{11}{section.62}
+\contentsline {chapter}{\numberline {5}Mnemonic to Seed}{13}{chapter.63}
+\contentsline {section}{\numberline {5.1}Functional explanation}{13}{section.64}
+\contentsline {section}{\numberline {5.2}BIP 39 derivation}{13}{section.65}
+\contentsline {subsection}{\numberline {5.2.1}Mnemonic generation}{13}{subsection.66}
+\contentsline {subsection}{\numberline {5.2.2}Seed derivation}{13}{subsection.67}
+\contentsline {section}{\numberline {5.3}Electrum derivation}{13}{section.68}
+\contentsline {subsection}{\numberline {5.3.1}Mnemonic generation}{13}{subsection.69}
+\contentsline {subsection}{\numberline {5.3.2}Seed derivation}{13}{subsection.70}
+\contentsline {section}{\numberline {5.4}BIP39 vs Electrum derivation}{13}{section.71}
+\contentsline {chapter}{\numberline {6}How to use a HD Wallet}{15}{chapter.72}
+\contentsline {section}{\numberline {6.1}BIP 44}{15}{section.73}
+\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{17}{appendix.74}
+\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{17}{section.75}
+\contentsline {chapter}{Bibliography}{19}{appendix*.76}
