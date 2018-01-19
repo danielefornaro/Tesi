@@ -14,23 +14,85 @@
 %\newcommand{\option}[1]{\texttt{\itshape#1}}
 
 %----------------------------------------------------------------------------------------
-\section{Waht is a Bitcoin Wallet}
+
 
 A Bitcoin wallet is a structure used to store keys. \\ \\
-There exist two different type of wallets:
+There are different type of wallet:
 \begin{itemize}
-	\item Nondeterministic Wallets
-	\item Deterministic Wallets
+	\item Nondeterministic (\textit{random}) Wallet
+	\item Deterministic Wallet
 \end{itemize}
+
 \begin{remark}
-	Bitcoin wallets contains keys, not coins.
+	Bitcoin wallets contains keys, not coins. Coins are in the Blockchain.
 \end{remark}
 
-\section{Random Wallets}
-This is the simplest 
+\section{Nondeterministic (\textit{random}) Wallet}
+A nondeterministic wallet is the simplest type of wallet. Each Key is randomly and independently generated.
+
+\begin{enumerate}[label=(\roman*)]
+	\item Consider a \textit{Discrete Uniform Random Variable}
+	\begin{equation*}
+		X\sim \mathcal{U}(S)
+	\end{equation*}
+	Where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	\item Take some realizations $k_1,k_2...k_n$ of $X$ using enough entropy to make these numbesr (\textit{private keys}) impossible to guess.
+	\begin{equation*}
+		k_1=X(\omega_1) \quad  k_2=X(\omega_2) \quad ... \quad k_n=X(\omega_n)
+	\end{equation*}
+	\item Go back to point (i) every time new \textit{private keys} are needed.
+\end{enumerate}
+
 \subsection{Pros and Cons}
+Let's focus on the good and bad aspect of this wallet.
+
+\begin{center}
+	\begin{tabular}{ |p{6cm}|p{6cm}|  }
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\textit{Random Wallet}}} \\
+	\hline \hline 
+	\\
+	\centerline{\textbf{Pros}}&\centerline{\textbf{Cons}}\\
+	\hline
+	\begin{itemize}
+		\item Easy to implement
+	\end{itemize} &
+	\begin{itemize}
+		\item Difficult to find \underline{real} new entropy for every new \textit{private key}.
+		\item Every time new \textit{private keys} are needed, you need to make new back up.
+		\item Difficult to store or back up in a \textit{non digital way}. Awkward to write it down all yours keys on a paper.
+	\end{itemize}\\
+	\hline
+\end{tabular}
+\end{center}
+
+The use of \textit{random wallet} is strongly discouraged for anything other than simple test. There are no good reason to use it.
 
 \section{Deterministic Wallets}
+A deterministic wallet is a more sophisticated one, in which every key is generated from a common "\textit{seed}". This means that knowing the \textit{seed} means also to know all the keys in the wallet.\\ \\
+There are different types of deterministic wallets, in this text we will analyze three main types:
+\begin{itemize}
+	\item Deterministic Wallet \textit{type 1}
+	\item Deterministic Wallet \textit{type 2}
+	\item Hierarchical Deterministic Wallet
+\end{itemize}
+
+These wallet are in increasing order of complexity.
+
+\subsection{Deterministic Wallet \textit{type-1}}
+The Deterministic Wallet \textit{type-1} is one of the simplest Wallet among the deterministic ones. Each key is generated adding a number in a sequential order to the \textit{seed} and then computing an \textit{hash} function such as the \textbf{SHA256} function.
+\\ \\
+Let's see how it works:
+
+\begin{enumerate}[label=(\roman*)]
+	\item Generate a \textit{seed}, a random number from a \textit{Discrete Uniform Random Variable}
+	\begin{equation*}
+	seed=X(\omega) \qquad X\sim \mathcal{U}(S)
+	\end{equation*}
+	Where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	\item
+\end{enumerate}
+
 
 \subsection{Pros and Cons}
 
