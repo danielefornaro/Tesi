@@ -42,9 +42,10 @@ A nondeterministic wallet is the simplest type of wallet. Each Key is randomly a
 	\end{equation*}
 	\item Go back to point (i) every time new \textit{private keys} are needed.
 \end{enumerate}
+With this procedure it is impossible to compute the \textit{public key} without having already the \textit{private key}.
 
-\subsection{Pros and Cons}
-Let's focus on the good and bad aspect of this wallet.
+\subsubsection{Pros and Cons}
+Let's focus on the good and bad aspects of this wallet.
 
 \begin{center}
 	\begin{tabular}{ |p{6cm}|p{6cm}|  }
@@ -76,25 +77,53 @@ There are different types of deterministic wallets, in this text we will analyze
 	\item Deterministic Wallet \textit{type 2}
 	\item Hierarchical Deterministic Wallet
 \end{itemize}
-
 These wallet are in increasing order of complexity.
 
 \subsection{Deterministic Wallet \textit{type-1}}
 The Deterministic Wallet \textit{type-1} is one of the simplest Wallet among the deterministic ones. Each key is generated adding a number in a sequential order to the \textit{seed} and then computing an \textit{hash} function such as the \textbf{SHA256} function.
 \\ \\
-Let's see how it works:
+Let's see how to generate the $n^{th}$ private key:
 
 \begin{enumerate}[label=(\roman*)]
-	\item Generate a \textit{seed}, a random number from a \textit{Discrete Uniform Random Variable}
+	\item Generate a \textit{seed} (only once), a random number from a \textit{Discrete Uniform Random Variable}
 	\begin{equation*}
 	seed=X(\omega) \qquad X\sim \mathcal{U}(S)
 	\end{equation*}
 	Where $S$ is the finite set of natural number in the range from $1$ to $order$.
-	\item
+	\item Consider the numbers $seed$ and $n$ as strings and concatenate $n$ to $seed$, obtaining a $value$
+	\begin{equation*}
+	value=seed|n
+	\end{equation*}
+	\item Compute the SHA256 function to $value$ and obtain the $n^{th}$ \textit{private key}.
+	\item Go back to point (ii) every time new \textit{private keys} are needed with $n=n+1$. 
 \end{enumerate}
+With this procedure it is impossible to compute the \textit{public key} without having already computed the \textit{private key}.
 
+\subsubsection{Pros and Cons}
+Let's focus on the good and bad aspects of this wallet.
 
-\subsection{Pros and Cons}
+\begin{center}
+	\begin{tabular}{ |p{6cm}|p{6cm}|  }
+		\hline
+		\multicolumn{2}{|c|}{\textbf{\textit{Deterministic Wallet type-1}}} \\
+		\hline \hline 
+		\\
+		\centerline{\textbf{Pros}}&\centerline{\textbf{Cons}}\\
+		\hline
+		\begin{itemize}
+			\item In order to make a back up of the entire wallet it is needed to store the \textit{seed} only. All \textit{private keys} can be derived from it.
+			\item A single back up is needed.
+			\item The \textit{seed} can be stored also in a \textit{non digital way}, in a paper for example.
+		\end{itemize} &
+		\begin{itemize}
+			\item Every time new \textit{public keys} are needed, you need to use the \textit{seed}, to compute new \textit{private keys} and then derive the \textit{public} ones. This could compromise the entire wallet, if the \textit{seed} is used in a non safe environment.
+			\item There is only a \textit{key} sequence. No way to distinguish the "purpose" of each \textit{private key}.
+		\end{itemize}\\
+		\hline
+	\end{tabular}
+\end{center}
+The use of this type of wallet is not recommended for everyday use, but it could be used to store Bitcoin in a safe place: \textit{cold wallet}. Without 
+
 
 \section{Hierarchical deterministic Wallets}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  19 JAN 2018 17:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  20 JAN 2018 19:40
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -2304,9 +2304,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--22
 
 LaTeX Font Info:    Font shape `T1/ppl/bx/it' in size <14.4> not available
 (Font)              Font shape `T1/ppl/b/it' tried instead on input line 30.
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 47.
+
 1: section
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 72--75
+Underfull \hbox (badness 10000) in paragraph at lines 73--76
 
  []
 
@@ -2317,7 +2321,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 83--86
 
  []
 
-) [8] [9]
+[8]
+Underfull \hbox (badness 1831) in paragraph at lines 120--121
+\T1/ppl/m/n/10.95 No way to dis-tin-guish the
+ []
+
+) [9]
 \openout2 = `Chapters/From_seed_to_xprv.aux'.
 
  (Chapters/From_seed_to_xprv.tex [10
@@ -2393,15 +2402,9 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
 (Appendices/AppendixA.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 295.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 295.
+Package rerunfilecheck Info: File `tesi.out' has not changed.
+(rerunfilecheck)             Checksum: 7085670CB4EFF5AB09BAA7D9429614DE;8518.
 
-
-Package rerunfilecheck Warning: File `tesi.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `tesi.out':
-(rerunfilecheck)             Before: A9C82E570C9E21A2ADB14C911D23B3B7;8519
-(rerunfilecheck)             After:  DF321C6F230E767A12B0F5D86EC01696;8519.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -2410,95 +2413,29 @@ Package logreq Info: Writing requests to 'tesi.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35288 strings out of 493312
- 708391 string characters out of 3138891
+ 35268 strings out of 493312
+ 708155 string characters out of 3138891
  928014 words of memory out of 3000000
  38256 multiletter control sequences out of 15000+200000
  602642 words of font info for 157 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,21n,77p,10379b,2394s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{appendix*.80} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.79} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{appendix.78} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.77} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.76} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.75} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.73} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.72} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.70} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.68} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.67} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.66} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.64} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.62} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.61} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.59} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.58} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.57} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section*.54} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.53} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.52} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.51} has been referenced but does not exi
-st, replaced by a fixed one
-
- <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600
-\ectt1095.pk> <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
-pen\ec\dpi600\ectt1000.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.
-enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dfornaro/Ap
-pData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/dforn
-aro/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTe
-X 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palat
-ino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pf
-b>
-Output written on tesi.pdf (45 pages, 410905 bytes).
+ <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
+00\ectt1095.pk> <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
+appen\ec\dpi600\ectt1000.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8
+r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dfornaro/
+AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/dfo
+rnaro/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pal
+atino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.
+pfb>
+Output written on tesi.pdf (45 pages, 411658 bytes).
 PDF statistics:
- 673 PDF objects out of 1000 (max. 8388607)
- 152 named destinations out of 1000 (max. 500000)
+ 648 PDF objects out of 1000 (max. 8388607)
+ 132 named destinations out of 1000 (max. 500000)
  443 words of extra memory for PDF output out of 10000 (max. 10000000)
 
