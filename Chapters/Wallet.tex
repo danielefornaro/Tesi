@@ -113,7 +113,7 @@ Let's focus on the good and bad aspects of this wallet.
 		\begin{itemize}
 			\item In order to make a back up of the entire wallet it is needed to store the \textit{seed} only. All \textit{private keys} can be derived from it.
 			\item A single back up is needed.
-			\item The \textit{seed} can be stored also in a \textit{non digital way}, in a paper for example.
+			\item The \textit{seed} can be stored easily also in a \textit{non digital way}, in a paper for example.
 		\end{itemize} &
 		\begin{itemize}
 			\item Every time new \textit{public keys} are needed, you need to use the \textit{seed}, to compute new \textit{private keys} and then derive the \textit{public} ones. This could compromise the entire wallet, if the \textit{seed} is used in a non safe environment.
@@ -122,8 +122,94 @@ Let's focus on the good and bad aspects of this wallet.
 		\hline
 	\end{tabular}
 \end{center}
-The use of this type of wallet is not recommended for everyday use, but it could be used to store Bitcoin in a safe place: \textit{cold wallet}. Without 
+The use of this type of wallet is not recommended for everyday use, but it could be used to store Bitcoin in a safe place: \textit{cold wallet}. 
 
+\subsection{Deterministic Wallet \textit{type-2}}
+The Deterministic Wallet \textit{type-2} is more sophisticated. Each \textit{private key} is generated in such a way that it is possible to compute the respective \textit{public key} without knowing the \textit{private}.
+\\ \\
+First let's introduce the necessary ingredients:
+\begin{itemize}[label=$\diamond$]
+	\item \textbf{Master private key} ($mp$): a random number, generated from a \textit{Discrete Uniform Random Variable}
+	\begin{equation*}
+	mp=X(\omega) \qquad X\sim \mathcal{U}(S)
+	\end{equation*}
+	Where $S$ is the finite set of natural number in the range from $1$ to $order$. \\ The master private key must be take \underline{secret}.
+	\item \textbf{Master public key} ($MP$): a point on the EC, obtained from the $mp$:
+	\begin{equation*}
+	MP=mp\cdot G
+	\end{equation*}
+	Where $G$ is the \textit{generator}.\\ This point can be consider \underline{non-secret}.
+	\item \textbf{Public random number} ($r$): a random number, generated from a \textit{Discrete Uniform Random Variable}
+	\begin{equation*}
+	r=X(\omega) \qquad X\sim \mathcal{U}(S)
+	\end{equation*}
+	This number can be consider \underline{non-secret}.
+\end{itemize}
+Let's see how to generate the $n^{th}$ private key: $p_n$
+
+\begin{enumerate}[label=(\roman*)]
+	\item Compute the SHA256 function to the concatenation of $r$ with $n$, considered as string:
+	\begin{equation*}
+	h_{n|r}=SHA256 (n|r)
+	\end{equation*}
+	$h_{n|r}$ can be consider \underline{non-secret}, from the moment that it is derived from non secret information.
+	\item Compute the $n^{th}$ \textit{private key} adding $mp$ to $h_{n|r}$:
+	\begin{equation*}
+	p_n=mp+h_{n|r} \qquad \mod (order)
+	\end{equation*}
+\end{enumerate}
+In order to obtain the corresponding \textit{public key} $P_n$, it is possible to compute the standard multiplication:
+\begin{equation*}
+P_n=p_n \cdot G
+\end{equation*}
+It is also possible to compute $P_n$ without knowing $p_n$, using only non-secret information: $h_{n|r}$ and $MP$.
+\begin{enumerate}[label=(\roman*)]
+	\item Compute $V$:
+	\begin{equation*}
+	V=h_{n|r} \cdot G
+	\end{equation*}
+	$V$ can be see as the \textit{public key} of $h_{n|r}$ and can be consider \underline{non-secret}.
+	\item Add $MP$ to $V$:
+	\begin{equation*}
+	P_n=MP+V
+	\end{equation*}
+	Where the sum in this contest is the one defined between two point in the EC.
+\end{enumerate}
+It is easy to prove that $P_n$ can be computed in these two way:
+\begin{equation*} \label{eq1}
+\begin{split}
+P_n & = p_n \cdot G \\
+& = (mp+h_{n|r}) \cdot G \\
+& = (mp \cdot G) + (h_{n|r}\cdot G) \\
+& = MP + V
+\end{split}
+\end{equation*}
+
+\subsubsection{Pros and Cons}
+Let's focus on the good and bad aspects of this wallet.
+
+\begin{center}
+	\begin{tabular}{ |p{6cm}|p{6cm}|  }
+		\hline
+		\multicolumn{2}{|c|}{\textbf{\textit{Deterministic Wallet type-2}}} \\
+		\hline \hline 
+		\\
+		\centerline{\textbf{Pros}}&\centerline{\textbf{Cons}}\\
+		\hline
+		\begin{itemize}
+			\item In order to make a back up of the entire wallet it is needed to store the \textit{master private key} and the random number $r$. All \textit{private keys} can be derived from them.
+			\item A single back up is needed.
+			\item The \textit{master private key} can be stored easily also in a \textit{non digital way}, in a paper for example.
+			\item It is possible to derive a new \textit{public key} using only non-secret information, with the procedure above.
+		\end{itemize} &
+		\begin{itemize}
+			\item There is only a \textit{key} sequence. No way to distinguish the "purpose" of each \textit{private key}.
+		\end{itemize}\\
+		\hline
+	\end{tabular}
+\end{center}
+The \textit{type-2 deterministic wallet} it is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses also in a non safe environment, having only $r$ and $MP$. \\
+A thief can only steal your privacy, because if $MP$ and $r$ are stolen, he is not able to make any Bitcoin transactions from your wallet, but he can see all the previous transactions and the total amount of Bitcoin stored in the wallet.
 
 \section{Hierarchical deterministic Wallets}
 

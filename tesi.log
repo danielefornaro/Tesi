@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  20 JAN 2018 19:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  22 JAN 2018 11:59
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -2160,7 +2160,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--30
 
  []
 
-<Figures/EC_ex.jpg, id=406, 468.24937pt x 467.49657pt>
+<Figures/EC_ex.jpg, id=416, 468.24937pt x 467.49657pt>
 File: Figures/EC_ex.jpg Graphic file (type jpg)
 <use Figures/EC_ex.jpg>
 Package pdftex.def Info: Figures/EC_ex.jpg  used on input line 37. on input lin
@@ -2174,7 +2174,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--59
 
  []
 
-<Figures/EC_aligned.jpg, id=409, 467.49657pt x 463.7325pt>
+<Figures/EC_aligned.jpg, id=419, 467.49657pt x 463.7325pt>
 File: Figures/EC_aligned.jpg Graphic file (type jpg)
 <use Figures/EC_aligned.jpg>
 Package pdftex.def Info: Figures/EC_aligned.jpg  used on input line 66. on inpu
@@ -2326,10 +2326,31 @@ Underfull \hbox (badness 1831) in paragraph at lines 120--121
 \T1/ppl/m/n/10.95 No way to dis-tin-guish the
  []
 
-) [9]
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--131
+
+ []
+
+[9]
+Underfull \hbox (badness 1097) in paragraph at lines 200--201
+\T1/ppl/m/n/10.95 and the ran-dom num-ber $\OML/zplm/m/it/10.95 r$\T1/ppl/m/n/1
+0.95 .
+ []
+
+
+Underfull \hbox (badness 2698) in paragraph at lines 203--204
+\T1/ppl/m/it/10.95 pub-lic key \T1/ppl/m/n/10.95 us-ing only non-
+ []
+
+
+Underfull \hbox (badness 1831) in paragraph at lines 206--207
+\T1/ppl/m/n/10.95 No way to dis-tin-guish the
+ []
+
+[10]) [11]
 \openout2 = `Chapters/From_seed_to_xprv.aux'.
 
- (Chapters/From_seed_to_xprv.tex [10
+ (Chapters/From_seed_to_xprv.tex [12
 
 
 
@@ -2337,10 +2358,10 @@ Underfull \hbox (badness 1831) in paragraph at lines 120--121
 Chapter 3.
 )
 1: section
-[11]
+[13]
 \openout2 = `Chapters/child_key_derivation.aux'.
 
- (Chapters/child_key_derivation.tex [12
+ (Chapters/child_key_derivation.tex [14
 
 
 
@@ -2348,10 +2369,10 @@ Chapter 3.
 Chapter 4.
 )
 1: section
-[13]
+[15]
 \openout2 = `Chapters/Mnemonic_to_seed.aux'.
 
- (Chapters/Mnemonic_to_seed.tex [14
+ (Chapters/Mnemonic_to_seed.tex [16
 
 
 
@@ -2359,10 +2380,10 @@ Chapter 4.
 Chapter 5.
 )
 1: section
-[15]
+[17]
 \openout2 = `Chapters/how_to_use_wallets.aux'.
 
- (Chapters/how_to_use_wallets.tex [16
+ (Chapters/how_to_use_wallets.tex [18
 
 
 
@@ -2370,10 +2391,10 @@ Chapter 5.
 Chapter 6.
 )
 1: section
-[17]
+[19]
 \openout2 = `Appendices/AppendixA.aux'.
 
- (Appendices/AppendixA.tex [18
+ (Appendices/AppendixA.tex [20
 
 
 
@@ -2384,7 +2405,7 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 1: section
-[19] [20
+[21] [22
 
 
 ]
@@ -2394,7 +2415,7 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 295.
 
 1: section
-[21]
+[23]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
  (tesi.aux (Chapters/elliptic_curve_geometry.aux) (Chapters/Wallet.aux)
 (Chapters/From_seed_to_xprv.aux) (Chapters/child_key_derivation.aux)
@@ -2403,7 +2424,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 295.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 295.
 Package rerunfilecheck Info: File `tesi.out' has not changed.
-(rerunfilecheck)             Checksum: 7085670CB4EFF5AB09BAA7D9429614DE;8518.
+(rerunfilecheck)             Checksum: F6EA813A3443157A06EAB015137E8972;8849.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -2413,13 +2434,13 @@ Package logreq Info: Writing requests to 'tesi.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35268 strings out of 493312
- 708155 string characters out of 3138891
- 928014 words of memory out of 3000000
- 38256 multiletter control sequences out of 15000+200000
+ 35279 strings out of 493312
+ 708254 string characters out of 3138891
+ 929014 words of memory out of 3000000
+ 38259 multiletter control sequences out of 15000+200000
  602642 words of font info for 157 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,21n,77p,10379b,2394s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 58i,21n,77p,10379b,2394s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
 00\ectt1095.pk> <C:\Users\dfornaro\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
 appen\ec\dpi600\ectt1000.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8
@@ -2433,9 +2454,9 @@ TeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.
 pfb>
-Output written on tesi.pdf (45 pages, 411658 bytes).
+Output written on tesi.pdf (47 pages, 419913 bytes).
 PDF statistics:
- 648 PDF objects out of 1000 (max. 8388607)
- 132 named destinations out of 1000 (max. 500000)
- 443 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 672 PDF objects out of 1000 (max. 8388607)
+ 140 named destinations out of 1000 (max. 500000)
+ 459 words of extra memory for PDF output out of 10000 (max. 10000000)
 
