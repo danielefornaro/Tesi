@@ -2,7 +2,7 @@
 
 \chapter{Wallet} % Main chapter title
 
-\label{bip32} % For referencing the chapter elsewhere, use \ref{Chapter1}
+\label{wallet} % For referencing the chapter elsewhere, use \ref{Chapter1}
 
 %----------------------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ There are different types of deterministic wallets, in this text we will analyze
 \begin{itemize}
 	\item Deterministic Wallet \textit{type 1}
 	\item Deterministic Wallet \textit{type 2}
-	\item Hierarchical Deterministic Wallet
+	\item Deterministic Wallet \textit{type 3}
 \end{itemize}
 These wallet are in increasing order of complexity.
 
@@ -211,15 +211,23 @@ Let's focus on the good and bad aspects of this wallet.
 The \textit{type-2 deterministic wallet} it is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses also in a non safe environment, having only $r$ and $MP$. \\
 A thief can only steal your privacy, because if $MP$ and $r$ are stolen, he is not able to make any Bitcoin transactions from your wallet, but he can see all the previous transactions and the total amount of Bitcoin stored in the wallet.
 
-\section{Hierarchical deterministic Wallets}
+\subsection{Deterministic Wallet \textit{type-3}}
+Deterministic Wallet \textit{type-3} is the most elaborate among the ones considered. Starting from a \textit{seed} it is possible to obtain different \textit{keys} in a hierarchical way, with a structure similar to a tree. \\ \\
+Let's see roughly how an this Wallet works:
 
-\subsection{Key Concept}
+\begin{enumerate}[label=(\roman*)]
+	\item Generate a \textit{seed}, a random number from a \textit{Discrete Uniform Random Variable}, unique for each wallet.
+	\begin{equation*}
+	seed=X(\omega) \qquad X\sim \mathcal{U}(S)
+	\end{equation*}
+	Where $S$ is a finite set of natural number.
+	\item Generate a \textit{master private key} from the \textit{seed}, using a stretching function: PBKDF2.
+	\item From this \textit{master private key} it is possible to generate $2^{8}$ \textit{private key} using a irreversible function: HASH512
+	\item Everyone of this \textit{private key} "children" can derive $2^{8}$ \textit{private key} and all of these "grandchildren" can derive as many.
+\end{enumerate}
 
-\subsubsection{Seed}
-
-\subsubsection{Extended Key}
-
-\subsubsection{Mnemonic and Passphrase}
-
-\subsection{Pros and Cons}
-
+This procedure can produce a huge number of keys. They seem independent from an outside point of view: it is impossible to guess that two private-public key are derived from the same \textit{seed}.
+\\ \\ 
+This particular type of Wallet is commonly known as \textbf{Hierarchical Deterministic Wallet}, one of the most used and widespread.
+\\ \\
+In the next chapter we will see in detail how it works.

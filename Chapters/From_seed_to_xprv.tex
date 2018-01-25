@@ -1,8 +1,8 @@
 % Chapter 1
 
-\chapter{Seed to Master Private Key} % Main chapter title
+\chapter{Hierarchical Deterministic Wallet} % Main chapter title
 
-\label{bip32} % For referencing the chapter elsewhere, use \ref{Chapter1}
+\label{hd wallet} % For referencing the chapter elsewhere, use \ref{Chapter1}
 
 %----------------------------------------------------------------------------------------
 
@@ -15,6 +15,36 @@
 
 %----------------------------------------------------------------------------------------
 
+In this chapter we will see how an HD wallet works.
+\\ \\
+\section{Elements}
+Let's focus on the main elements of the Wallet:
+\begin{itemize}[label=$\diamond$]
+	\item Seed
+	\item Extended keys
+\end{itemize}
+
+\subsection{Seed}
+The entire Wallet is based on a \textit{seed}.
+\\ \\
+It is a number taken from a \textit{Discrete Uniform Random Variable}
+\begin{equation*}
+seed=X(\omega) \qquad X\sim \mathcal{U}(S)
+\end{equation*}
+Where $S$ is the finite set of natural number in the range from $1$ to an arbitrary value.\\ Obviously the greater the set from which the number can be extracted, the better it is for the security of the seed itself.
+\\ \\
+This is an example of seed expressed in hexadecimal format: \\
+\textit{seed}=fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999 \\ 693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542 
+
+\subsection{Extended Key}
+An Extended Key is a sequence of bytes, encoded in base58. It contains all the information necessary for the derivation. \\ \\
+Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and order:
+\begin{itemize}[label=$\circledast$]
+	\item 4 bytes are used to specified the \textbf{version}.
+	\item 1 byte is used to specified the \textbf{depth} in the hierarchical tree: the extended key derived directly from the seed has $depth=0$, its first children have $depth=1$, grandchildren have $depth=2$ and so on.
+\end{itemize}
+
+ 
 \section{Functional explanation}
 
 \section{Code implementation}
