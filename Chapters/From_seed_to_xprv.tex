@@ -37,11 +37,20 @@ This is an example of seed expressed in hexadecimal format: \\
 \textit{seed}=fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999 \\ 693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542 
 
 \subsection{Extended Key}
-An Extended Key is a sequence of bytes, encoded in base58. It contains all the information necessary for the derivation. \\ \\
+An Extended Key is a sequence of bytes, encoded in base58. It contains all the information necessary for the derivation. When the derivation is made for the first time from the seed, the extended key is called master key.\\ \\
 Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and order:
 \begin{itemize}[label=$\circledast$]
 	\item 4 bytes are used to specified the \textbf{version}.
 	\item 1 byte is used to specified the \textbf{depth} in the hierarchical tree: the extended key derived directly from the seed has $depth=0$, its first children have $depth=1$, grandchildren have $depth=2$ and so on.
+	\item 4 bytes are used for the \textbf{fingerprint}. It is a unique value that identify the parent. Compute the HASH160 function on the "parent" public key in a compressed form and then take the first 4 bytes, this is the fingerprint of the child:
+	\begin{equation*}
+	fingerprint=HASH160(\text{parent public key})[0:4]
+	\end{equation*}
+	Where $[0:4]$ is a python notation.\\
+	For the master key the fingerprint is formed by 4 zeros bytes: $fingerprint=0000000000$
+	\item 4 bytes are used to specified the \textbf{index} of the child. \\
+	For the master key the index is formed by 4 zeros bytes: $index=0000000000$
+	\item 32 bytes are used for the \textbf{chain code}.
 \end{itemize}
 
  

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  25 JAN 2018 14:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.6)  25 JAN 2018 23:07
 entering extended mode
 **./tesi.tex
 (tesi.tex
@@ -2426,13 +2426,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--42
 
  []
 
-)
 1: section
 [13
 
 
 
-] [14]
+]) [14]
 \openout2 = `Chapters/child_key_derivation.aux'.
 
  (Chapters/child_key_derivation.tex
@@ -2529,7 +2528,7 @@ m Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX
 pe1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palati
 no/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb
 >
-Output written on tesi.pdf (47 pages, 431167 bytes).
+Output written on tesi.pdf (47 pages, 432343 bytes).
 PDF statistics:
  670 PDF objects out of 1000 (max. 8388607)
  142 named destinations out of 1000 (max. 500000)
