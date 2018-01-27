@@ -50,10 +50,46 @@ Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and 
 	For the master key the fingerprint is formed by 4 zeros bytes: $fingerprint=0000000000$
 	\item 4 bytes are used to specified the \textbf{index} of the child. \\
 	For the master key the index is formed by 4 zeros bytes: $index=0000000000$
-	\item 32 bytes are used for the \textbf{chain code}.
+	\item 32 bytes are used for the \textbf{chain code}. The chain code is used in order to introduce a sort of entropy in the children generation. We will see below how it works.
+	\item 33 bytes are used for the \textbf{key}. It can be \textit{private} or \textit{public}. \\ Public key is expressed in compact form, so the first byte is always $02$ or $03$. The first byte of the private key is always $00$ in order to distinguish the key from the public one.\\
 \end{itemize}
-
+An extended key is called \textbf{Extended Private Key} if the lasts 33 bytes are used to specify the private key; it is called \textbf{Extended Public Key} if they are used to specify the public key.
+\\ \\
+For the Bitcoin mainnet it is used for the \textbf{version}: $0x0488ADE4$ for an extended private key, $0x0488B21E$ for an extended public key. When this bytes are encoded in base58, they returns \textit{xprv} and \textit{xpub} respectively.
  
-\section{Functional explanation}
+\section{From SEED to Master Private Key}
+In this section we will see in detail how it is possible to switch from a \textit{seed} to a \textit{master private key}. \\ \\
+First of all we need to convert the seed into a string of bytes, where the most significant bytes come first (big endian). In order to do so, we need to know how much long we want the string of bytes. \\ \\
+Let's see a practical example:
+\begin{equation*}
+\begin{split}
+&byte\_string_1=00\; 00\; 00 \; 01 \\
+&byte\_string_2=00\; 00\; 01 \\
+&byte\_string_3=00\; 01 \\
+&byte\_string_4=01
+\end{split}
+\end{equation*}
+These $4$ byte strings are obtained from the same seed: $seed=1$ and the only different is the length of the string.
+\begin{remark}
+	Different length of string produce different master private key, even if the seed is the same number.
+\end{remark}
+In python:
+\begin{lstlisting}[language=Python]
+byte_string = seed.to_bytes(seed_bytes, 'big')
+\end{lstlisting}
+Where 
 
-\section{Code implementation}
+
+
+\begin{lstlisting}[language=Python]
+from hashlib import sha512
+from hmac import HMAC
+
+hashValue = HMAC(b"Bitcoin seed", seed.to_bytes(seed_bytes, 'big'), sha512).digest()
+p_bytes = hashValue[:32]
+p = int(p_bytes.hex(), 16) % order
+p_bytes = b'\x00' + p.to_bytes(32, 'big')
+chain_code = hashValue[32:]
+\end{lstlisting}
+
+\section{Child Key derivation}
