@@ -77,7 +77,18 @@ In python:
 \begin{lstlisting}[language=Python]
 byte_string = seed.to_bytes(seed_bytes, 'big')
 \end{lstlisting}
-Where 
+Where $seed$ is a \textit{int}, \textit{seed\_bytes} is the number of bytes that the \textit{byte\_string} should have. \\ \\
+It is essential to specify the length of the byte string, otherwise there will be obtained different wallets. \\ \\
+Once we obtain a string of bytes, we will compute the HMAC algorithm. The hash function used for HMAC is the SHA512 and the \textit{key} is a particular string of bytes: \textit{b"Bitcoin seed"}. In python the implementation is the follow:
+
+\begin{lstlisting}[language=Python]
+from hashlib import sha512
+from hmac import HMAC
+
+hashValue = HMAC(b"Bitcoin seed", byte_string, sha512).digest()
+\end{lstlisting}
+Where \textit{.digest()} is used in order to return a string of bytes.
+
 
 
 

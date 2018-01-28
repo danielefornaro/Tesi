@@ -34,24 +34,24 @@
 \contentsline {subsection}{\numberline {3.1.1}Seed}{13}{subsection.68}
 \contentsline {subsection}{\numberline {3.1.2}Extended Key}{13}{subsection.69}
 \contentsline {section}{\numberline {3.2}From SEED to Master Private Key}{14}{section.70}
-\contentsline {section}{\numberline {3.3}Child Key derivation}{15}{section.83}
-\contentsline {chapter}{\numberline {4}Child Key Derivation}{17}{chapter.84}
-\contentsline {section}{\numberline {4.1}Functional explanation}{17}{section.85}
-\contentsline {section}{\numberline {4.2}Normal derivation}{17}{section.86}
-\contentsline {subsection}{\numberline {4.2.1}Derive public child from public parent}{17}{subsection.87}
-\contentsline {subsection}{\numberline {4.2.2}Possible Risk}{17}{subsection.88}
-\contentsline {section}{\numberline {4.3}Hardened derivation}{17}{section.89}
-\contentsline {chapter}{\numberline {5}Mnemonic to Seed}{19}{chapter.90}
-\contentsline {section}{\numberline {5.1}Functional explanation}{19}{section.91}
-\contentsline {section}{\numberline {5.2}BIP 39 derivation}{19}{section.92}
-\contentsline {subsection}{\numberline {5.2.1}Mnemonic generation}{19}{subsection.93}
-\contentsline {subsection}{\numberline {5.2.2}Seed derivation}{19}{subsection.94}
-\contentsline {section}{\numberline {5.3}Electrum derivation}{19}{section.95}
-\contentsline {subsection}{\numberline {5.3.1}Mnemonic generation}{19}{subsection.96}
-\contentsline {subsection}{\numberline {5.3.2}Seed derivation}{19}{subsection.97}
-\contentsline {section}{\numberline {5.4}BIP39 vs Electrum derivation}{19}{section.98}
-\contentsline {chapter}{\numberline {6}How to use a HD Wallet}{21}{chapter.99}
-\contentsline {section}{\numberline {6.1}Multi-coin wallet BIP 44}{21}{section.100}
-\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{23}{appendix.101}
-\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{23}{section.102}
-\contentsline {chapter}{Bibliography}{25}{appendix*.103}
+\contentsline {section}{\numberline {3.3}Child Key derivation}{15}{section.88}
+\contentsline {chapter}{\numberline {4}Child Key Derivation}{17}{chapter.89}
+\contentsline {section}{\numberline {4.1}Functional explanation}{17}{section.90}
+\contentsline {section}{\numberline {4.2}Normal derivation}{17}{section.91}
+\contentsline {subsection}{\numberline {4.2.1}Derive public child from public parent}{17}{subsection.92}
+\contentsline {subsection}{\numberline {4.2.2}Possible Risk}{17}{subsection.93}
+\contentsline {section}{\numberline {4.3}Hardened derivation}{17}{section.94}
+\contentsline {chapter}{\numberline {5}Mnemonic to Seed}{19}{chapter.95}
+\contentsline {section}{\numberline {5.1}Functional explanation}{19}{section.96}
+\contentsline {section}{\numberline {5.2}BIP 39 derivation}{19}{section.97}
+\contentsline {subsection}{\numberline {5.2.1}Mnemonic generation}{19}{subsection.98}
+\contentsline {subsection}{\numberline {5.2.2}Seed derivation}{19}{subsection.99}
+\contentsline {section}{\numberline {5.3}Electrum derivation}{19}{section.100}
+\contentsline {subsection}{\numberline {5.3.1}Mnemonic generation}{19}{subsection.101}
+\contentsline {subsection}{\numberline {5.3.2}Seed derivation}{19}{subsection.102}
+\contentsline {section}{\numberline {5.4}BIP39 vs Electrum derivation}{19}{section.103}
+\contentsline {chapter}{\numberline {6}How to use a HD Wallet}{21}{chapter.104}
+\contentsline {section}{\numberline {6.1}Multi-coin wallet BIP 44}{21}{section.105}
+\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{23}{appendix.106}
+\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{23}{section.107}
+\contentsline {chapter}{Bibliography}{25}{appendix*.108}
