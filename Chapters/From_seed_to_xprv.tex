@@ -88,19 +88,62 @@ from hmac import HMAC
 hashValue = HMAC(b"Bitcoin seed", byte_string, sha512).digest()
 \end{lstlisting}
 Where \textit{.digest()} is used in order to return a string of bytes.
-
-
-
+\\ \\
+Now we have obtained an \textit{hashValue} of $512$ bits, so $64$ bytes. Consider the firsts $32$ bytes as the master private key and the next $32$ bytes as the master chain code. A python implementation is the follow:
 
 \begin{lstlisting}[language=Python]
-from hashlib import sha512
-from hmac import HMAC
-
-hashValue = HMAC(b"Bitcoin seed", seed.to_bytes(seed_bytes, 'big'), sha512).digest()
-p_bytes = hashValue[:32]
-p = int(p_bytes.hex(), 16) % order
-p_bytes = b'\x00' + p.to_bytes(32, 'big')
-chain_code = hashValue[32:]
+private_key_bytes = hashValue[0:32]
+chain_code_bytes = hashValue[32:64]
 \end{lstlisting}
+\begin{flushleft}
+	Now we have two byte strings, one for the master private key and the other for the master chain code.
+\end{flushleft}
+It is important to remember that a private key must be in the range between $1$ and $order$, so the byte string for the private key should be converted in \textit{int} and then take the \textit{mod order}. In python we have:
 
-\section{Child Key derivation}
+\begin{lstlisting}[language=Python]
+private_key = int(private_key_bytes.hex(), 16) % order
+\end{lstlisting}
+\begin{flushleft}
+	Finally we will concatenate all the informations obtained in order to form a Master Extended Private Key (in bytes format):
+\end{flushleft}
+
+\begin{itemize}
+	\item vbytes = $b'\backslash x04\backslash x88\backslash xAD\backslash xE4'$
+	\item depth = $b'\backslash x00'$
+	\item fingerprint = $b'\backslash x00\backslash x00\backslash x00\backslash x00'$
+	\item index = $b'\backslash x00\backslash x00\backslash x00\backslash x00'$
+	\item chain code is the one previously computed
+	\item private key = $b'\backslash x00'$ $+$ private key in bytes format, previously computed.
+\end{itemize}
+Then the Master Extended Private Key is formed by concatenation:
+
+\begin{lstlisting}[language=Python]
+xkey = vbytes + depth + fingerprint + index + chain_code + key
+\end{lstlisting}
+\begin{flushleft}
+	In order to make it readable, a base58 encode is performed.
+\end{flushleft}
+This is an example of Master Extended Private Key: \\
+xprv9s21ZrQH143K3wEaiSJZ8jYCuZF1oJoXHiwFcx2WwXqQHD4ZLdyEAFZ22M4 BmQT82HRbWssLArj53YDQTj6vSN4iH6nTiSQ61C5CckxUtDq
+
+\begin{remark}
+	The SHA512 is an irreversible function, so it is infeasible to obtained the seed, knowing the Extended Key. (It is also useless because with the master key you can derive all the keys in the wallet).
+\end{remark}
+
+\section{Child Key normal derivation}
+From any extended private key it is possible to obtain different child keys.
+\\ \\
+First we need to extract the essential informations from the parent key:
+\begin{itemize}[label=$\star$]
+	\item Chain code
+	\item Private key
+\end{itemize}
+In order to do so, we need to decode the Extended key.
+\\ \\
+After that 
+
+
+
+
+
+
