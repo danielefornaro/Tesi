@@ -22,5 +22,9 @@
 *.mtc1
 *.out
 *.synctex.gz
+*.bib
+*.thm
+*.xml
+*.bib
 # for the beginning only the .tex file
 *.pdf
