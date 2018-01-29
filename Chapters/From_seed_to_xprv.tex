@@ -130,20 +130,64 @@ xprv9s21ZrQH143K3wEaiSJZ8jYCuZF1oJoXHiwFcx2WwXqQHD4ZLdyEAFZ22M4 BmQT82HRbWssLArj
 	The SHA512 is an irreversible function, so it is infeasible to obtained the seed, knowing the Extended Key. (It is also useless because with the master key you can derive all the keys in the wallet).
 \end{remark}
 
-\section{Child Key normal derivation}
-From any extended private key it is possible to obtain different child keys.
+\section{Child Key derivation}
+From any extended private key it is possible to obtain different child keys. There are two method used in order to do so:
+\begin{itemize}
+	\item Normal
+	\item Hardened
+\end{itemize}
+Both methods have some advantage and disadvantage that we will discuss later. For every situation it is essential to use the method that best fit.
 \\ \\
-First we need to extract the essential informations from the parent key:
+For both the method the derivation starts from a Extended Private Key. From this key some essential information are necessary:
 \begin{itemize}[label=$\star$]
 	\item Chain code
 	\item Private key
 \end{itemize}
-In order to do so, we need to decode the Extended key.
+It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any Extended Key there are 4 bytes used to specify the index of the child:
+\begin{equation*}
+	max \; index=(FF\;FF\;FF\;FF)_{16} = (4294967295)_{10}
+\end{equation*}
+In fact it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding Extended Key in the format described above.
+
+\section{Normal derivation}
+
+As already mentioned we need only 3 ingredient in order to derive a key. Let's see how we can combine them together in order to obtain a new key (and chain code). \\ \\
+First we need to compute the Parent Public Key $P$. This is obtained from the usual scalar multiplication of an EC point (the Generator $G$) with the Parent Private Key $p$:
+
+\begin{equation*}
+P=p\cdot G
+\end{equation*}
+Consider only the compress form of $P$ and convert this value into a byte string, obtaining 33 bytes.
 \\ \\
-After that we can see
+Concatenate this number 33 byte string to the 4 byte string representing the index number:
 
+\begin{equation*}
+msg = compressed \; public\;key \;|\; index
+\end{equation*}
+$msg$ is a string of $37$ bytes. \\ \\
+Apply the HMAC algorithm with the following input:
 
+\begin{itemize}[label=$\odot$]
+	\item \textbf{Hash function}: SHA512
+	\item \textbf{Key}: chain code
+	\item \textbf{Message}: $msg$
+\end{itemize}
+The Python code is the follow:
+\begin{lstlisting}[language=Python]
+from hmac import HMAC
+from hashlib import sha512
 
+msg=parent_key + index
+hashValue = HMAC(parent_chain_code, msg, sha512).digest()
+\end{lstlisting}
+\begin{flushleft}
+	The result is a string of 64 bytes: \textit{hashValue}.
+\end{flushleft}
+Split this string of bytes in two: the last 32 are the child chain code. Take the first 32 bytes, convert them into an integer number and sum it to the parent private key (mod \textit{order}), obtaining the child private key.\\ \\
+This is the python code:
 
-
-
+\begin{lstlisting}[language=Python]
+child_chain_code = hashValue[32:]
+p = int(hashValue[:32].hex(), 16)
+child_private_key = (p + parent_private_key) % order
+\end{lstlisting}
