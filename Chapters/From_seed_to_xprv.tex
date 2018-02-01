@@ -56,7 +56,11 @@ Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and 
 An extended key is called \textbf{Extended Private Key} if the lasts 33 bytes are used to specify the private key; it is called \textbf{Extended Public Key} if they are used to specify the public key.
 \\ \\
 For the Bitcoin mainnet it is used for the \textbf{version}: $0x0488ADE4$ for an extended private key, $0x0488B21E$ for an extended public key. When this bytes are encoded in base58, they returns \textit{xprv} and \textit{xpub} respectively.
- 
+
+\begin{remark}
+	Obviously it is possible to calculate the extended public key starting from the extended private key, but it is infeasible to do the opposite. The only difference between the two extended keys are the \textbf{key bytes} and the \textbf{version bytes}, all the others elements remain the same.
+\end{remark}
+
 \section{From SEED to Master Private Key}
 In this section we will see in detail how it is possible to switch from a \textit{seed} to a \textit{master private key}. \\ \\
 First of all we need to convert the seed into a string of bytes, where the most significant bytes come first (big endian). In order to do so, we need to know how much long we want the string of bytes. \\ \\
@@ -201,8 +205,8 @@ This is the python code:
 
 \begin{lstlisting}[language=Python]
 child_chain_code = hashValue[32:]
-p = int(hashValue[:32].hex(), 16)
-child_private_key = (p + parent_private_key) % order
+q = int(hashValue[:32].hex(), 16)
+child_private_key = (q + parent_private_key) % order
 \end{lstlisting}
 
 \begin{flushleft}
@@ -248,8 +252,8 @@ This is the python code:
 
 \begin{lstlisting}[language=Python]
 child_chain_code = hashValue[32:]
-p = int(hashValue[:32].hex(), 16)
-child_private_key = (p + parent_private_key) % order
+q = int(hashValue[:32].hex(), 16)
+child_private_key = (q + parent_private_key) % order
 \end{lstlisting}
 
 
@@ -263,3 +267,102 @@ child_private_key = (p + parent_private_key) % order
 	\caption{Hardened Derivation }
 	\label{fig:hardened_derivation}
 \end{figure}
+
+
+\section{Special derivation}
+Using a \textit{normal derivation} it is possible to derive the extended public key, starting only from the extended public key of the parent.
+
+\subsection{Public derivation}
+
+The only essential elements are the ones contained in the extended public key, in particular:
+
+\begin{itemize}
+	\item Public key $P_{parent}$
+	\item Chain code
+	\item Index
+\end{itemize}
+
+As shown for the normal derivation starting from the extended private key, we have all the input elements for the hash algorithm:
+\\ \\
+Concatenate the 33 byte string of the public key to the 4 byte string representing the index number:
+
+\begin{equation*}
+msg = compressed \; public\;key \;|\; index
+\end{equation*}
+$msg$ is a string of $37$ bytes. \\ \\
+Apply the HMAC algorithm with the following input:
+
+\begin{itemize}[label=$\odot$]
+	\item \textbf{Hash function}: SHA512
+	\item \textbf{Key}: chain code
+	\item \textbf{Message}: $msg$
+\end{itemize}
+The output of this function is the same of the normal derivation with the extended private key. The last 32 bytes formed as usual the child chain code, instead the first 32 bytes can be read as a special number: $q$. \\ \\
+Multiply the generator $G$ to the integer number $q$ and obtain $Q$, a point on the EC:
+\begin{equation*}
+Q=q\cdot G
+\end{equation*}
+Compute the sum between two point on the elliptic curve: $Q$ and $P_{parent}$, where $P_{parent}$ is the parent public key.
+\begin{equation*}
+Q+P_{parent}=P_{child}
+\end{equation*}
+Where $P_{child}$ is the child public key. Let's prove that the child public key obtained in this way $P_{child_2}$ is the same as that obtained starting from the private key, $P_{child_1}$:
+\\ \\
+Both the procedures start from $q$, number obtained from the first 32 bytes of the HMAC function. Let's call $p_{parent}$ the parent private key and $p_{child}$ the child private key.
+
+\begin{equation*} \label{eq2}
+\begin{split}
+P_{child_1} & = p_{child} \cdot G \\
+& = (q+p_{parent}) \cdot G \\
+& = (q \cdot G) + (p_{parent}\cdot G) \\
+& = Q + P_{parent} = P_{child_2}
+\end{split}
+\end{equation*}
+\begin{flushright}
+	\textit{cvd}
+\end{flushright}
+Graphically this derivation can be shown in figure \ref{fig:pubtopub}
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=15cm]{Figures/hardened_derivation.png} %cambiare immagine
+	\caption{Hardened Derivation }
+	\label{fig:pubtopub}
+\end{figure}
+
+\subsection{Weakness of Normal Derivation}
+As shown above the normal derivation present a great advantage, but also a weakness. It is possible to derive the \textbf{parent extended private key} knowing the \textbf{parent extended public key} and only one of the \textbf{child extended private key}.
+\\ \\
+The HMAC-SHA256 function has as input three elements: the parent chain code, the parent public key and the child index. The firsts two information can be taken from the parent extended public key, instead the child index can be taken from the child extended private key.
+
+\begin{equation*}
+msg = compressed \;parent\; public\;key \;|\;child\; index
+\end{equation*}
+Then apply the HMAC algorithm with the usual input:
+
+\begin{itemize}[label=$\odot$]
+	\item \textbf{Hash function}: SHA512
+	\item \textbf{Key}: parent chain code
+	\item \textbf{Message}: $msg$
+\end{itemize}
+Consider the first 32 bytes of the result of this function and consider it as an integer number, $q$.
+\\ \\
+Remembering that to get the child private key it is needed to compute a sum with the parent private key, it is possible to reverse the process. \\ \\
+Let's call $p_{child}$ and $p_{parent}$ the private keys of the child and the father respectively.
+\begin{equation}\label{eq3}
+\begin{split}
+p_{child} &= q+p_{parent} \qquad \mod (order) \\
+&\Downarrow \\
+p_{parent} &=p_{child}-q \qquad \mod (order)
+\end{split}
+\end{equation}
+The implication \ref{eq3} holds also with modular arithmetic.
+\\ \\
+So we have derived the private key of the parent. Graphically this derivation can be shown in figure \ref{fig:from_child_to_parent}
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=15cm]{Figures/hardened_derivation.png} %cambiare immagine
+	\caption{Hardened Derivation }
+	\label{fig:from_child_to_parent}
+\end{figure}
+
+ 
