@@ -365,4 +365,23 @@ So we have derived the private key of the parent. Graphically this derivation ca
 	\label{fig:from_child_to_parent}
 \end{figure}
 
- 
+
+
+\section{Advantages and disadvantages}
+We have seen that public-to-public operation is possible using the normal derivation. This is impossible with the hardened one: \\ \\
+The input of HMAC-SHA512 are different for the two derivation. If for the normal derivation is sufficient only the information in the public extended key, for the hardened derivation, the parent private key is needed. This makes impossible to obtain a public from a public, but also it makes impossible to derive the private key of the parent knowing the private key of the child and the public of the parent.
+\\ \\
+Knowing strengths and weaknesses of the two methods, it is advisable to use each of the two methods in the appropriate situations.
+
+\subsection{When use Normal Derivation?}
+Normal derivation should be used whenever all the child keys are collected in the same digital place and you should never give one key to someone else. As already mention a leak of a single private key can compromise the entire wallet.
+\\ \\
+However if all the child keys are used by the same person and you need to generate different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment but it is impossible to spend them as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all the UTXOs associated with that wallet.
+
+
+\subsection{When use Hardened Derivation?}
+Hardened derivation should be used whenever all the keys generated are used for different purpose and are maybe stored in different place. With this procedure it is possible to yield a branch of the tree to someone else in order to manage part of your money, without the risk to lose all the others keys in the wallet.
+\\ \\
+As a best practice it is always advisable to derive with the hardened method from the master. An hardened key should have both hardened or normal children, but from a normal child it is not reasonable to derive an hardened one, because it make no sense to decrease the security of the wallet at the last level.
+
+
