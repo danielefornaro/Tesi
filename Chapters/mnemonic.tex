@@ -1,0 +1,72 @@
+% Chapter 1
+
+\chapter{Mnemonic phrase} % Main chapter title
+
+\label{mnemonic} % For referencing the chapter elsewhere, use \ref{Chapter1}
+
+%----------------------------------------------------------------------------------------
+
+% Define some commands to keep the formatting separated from the content 
+%\newcommand{\keyword}[1]{\textbf{#1}}
+%\newcommand{\tabhead}[1]{\textbf{#1}}
+%\newcommand{\code}[1]{\texttt{#1}}
+%\newcommand{\file}[1]{\texttt{\bfseries#1}}
+%\newcommand{\option}[1]{\texttt{\itshape#1}}
+
+%----------------------------------------------------------------------------------------
+
+We have seen how it is possible to generate keys starting from a seed. But a seed is a long number, difficult to remember and not easy to write down on a paper. You may incur typos while transcribing it, and this can compromise the entire wallet.
+\begin{remark}
+	Mistyping a single digit in the seed produce completely different keys
+\end{remark}
+In order to work around this problem, some solution were implemented. Among them, the most widespread and used is the one described by BIP39, \textit{Bitcoin Improvement Proposal}. This is not the only one, in this chapter we will also see another solution proposed by Electrum, one of the most famous Bitcoin wallet.
+\\ \\
+Both these solutions used a \textit{Mnemonic phrase}, from which the seed is obtained. This sentence is designed to avoid typing errors while maintaining the same level of security and entropy.
+\begin{flushleft}
+	\textbf{What is a Mnemonic phrase?}
+\end{flushleft}
+A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that make up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid to insert into the dictionary two words with similar meaning or spelling.
+
+\section{BIP39}
+First we will see what is and how to generate a mnemonic phrase in the framework of BIP39 and then how it is possible to obtain a seed from it.
+
+\subsection{Mnemonic Generation}
+In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a die many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
+\\ \\
+Call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belongs to a given set:
+\begin{equation*}
+	ENT \in \{128,160,192,224,256\} =: entropy \; digits 
+\end{equation*}
+The reason for a given length for the entropy will be clear in a moment.
+\\ \\
+Write the entropy in bytes format, obtaining a string of $ENT/8$ length. Compute the SHA256 algorithm and consider only the first $ENT/32$ bits as a checksum. Finally add these bits to the bottom of the entropy, obtaining an integer number, called \textit{entropy\_checked}, expressed in binary format of length equal to: $ENT+ENT/32$.
+
+\begin{flushleft}
+	In python:
+\end{flushleft}
+
+\begin{lstlisting}[language=Python]
+from hashlib import sha256
+
+entropy_bytes = entropy.to_bytes(int(ENT/8), byteorder='big')
+checksum = sha256(entropy_bytes).digest()
+entropy_checked = entropy_bin + checksum_bin[:int(ENT/32)]
+\end{lstlisting}
+Where \textit{entropy\_bin} and \textit{checksum\_bin} are strings of bits that can be concatenated.
+\\ \\
+Now it is clear the reason for a constraint on the length of the entropy in input: 
+\begin{enumerate}[label=\roman*]
+	\item \textit{ENT} must be a dividend of 32
+	\item $ENT<128$ could be not secure enough.
+	\item $ENT>256$ is useless.
+\end{enumerate}
+The point (i) is due to the structure proposed by BIP39. It is only a convention to take the first $ENT/32$ bits as a checksum. However it is essential that the final length of the entropy plus the checksum must be a dividend of 11, from the moment that the dictionary is a set of $2^{11}$ words.
+\\ \\
+The point (ii) is just a suggestion because take less entropy could bring to a leak of security, from the moment that it will be easier for an attacker to guess your mnemonic phrase by trying out all the possible combinations. It is important to remember that adding even a single bit of entropy, doubles the difficulty of guessing it.
+
+
+
+
+
+
+
