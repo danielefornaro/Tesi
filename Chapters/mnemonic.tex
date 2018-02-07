@@ -31,11 +31,11 @@ A Mnemonic phrase is a set of words taken from a specific dictionary. Although t
 First we will see what is and how to generate a mnemonic phrase in the framework of BIP39 and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
-In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a die many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
+In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
 \\ \\
 Call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belongs to a given set:
 \begin{equation*}
-	ENT \in \{128,160,192,224,256\} =: entropy \; digits 
+	ENT \in \{128,160,192,224,256\}
 \end{equation*}
 The reason for a given length for the entropy will be clear in a moment.
 \\ \\
@@ -62,11 +62,53 @@ Now it is clear the reason for a constraint on the length of the entropy in inpu
 \end{enumerate}
 The point (i) is due to the structure proposed by BIP39. It is only a convention to take the first $ENT/32$ bits as a checksum. However it is essential that the final length of the entropy plus the checksum must be a dividend of 11, from the moment that the dictionary is a set of $2^{11}$ words.
 \\ \\
-The point (ii) is just a suggestion because take less entropy could bring to a leak of security, from the moment that it will be easier for an attacker to guess your mnemonic phrase by trying out all the possible combinations. It is important to remember that adding even a single bit of entropy, doubles the difficulty of guessing it.
+The point (ii) is just a suggestion because taking less entropy could bring to a leak of security. It will be easier for an attacker to guess your mnemonic phrase by trying out all the possible combinations if less words are involved. It is important to remember that adding even a single bit of entropy, doubles the difficulty of guessing it.
+\\ \\
+The point (iii) is another suggestion. A private key is a number smaller then $2^{256}$ therefore it would be useless to generate a seed starting from an entropy with more then 256 bits.
+\\ \\
+Thanks to constraint (i) we obtain that the length of \textit{entropy\_checked} is a dividend of 11:
+\begin{equation*}
+len(entropy\_checked)=ENT+\dfrac{ENT}{32}=\dfrac{33}{32}\cdot ENT=11\cdot \dfrac{3}{32}\cdot ENT
+\end{equation*}
+Consider \textit{entropy\_checked} as a string of bits and divide it in substring, each of 11 bits length, obtaining $(\frac{3}{32}\cdot ENT)$ strings of bits.
+\\ \\
+Each of these strings represents an integer number that can take values in the range between 0 and 2047, ie $2^{11}-1$. Associate each of these numbers with a word in the chosen dictionary, suppose to consider the English one sorted alphabetically. Write down all these words, separated by a space and obtain the Mnemonic Phrase.
+\\ \\
+An example of Mnemonic Phrase (24 words):
+\begin{center}
+	\textit{inherit antique flame enrich tell arena eternal floor equal invite swarm pioneer oak benefit giggle damage ship shoe kitten zone shock decline kiss subject}
+\end{center}
 
 
+\subsection{From Mnemonic to Seed}
+Once obtaining the Mnemonic phrase we need to derive the seed. In order to do so an hash function is used. So it will be infeasible to derive the Mnemonic phrase from the seed.
+\\ \\
+The function used is the PBKDF2 and it is used in order to avoid brute force attack, from the moment that the output has exactly the same length of a standard hash function, but it will take more times to calculate it from the moment that it will compute the same hash function many times.
+\\ \\
 
+It receives as input:
+\begin{itemize}[label=$\odot$]
+	\item \textbf{Password}: Mnemonic phrase
+	\item \textbf{Salt}: 'mnemonic' + passphrase
+	\item \textbf{Number of iterations}: 2048
+	\item \textbf{Digest-module}: SHA512
+	\item \textbf{Mac-module}: HMAC
+\end{itemize}
+Summing up it can be said that it calculates the same hash function (HMAC-SHA512) 2048 times.
+\\ \\
+In order to introduce more complexity in the seed computation a \textit{Salt} is introduced. If not specified the standard salt is simply the world 'mnemonic', otherwise it could be extended with an optional \textit{passphrase}.
+\\ \\
+Although it is true that a human being is a scarce source of randomness, the passphrase is usually chosen by the user. This is due to the fact that it has a different purpose to the mnemonic phrase. We will analyze some useful applications in the next chapter. 
+\begin{remark}
+	The randomness should be guaranteed by the input entropy used to generate the mnemonic phrase, not by the passphrase.
+\end{remark}
+The python code is the follow:
+\begin{lstlisting}[language=Python]
+from hashlib import sha512
+from pbkdf2 import PBKDF2
+import hmac
 
-
-
+seed = PBKDF2(mnemonic, 'mnemonic' + passphrase, iterations = 2048, macmodule = hmac, digestmodule = sha512).read(64)
+\end{lstlisting}
+Where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{passphrase} is chosen by the user
 
