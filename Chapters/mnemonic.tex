@@ -28,7 +28,7 @@ Both these solutions used a \textit{Mnemonic phrase}, from which the seed is obt
 A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that make up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid to insert into the dictionary two words with similar meaning or spelling.
 
 \section{BIP39}
-First we will see what is and how to generate a mnemonic phrase in the framework of BIP39 and then how it is possible to obtain a seed from it.
+First we will see how to generate a mnemonic phrase in the framework of BIP39 and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
 In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
@@ -111,4 +111,22 @@ import hmac
 seed = PBKDF2(mnemonic, 'mnemonic' + passphrase, iterations = 2048, macmodule = hmac, digestmodule = sha512).read(64)
 \end{lstlisting}
 Where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{passphrase} is chosen by the user
+
+\begin{remark}
+	With this procedure we always produce a seed of specific length: 512 bits. It will always be enough because every private key can take value from a smaller set of value (1 to \textit{order}).
+\end{remark}
+
+\section{Electrum Mnemonic}
+Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum.
+\\ \\
+The main difference is in the way that the mnemonic phrase is generated and the purpose of it. Electrum choses to assign a version to the seed in such a way that is possible to recognize the purpose of the key generated from it.
+
+\subsection{Mnemonic and Seed Generation}
+Whenever a new mnemonic phrase is required, Electrum starts from an given entropy, generated through a random function. Obviously it is possible to generate a valid mnemonic phrase with an entropy chosen by the user, if he is skeptical or doesn't want to relay on the reliability of the randomness of a random function.
+\\ \\
+To be consistent, call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} must be a multiple of 11. 
+
+
+
+
 
