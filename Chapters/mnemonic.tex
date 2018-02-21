@@ -74,9 +74,29 @@ Consider \textit{entropy\_checked} as a string of bits and divide it in substrin
 \\ \\
 Each of these strings represents an integer number that can take values in the range between 0 and 2047, ie $2^{11}-1$. Associate each of these numbers with a word in the chosen dictionary, suppose to consider the English one sorted alphabetically. Write down all these words, separated by a space and obtain the Mnemonic Phrase.
 \\ \\
-An example of Mnemonic Phrase (24 words):
+All these steps can be summarize with the follow scheme, ($ENT=128$):
+\begin{center} 
+	$ entropy_{16} = f012003974d093eda670121023cd03bb $ 
+	\\
+	$\Downarrow $
+	\\
+	$entropy_{2}= \underbrace{1111000000010010000000...0111011}_{\substack{SHA256\\ \Downarrow\\ \underbrace{0010}_{\substack{check \;sum}}\underbrace{010001000001001...}_{\substack{ignored}}} } $
+	\\
+	$ $
+	\\
+	$entropy\;checked = 11110000000 10010000000...0111011\; | \; 0010$
+	\\
+	$\Downarrow $
+	\\
+	$\underbrace{11110000000}_{\substack{1920 \\ \Downarrow\\ useless} }
+	\underbrace{10010000000}_{\substack{1152 \\ \Downarrow\\ mosquito}}
+	...
+	\underbrace{01110110010}_{\substack{946 \\ \Downarrow\\ iron}}
+	$
+\end{center}
+Obtaining a sequence of 12 words:
 \begin{center}
-	\textit{inherit antique flame enrich tell arena eternal floor equal invite swarm pioneer oak benefit giggle damage ship shoe kitten zone shock decline kiss subject}
+	\textit{useless mosquito atom trust ankle walnut oil across awake bunker domain iron}
 \end{center}
 
 
@@ -85,7 +105,6 @@ Once obtaining the Mnemonic phrase we need to derive the seed. In order to do so
 \\ \\
 The function used is the PBKDF2 and it is used in order to avoid brute force attack, from the moment that the output has exactly the same length of a standard hash function, but it will take more times to calculate it from the moment that it will compute the same hash function many times.
 \\ \\
-
 It receives as input:
 \begin{itemize}[label=$\odot$]
 	\item \textbf{Password}: Mnemonic phrase
@@ -117,16 +136,140 @@ Where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{p
 \end{remark}
 
 \section{Electrum Mnemonic}
-Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum.
+Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum\footnote{Electrum is a lightweight Bitcoin client, released on November 5, 2011}.
 \\ \\
-The main difference is in the way that the mnemonic phrase is generated and the purpose of it. Electrum choses to assign a version to the seed in such a way that is possible to recognize the purpose of the key generated from it.
+The main difference is in the way that the mnemonic phrase is generated and the purpose of it. Electrum chooses to assign a version to the seed in such a way that is possible to recognize the purpose of the keys and the way to generate them.
 
-\subsection{Mnemonic and Seed Generation}
-Whenever a new mnemonic phrase is required, Electrum starts from an given entropy, generated through a random function. Obviously it is possible to generate a valid mnemonic phrase with an entropy chosen by the user, if he is skeptical or doesn't want to relay on the reliability of the randomness of a random function.
+\subsection{Mnemonic Generation}
+Whenever a new mnemonic phrase is required, Electrum starts from an en entropy, generated through a random function. Obviously it is possible to generate a valid mnemonic phrase with an entropy chosen by the user, if he is skeptical or doesn't want to relay on the reliability of the randomness of random function.
 \\ \\
-To be consistent, call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} must be a multiple of 11. 
+To be consistent with the BIP39 section, consider the entropy as a large integer number and call \textit{ENT} the number of its binary digits. Then \textit{ENT} must be a multiple of 11 if the chosen dictionary is the same of BIP39. However the choice of dictionary is not binding.
+\\ \\
+The first important difference with BIP39 mnemonic is that the checksum is not performed on the entropy but on the Mnemonic phrase directly. In order to obtain a valid mnemonic phrase, the following instruction must be followed:
+\begin{enumerate}
+	\item Divide the \textit{entropy} in string of 11 bits each.
+	\item Associate each string with a word from the chosen dictionary of 2048 words.
+	\item Write down all these words, separated by a space and obtain a \textit{candidate} Mnemonic phrase
+	\item Compute a particular HASH function on the Mnemonic phrase previously obtained and verify that the first digits correspond to the digits of the chosen version of the seed:
+	\begin{itemize}
+		\item '0x01' for a standard type seed
+		\item '0x100' for a segwit type seed
+		\item '0x101' for a two-factor authenticated type seed
+	\end{itemize}
+	\item If the initial digits are different, increase entropy by one and then go back to point 1, otherwise you have obtained a valid mnemonic phrase.
+\end{enumerate}
+Point 5. has the simple effect of changing a single word of the mnemonic phrase and this will lead to a complete different HASH. Do this over and over again, until the first digits match the version digits required.
+\\ \\ 
+This procedure can be shown with the following python instruction:
+\begin{lstlisting}[language=Python]
+import binascii
+import hmac
+from hashlib import sha512
+
+def verify_mnemonic_electrum(mnemonic, version = "standard"):
+	x = hmac.new(b"Seed version", mnemonic.encode('utf8'), sha512).digest()
+	s = binascii.hexlify(x).decode('ascii')
+	if s[0:2] == '01':
+		return version == "standard"
+	elif s[0:3] == '100':
+		return version == "segwit"
+	elif s[0:3] == '101':
+		return version == "2FA"
+	else:
+		return False
+	return True
+
+def mnemonic_electrum(entropy, number_words, version, dictionary):	
+	is_verify = False
+	while not is_verify:
+		mnemonic = from_entropy_to_mnemonic(entropy, number_words, dictionary)
+		is_verify = verify_mnemonic_electrum(mnemonic, version)
+		if not is_verify:
+			entropy = entropy + 1
+		
+\end{lstlisting}
+
+Let's see and example: suppose to be looking for a standard type seed, starting with $ENT=132$
+
+\begin{center} 
+	$ entropy_{16} = ef938205cd78ab6d876398dcfd65dae32 $ 
+	\\
+	$\Downarrow $
+	\\
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	...
+	\underbrace{11000110010}_{\substack{1586 \\ \Downarrow\\ shock}}  $
+\end{center}
+Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue shock}
+
+\begin{center}
+	\textit{HASH}(Mnemonic) $= 3d5d23737859601eeabe32d1e1...$
+\end{center}
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO
+\begin{center}
+	$entropy_{16} = entropy_{16} + 1  = ef938205cd78ab6d876398dcfd65dae33$
+	\\
+	$\Downarrow $
+	\\
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	...
+	\underbrace{11000110011}_{\substack{1587 \\ \Downarrow\\ shoe}}  $
+\end{center}
+Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue shoe}
+
+\begin{center}
+	\textit{HASH}(Mnemonic) $= 2a3b2cf6a0506844a77baf8175...$
+\end{center}
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO
+\\ \\
+After other 443 attempts we obtain:
+\begin{center}
+	$entropy_{16} =ef938205cd78ab6d876398dcfd65dafee$
+	\\
+	$\Downarrow $
+	\\
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	...
+	\underbrace{11111101110}_{\substack{2030 \\ \Downarrow\\ worry}}  $
+\end{center}
+Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue worry}
+
+\begin{center}
+	\textit{HASH}(Mnemonic) $= 01d133fdcc54bd0da3d717173e0f82127...$
+\end{center}
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ YES
+\\ \\
+So we have finally found a valid Mnemonic phrase for the standard type seed.
 
 
+\subsection{From Mnemonic to Seed}
+Once obtaining the Mnemonic phrase the seed is derived in the same way described in BIP39, with only one exception:
+\\ \\
+The \textbf{Salt} used for the PBKDF2 function does not contain the word 'mnemonic', instead it contains the word 'electrum'. It is always concatenate with a \textit{passphrase}, chosen by the user.
+\\ \\
+The python code it is therefore the following:  
 
+\begin{lstlisting}[language=Python]
+from hashlib import sha512
+from pbkdf2 import PBKDF2
+import hmac
+
+seed = PBKDF2(mnemonic, 'electrum' + passphrase, iterations = 2048, macmodule = hmac, digestmodule = sha512).read(64)
+\end{lstlisting}
+
+
+\section{Comparison}
+Once described how to generate the Mnemonic phrase for each of the two principal proposals, let's analyse the advantages and disadvantages.
+\\ \\
+Both BIP39 and Electrum are secure from a so called \textit{brute force attack}, from the moment that the function PBKDF2 is used and so it is infeasible to guess a Mnemonic randomly generated by another user.
+\\ \\ 
+From a security point of view the two method are really similar, indeed both of them use the last part of the phrase as a "checksum", but in two different way. \\ 
+Indeed the first important differences is in the way that a Mnemonic phrase is considered valid. For BIP39, it is valid if and only if the checksum is correct. In order to  
 
 
