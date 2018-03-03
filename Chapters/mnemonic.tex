@@ -292,7 +292,14 @@ The first column represents the number of words in a mnemonic phrase, the second
 \\ \\ 
 Another difference is in the way that a phrase is consider valid. BIP39 used a checksum based on the input entropy. This means that the knowledge of the mnemonic phrase alone is not enough to know if it is valid or not. A fixed dictionary is always required. On the other side for Electrum it is useless the knowledge of the dictionary, because the validation is based directly on the HASH of the mnemonic phrase. Furthermore Electrum allows the use of any kind of dictionary and not only the standard ones.
 \\ \\
-The most important difference is the Electrum introduction of version type for the seed. While BIP39 only check if a mnemonic is valid, Electrum check the validity of phrase looking if it correspond to a specific version. Directly from the Mnemonic, with Electrum, it is possible to understand how to derive all the keys required and their purpose. On the other side, with BIP39, it is impossible to say \textit{a priori} the purpose of keys derived from that seed. To avoid this problem a new BIP was proposed: BIP43. It is described a way 
+The most important difference is the Electrum introduction of version type for the seed. While BIP39 only check if a mnemonic is valid, Electrum check the validity of phrase looking if it correspond to a specific version. Directly from the Mnemonic, with Electrum, it is possible to understand how to derive all the keys required and their purpose. On the other side, with BIP39, it is impossible to say \textit{a priori} the purpose of keys derived from that seed. 
+\\ \\
+To avoid this problem a new BIP was proposed: BIP43. In order to identify a particular purpose for a bunch of keys, a particular derivation scheme was used:
+\begin{equation*}
+m\; \;/\;\; purpose'\;\; /\;\; *
+\end{equation*}
+Changing the derivation path, will change also the purpose of the keys. For more information see the next chapter.
+
 
 
 
