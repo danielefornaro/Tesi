@@ -16,7 +16,7 @@
 %----------------------------------------------------------------------------------------
 As already mentioned there are various way to use a Hierarchical Deterministic Wallet. It is possible to use this sequence of keys also for a non-monetary purpose, outside the cryptocurrency world. In fact these keys are simple number and they can be used for every possible purpose. Here we will focus only on the cryptocurrency application, in particular Bitcoin.  
 \section{BIP 43}
-This BIP introduces a "Purpose Field" for use in Hierarchical deterministic wallets. The first child of the extended master private key specify the purpose of the entire branch.
+This BIP introduces a "Purpose Field" in the Hierarchical deterministic wallet. The first child of the extended master private key specify the purpose of the entire branch.
 \begin{equation*}
 m\; \;/\;\; purpose'\;\; /\;\; *
 \end{equation*}
@@ -68,7 +68,7 @@ The derivation scheme is the follow:
 \begin{equation*}
 m / 49' / coin\_type' / account' / change / address\_index
 \end{equation*}
-This scheme follow the logic of BIP44 and let the user the possibility to have a multi-coin wallet just by choosing a specific \textit{coin\_type}.
+The logic of BIP44 was followed and it let the user the possibility to have a multi-coin wallet just by choosing a specific \textit{coin\_type}.
 \\ \\
 \begin{remark}
 	In order to make SegWit a soft fork (backward compatible), a SegWit transaction is nested in a pay-to-script-hash, so the corresponding address must begin with '3'.	
