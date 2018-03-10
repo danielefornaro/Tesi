@@ -16,7 +16,7 @@
 %----------------------------------------------------------------------------------------
 
 In this chapter we will see how an HD wallet works.
-\\ \\
+
 \section{Elements}
 Let's focus on the main elements of the Wallet:
 \begin{itemize}[label=$\diamond$]
@@ -37,12 +37,12 @@ This is an example of seed expressed in hexadecimal format: \\
 \textit{seed}=fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999 \\ 693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542 
 
 \subsection{Extended Key}
-An Extended Key is a sequence of bytes, encoded in base58. It contains all the information necessary for the derivation. When the derivation is made for the first time from the seed, the extended key is called master key.\\ \\
+An Extended Key is a sequence of bytes, encoded in base58. It contains all the information necessary derive the keys. When the derivation is made for the first time from the seed, the extended key is called master key.\\ \\
 Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and order:
 \begin{itemize}[label=$\circledast$]
 	\item 4 bytes are used to specified the \textbf{version}.
 	\item 1 byte is used to specified the \textbf{depth} in the hierarchical tree: the extended key derived directly from the seed has $depth=0$, its first children have $depth=1$, grandchildren have $depth=2$ and so on.
-	\item 4 bytes are used for the \textbf{fingerprint}. It is a unique value that identify the parent. Compute the HASH160 function on the "parent" public key in a compressed form and then take the first 4 bytes, this is the fingerprint of the child:
+	\item 4 bytes are used for the \textbf{fingerprint}. It is a unique value that identify the parent. Compute the HASH160 function on the "parent" public key in a compressed form and then take the first 4 bytes:
 	\begin{equation*}
 	fingerprint=HASH160(\text{parent public key})[0:4]
 	\end{equation*}
@@ -50,8 +50,8 @@ Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and 
 	For the master key the fingerprint is formed by 4 zeros bytes: $fingerprint=0000000000$
 	\item 4 bytes are used to specified the \textbf{index} of the child. \\
 	For the master key the index is formed by 4 zeros bytes: $index=0000000000$
-	\item 32 bytes are used for the \textbf{chain code}. The chain code is used in order to introduce a sort of entropy in the children generation. We will see below how it works.
-	\item 33 bytes are used for the \textbf{key}. It can be \textit{private} or \textit{public}. \\ Public key is expressed in compact form, so the first byte is always $02$ or $03$. The first byte of the private key is always $00$ in order to distinguish the key from the public one.\\
+	\item 32 bytes are used for the \textbf{chain code}. The chain code is used in order to introduce entropy in the children generation. We will see below how it works.
+	\item 33 bytes are used for the \textbf{key}. It can be \textit{private} or \textit{public}. \\ Public key is expressed in compress form, so the first byte is always $02$ or $03$. The first byte of the private key is always $00$ in order to distinguish the key from the public one.\\
 \end{itemize}
 An extended key is called \textbf{Extended Private Key} if the lasts 33 bytes are used to specify the private key; it is called \textbf{Extended Public Key} if they are used to specify the public key.
 \\ \\
@@ -63,7 +63,7 @@ For the Bitcoin mainnet it is used for the \textbf{version}: $0x0488ADE4$ for an
 
 \section{From SEED to Master Private Key}
 In this section we will see in detail how it is possible to switch from a \textit{seed} to a \textit{master private key}. \\ \\
-First of all we need to convert the seed into a string of bytes, where the most significant bytes come first (big endian). In order to do so, we need to know how much long we want the string of bytes. \\ \\
+First of all we need to convert the seed into a string of bytes, where the most significant bytes come first (big endian). In order to do so, we need to know the length of the string of bytes. \\ \\
 Let's see a practical example:
 \begin{equation*}
 \begin{split}
@@ -81,7 +81,8 @@ In python:
 \begin{lstlisting}[language=Python]
 byte_string = seed.to_bytes(seed_bytes, 'big')
 \end{lstlisting}
-Where $seed$ is a \textit{int}, \textit{seed\_bytes} is the number of bytes that the \textit{byte\_string} should have. \\ \\
+Where $seed$ is an integer number, \textit{seed\_bytes} is the number of bytes that the \textit{byte\_string} should have. 
+\\ \\
 It is essential to specify the length of the byte string, otherwise there will be obtained different wallets. \\ \\
 Once we obtain a string of bytes, we will compute the HMAC algorithm. The hash function used for HMAC is the SHA512 and the \textit{key} is a particular string of bytes: \textit{b"Bitcoin seed"}. In python the implementation is the follow:
 
@@ -161,15 +162,14 @@ For both the method the derivation starts from a Extended Private Key. From this
 \end{itemize}
 It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any Extended Key there are 4 bytes used to specify the index of the child:
 \begin{equation*}
-	max \; index=(FF\;FF\;FF\;FF)_{16} = (4294967295)_{10}
+max \; index=(FF\;FF\;FF\;FF)_{16} = (4294967295)_{10}
 \end{equation*}
 In fact it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding Extended Key in the format described above.
 
 
 \subsection{Normal derivation}
 
-As already mentioned we need only 3 ingredient in order to derive a key. Let's see how we can combine them together in order to obtain a new key (and chain code). \\ \\
-First we need to compute the Parent Public Key $P$. This is obtained from the usual scalar multiplication of an EC point (the Generator $G$) with the Parent Private Key $p$:
+First we need to compute the Parent Public Key $P$. This is obtained from the usual scalar multiplication between a point on the EC (the Generator $G$) and the Parent Private Key $p$:
 
 \begin{equation*}
 P=p\cdot G
