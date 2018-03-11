@@ -113,9 +113,9 @@ headsepline, % Uncomment to get a line under the header
 \subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{\href{http://www.university.com}{Politecnico di Milano}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://department.university.com}{Department or School Name}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{\href{http://researchgroup.university.com}{Research Group Name}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
-\faculty{\href{http://faculty.university.com}{Faculty Name}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
+\department{\href{http://department.university.com}{Department of Mathematics}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+%\group{\href{http://researchgroup.university.com}{Department of Mathematics}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\faculty{\href{http://faculty.university.com}{Industrial and Information Engineering}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
 	\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -135,10 +135,11 @@ headsepline, % Uncomment to get a line under the header
 	
 	\begin{titlepage}
 		\begin{center}
-			
-			\vspace*{.06\textheight}
+			\includegraphics[width=3.5cm]{Logo_Politecnico_Milano} % University/department logo - uncomment to place it
+			\\
+			\vspace*{.03\textheight}
 			{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
-			\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+			\textsc{\Large Master Thesis}\\[0.5cm] % Thesis type
 			
 			\HRule \\[0.4cm] % Horizontal line
 			{\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
@@ -161,12 +162,13 @@ headsepline, % Uncomment to get a line under the header
 			
 			\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
 			\textit{in the}\\[0.4cm]
-			\groupname\\\deptname\\[2cm] % Research group name and department name
+			\facname\\\deptname\\[2cm] % Research group name and department name
 			
 			\vfill
 			
-			{\large \today}\\[4cm] % Date
-			%\includegraphics{Logo} % University/department logo - uncomment to place it
+			{\large 19 April 2018}\\[4cm] % Date
+			
+			%\includegraphics[width=2cm]{Logo_Politecnico_Milano} % University/department logo - uncomment to place it
 			
 			\vfill
 		\end{center}
@@ -176,25 +178,25 @@ headsepline, % Uncomment to get a line under the header
 	%	DECLARATION PAGE
 	%----------------------------------------------------------------------------------------
 	
-	\begin{declaration}
-		\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
-		\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
-		
-		\begin{itemize} 
-			\item This work was done wholly or mainly while in candidature for a research degree at this University.
-			\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
-			\item Where I have consulted the published work of others, this is always clearly attributed.
-			\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-			\item I have acknowledged all main sources of help.
-			\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
-		\end{itemize}
-		
-		\noindent Signed:\\
-		\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
-		
-		\noindent Date:\\
-		\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
-	\end{declaration}
+%	\begin{declaration}
+%	\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
+%	\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
+	
+%	\begin{itemize} 
+%		\item This work was done wholly or mainly while in candidature for a research degree at this University.
+%		\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+%		\item Where I have consulted the published work of others, this is always clearly attributed.
+%		\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+%		\item I have acknowledged all main sources of help.
+%		\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+%	\end{itemize}
+	
+%	\noindent Signed:\\
+%	\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
+	
+%	\noindent Date:\\
+%	\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
+%\end{declaration}
 	
 	\cleardoublepage
 	
@@ -204,9 +206,9 @@ headsepline, % Uncomment to get a line under the header
 	
 	\vspace*{0.2\textheight}
 	
-	\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+	\noindent\enquote{\itshape The Times 03/Jan/2009 Chancellor on brink of second bailout for banks}\bigbreak
 	
-	\hfill Dave Barry
+	\hfill Bitcoin Blockchain
 	
 	%----------------------------------------------------------------------------------------
 	%	ABSTRACT PAGE

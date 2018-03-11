@@ -5,40 +5,75 @@
 \label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
 
-In order to make it easy to store and recognise keys, some encods were designed.
+In order to make it easy to store and recognise keys, in the Bitcoin framework some encodes were designed.
 \\ \\
-A public key, a point in the EC, can be represented in two way: \textit{uncompressed} or \textit{compressed}.
-
-
-\section{Uncompressed public key}
-An uncompressed public key is rapresented in hexadecimal digits, and it is obtained simply concatenating the $x$ coordinate with the $y$ coordinate and adding $04$ at the beginning, for a total of $130$ hexadecimal digits. \\ \\
-Example of an uncompressed public key: \\
-0450863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B235 22CD470243453A299FA9E77237716103ABC11A1DF38855ED6F2EE187E9C582BA6
-
-
-\section{Compressed public key}
-A compressed public key is obtained simply taking the $x$ coordinate and adding $02$ at the begging if the $y$ coordinate is even, $03$ otherwise. \\
-This is due to the \textit{symmetry properties} of a point of the EC.
+In this appendix we will briefly described the possible ways to write down a public key, a private key and finally how it is possible to obtain a Bitcoin addresses (Pay-to-Public-Key-Hash).
 \\ \\
-Example of a public key compressed:\\
-0250863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B2352
+All the examples below will start from the follow private key (expressed in hexadecimal digits): \\
+2AFEED53F26EF06521E7E825F83CB36A4632791A070A782E353230EAE71EBDD3
 
 
-\section{WIF Private Key}
-WIF stands for wallet import format and is the standard way used to write down a private key.
+\section{Public Key}
+A public key is a point in the EC and can be represented in two way:
 \begin{itemize}
-	\item Add a version number ($80$ for Bitcoin) in front of the private key, in order to recognize quickly for what cryptocurrency that private key was used.
-	\item Add $01$ at the end of the private key if you want a WIF \textit{compressed}, none if you want a WIF \textit{uncompressed}. The difference between these two types is that from a \textit{compressed} private key a \textit{compressed} public key is expected and from a \textit{uncompressed} private key a \textit{uncompressed} public key is expected.
-	\item Addd a checksum at the end, obtained applying the SHA256 function twice to the string previously obtained, take the first 4 bytes (8 hexadecimal digits) and put them at the end of the string.
-	\item Compute the Base58Encode, obtaining a 52 digit string.
+	\item \textit{Uncompressed}
+	\item \textit{Compressed}
 \end{itemize}
-Example of private key WIF: \\ KwdMAjGmerYanjeui5SHS7JkmpZvVipYvB2LJGU1ZxJwYvP98617
+ Both these encodes contains the same information and it is possible to obtain one from the other and \textit{vice versa}. 
+
+\subsection{Uncompressed}
+An uncompressed public key is a string of hexadecimal digits, obtained by concatenation of the $x$ coordinate with the $y$ coordinate (64 hexadecimal digits both). It is added $04$ at the beginning of the string, obtaining a total of $130$ hexadecimal digits. \\ \\
+Example of an uncompressed public key: \\
+049B7D40BA6BD08C0D1C46048279947AFEA89E6BA5E0C08AEEEBC3472F38C792B
+72EC672B238AD98EECD29A2CD5F2465FEE3BB8205093CEBED8B94C8472FBA15E4
+
+
+\subsection{Compressed}
+An compressed public key is a string of hexadecimal digits, it is obtained taking the $x$ coordinate and adding $02$ at the begging if the $y$ coordinate is even, $03$ otherwise. Its length will be of $66$ hexadecimal digits.
+
+\begin{remark}
+	The symmetry property of the EC allow us to write down only the x coordinate. The y coordinate can be derived by the equation of the EC that give us 2 possible y. The choice between these will be made base on the first two digits on the compressed public key.
+\end{remark}
+Example of a public key compressed:\\
+029B7D40BA6BD08C0D1C46048279947AFEA89E6BA5E0C08AEEEBC3472F38C792B7
+
+
+\section{Private Key}
+A private key is an integer number and in the Bitcoin framework it is usually represented in a particular format: WIF (Wallet Import Format). 
+\\ \\
+In order to obtain a WIF Private Key the following procedure must be used:
+\begin{itemize}
+	\item Write down the private key in hexadecimal format. (64 digits).
+	\item Add two digits as a version number ($80$ for Bitcoin) in front of the private key. This is done in order to recognize the purpose of the key.
+	\item Add $01$ at the end of the private key if you want a WIF \textit{compressed}, none if you want a WIF \textit{uncompressed}. The difference between these two types is that from a \textit{compressed} private key a \textit{compressed} public key is expected to be derived and from a \textit{uncompressed} private key a \textit{uncompressed} public key is expected to be derived.
+	\item Add a checksum at the end, obtained applying the SHA256 function twice to the string previously obtained, take the first 4 bytes (8 hexadecimal digits) and put them at the end of the string.
+	\item Finally compute the Base58Encode, obtaining a string of 51 digits if \textit{uncompressed} or 52 digits if \textit{compressed}.
+\end{itemize}
+A private key WIF compressed will start with the \textit{K} or \textit{L}, instead a uncompressed one will start with 5.
+\\ \\
+Example of private key WIF compressed: \\ KxfHiqW7h3N2puewVnHWBN4ucmBzK2iupiSUEGKjx1UNT8vvLwvP
+\\ \\
+Example of the same private key shown above in WIF uncompressed: \\ 5J9DrMWFf5AJBQFwVGhSeEqTshNXCnhm96K1H9TT3VevM4iSudq
+
+\begin{remark}
+	The two types of WIF private key give the same information. The only difference is in the public key that is expected to be derived from it. 
+\end{remark}
 
 \section{Address}
-Among the Bitcoin transactions, one of the most used is a \textit{Pay-to-PubkeyHash}, meaning that in the transaction you will not write directly the public key, but the hash of that public key.
-\\
-The hash function used in this freamwork is the HASH160 function, applied to the \textit{compressed} public key. This is an irreversible procedure, so you cannot obtain the public key from the public key hash. \\ \\
-In order to obtain a valid Bitcoin address, it is needed to encode the \textit{PubkeyHash} in base58, adding first the version in front, the checksum at the end and then encode everything with Base58Encode, obtaining a 34 digit string. 
+Among the Bitcoin transactions, one of the most used is a \textit{Pay-to-Public-Key-Hash}, meaning that in the transaction you will not write directly the public key, but the hash of that public key.
 \\ \\
-Example of an Address: \\
-1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+The hash function used in this framework is the HASH160, applied to the \textit{compressed} public key. The result is a \textit{PubkeyHash} and from the moment that the HASH160 is an irreversible function, it is infeasible to obtain the public key starting from the \textit{PubkeyHash}. \\ \\
+In order to obtain a valid Bitcoin address, it is needed to encode the \textit{PubkeyHash} in base58:
+
+\begin{itemize}
+	\item Write down the \textit{PubkeyHash} (160 bits).
+	\item Add one byte as version ($00$ for Bitcoin) in front of the \textit{PubkeyHash}.
+	\item Add a checksum at the end, obtained applying the SHA256 function twice to the string previously obtained, take the first 4 bytes and put them at the end of the string.
+	\item Finally compute the Base58Encode, obtaining a 34 digit string.
+\end{itemize}
+Example of an address: \\
+1DFvgrsFE6qVfgX83E35SbLdpjiSFffY2q
+
+\begin{remark}
+	This is not the only type of address in the Bitcoin framework, but it is the simplest one, derived directly from the public key. 
+\end{remark}
