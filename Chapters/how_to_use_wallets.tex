@@ -14,7 +14,39 @@
 %\newcommand{\option}[1]{\texttt{\itshape#1}}
 
 %----------------------------------------------------------------------------------------
-As already mentioned there are various way to use a Hierarchical Deterministic Wallet. It is possible to use this sequence of keys also for a non-monetary purpose, outside the cryptocurrency world. In fact these keys are simple number and they can be used for every possible purpose. Here we will focus only on the cryptocurrency application, in particular Bitcoin.  
+As already mentioned there are various way to use a Hierarchical Deterministic Wallet. It is possible to use this sequence of keys also for a non-monetary purpose, outside the cryptocurrency world. In fact these keys are simple number and they can be used for every possible purpose. Here we will focus only on the cryptocurrency application, in particular Bitcoin.
+
+\section{Derivation path}
+In order to easily recognize the path of a particular derivation, a common notion was introduced for the Hierarchical Deterministic Wallet.
+\\ \\
+Let's denote the extended master private key with \textit{m} and the extended master public key with \textit{M}.
+\\ \\
+The first normal private child derived from \textit{m} will be denoted by the number $0$:
+\begin{equation*}
+m /0
+\end{equation*}
+The fourth normal private child of the first normal private child of the master private key will use the follow notation:
+\begin{equation*}
+m /0/3
+\end{equation*}
+In order to indicate a hardened child, the number of the index is followed by an apostrophe. The first hardened child will have $index=2^{31}$, the second will have $index=2^{31}+1$ and so on, but for the nomenclature of the path, $2^{31}$ will be omitted and the first hardened child of the master key will be written in this way: 
+\begin{equation*}
+m /0' 
+\end{equation*}
+It is possible to mix hardened and normal derivation. For example the $15^{th}$ hardened child of the $37^{th}$ normal child of the $6^{th}$ normal child of the $1019^{th}$ hardened child of \textit{m} will be represented in the following way:
+\begin{equation*}
+m /1018'/5/36/14'
+\end{equation*}
+This nomenclature can be used also to represent extended public keys. In fact it is possible to derive, with the normal derivation, an extended public key from the parent extended public key. The notation will be the usual one: for example the third public key derived from the sixth public key derived from \textit{M} will be represented in this way:
+\begin{equation*}
+M /2/5
+\end{equation*}
+
+\begin{remark}
+It is useless to specify that children derived from M are normal and not hardened. It is impossible to use the hardened derivation to derive the public key from a parent public key.
+\end{remark}
+
+  
 \section{BIP 43}
 This BIP introduces a "Purpose Field" in the Hierarchical deterministic wallet. The first child of the extended master private key specify the purpose of the entire branch.
 \begin{equation*}

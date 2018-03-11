@@ -155,14 +155,14 @@ From any extended private key it is possible to obtain different child keys. The
 \end{itemize}
 Both methods have some advantage and disadvantage that we will discuss later. For every situation it is essential to use the method that best fit.
 \\ \\
-For both the method the derivation starts from a Extended Private Key. From this key some essential information are necessary:
+For both the method the derivation starts from an extended private key. From this key some essential information are necessary:
 \begin{itemize}[label=$\star$]
 	\item Chain code
 	\item Private key
 \end{itemize}
 It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any Extended Key there are 4 bytes used to specify the index of the child:
 \begin{equation*}
-max \; index=(FF\;FF\;FF\;FF)_{16} = (4294967295)_{10}
+max \; index=(FF\;FF\;FF\;FF)_{base \; 16} = 2^{32} = 4294967295
 \end{equation*}
 In fact it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding Extended Key in the format described above.
 
@@ -225,6 +225,9 @@ child_private_key = (q + parent_private_key) % order
 This method is similar to the previous one, the only difference is that as input of the \textit{hash} function the private key is used instead of the public one. \\ \\
 Concatenate the 33 bytes of parent private key, considering also the $00$ byte, with the 4 byte string representing the index number:
 
+\begin{remark}
+In order to better distinguish the hardened derivation from the normal one, the numbering of the indices starts from the number $2^{31}.$
+\end{remark} 
 \begin{equation*}
 msg = 00 \;|\; private\;key \;|\; index
 \end{equation*}
@@ -274,22 +277,20 @@ Using a \textit{normal derivation} it is possible to derive the extended public 
 
 \subsection{Public derivation}
 
-The only essential elements are the ones contained in the extended public key, in particular:
+In order to compute this particular derivation, the only essential elements are the ones contained in the extended public key, in particular:
 
 \begin{itemize}
 	\item Public key $P_{parent}$
 	\item Chain code
 	\item Index
 \end{itemize}
-
-As shown for the normal derivation starting from the extended private key, we have all the input elements for the hash algorithm:
+First apply the HMAC algorithm to the same input used for the normal derivation:
 \\ \\
 Concatenate the 33 byte string of the public key to the 4 byte string representing the index number:
 
 \begin{equation*}
 msg = compressed \; public\;key \;|\; index
 \end{equation*}
-$msg$ is a string of $37$ bytes. \\ \\
 Apply the HMAC algorithm with the following input:
 
 \begin{itemize}[label=$\odot$]
@@ -297,7 +298,7 @@ Apply the HMAC algorithm with the following input:
 	\item \textbf{Key}: chain code
 	\item \textbf{Message}: $msg$
 \end{itemize}
-The output of this function is the same of the normal derivation with the extended private key. The last 32 bytes formed as usual the child chain code, instead the first 32 bytes can be read as a special number: $q$. \\ \\
+The output of this function is the same of the normal derivation with the extended private key. The last 32 bytes formed the child chain code, instead the first 32 bytes can be read as a special number: $q$. \\ \\
 Multiply the generator $G$ to the integer number $q$ and obtain $Q$, a point on the EC:
 \begin{equation*}
 Q=q\cdot G
@@ -306,7 +307,9 @@ Compute the sum between two point on the elliptic curve: $Q$ and $P_{parent}$, w
 \begin{equation*}
 Q+P_{parent}=P_{child}
 \end{equation*}
-Where $P_{child}$ is the child public key. Let's prove that the child public key obtained in this way $P_{child_2}$ is the same as that obtained starting from the private key, $P_{child_1}$:
+Where $P_{child}$ is the child public key. 
+\\ \\
+We will now prove that the child public key obtained in this way $P_{child_2}$ is the same as that obtained starting from the private key, $P_{child_1}$:
 \\ \\
 Both the procedures start from $q$, number obtained from the first 32 bytes of the HMAC function. Let's call $p_{parent}$ the parent private key and $p_{child}$ the child private key.
 
@@ -376,12 +379,12 @@ Knowing strengths and weaknesses of the two methods, it is advisable to use each
 \subsection{When use Normal Derivation?}
 Normal derivation should be used whenever all the child keys are collected in the same digital place and you should never give one key to someone else. As already mention a leak of a single private key can compromise the entire wallet.
 \\ \\
-However if all the child keys are used by the same person and you need to generate different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment but it is impossible to spend them as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all the UTXOs associated with that wallet.
+However if all the child keys are used by the same person and you need to generate different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment to yours public keys, but it is impossible to spend those coins as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all the UTXOs associated with that wallet.
 
 
 \subsection{When use Hardened Derivation?}
-Hardened derivation should be used whenever all the keys generated are used for different purpose and are maybe stored in different place. With this procedure it is possible to yield a branch of the tree to someone else in order to manage part of your money, without the risk to lose all the others keys in the wallet.
+Hardened derivation should be used whenever all the keys generated are used for different purpose or are stored in different places. With this procedure it is possible to yield a branch of the tree to someone else in order to manage part of your money, without the risk to lose all the others keys in the wallet.
 \\ \\
-As a best practice it is always advisable to derive with the hardened method from the master. An hardened key should have both hardened or normal children, but from a normal child it is not reasonable to derive an hardened one, because it make no sense to decrease the security of the wallet at the last level.
+As a best practice it is always advisable to derive with the hardened method from the master. An hardened key should have both hardened or normal children, but from a normal child it is not reasonable to derive an hardened one, because it make no sense to increase the security of the wallet at the last level.
 
 
