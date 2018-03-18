@@ -55,6 +55,8 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{color}
+%\usepackage{natbib}
+
 \usepackage{ntheorem}
 \newtheorem*{remark}{Remark}
 \newtheorem*{definition}{Definition}
@@ -297,6 +299,7 @@ headsepline, % Uncomment to get a line under the header
 	% Uncomment the lines as you write the chapters
 	
 	%\include{Chapters/Chapter1}
+	\include{Chapters/Introduction}
 	\include{Chapters/elliptic_curve_geometry}
 	\include{Chapters/Wallet}
 	\include{Chapters/From_seed_to_xprv}
@@ -319,6 +322,51 @@ headsepline, % Uncomment to get a line under the header
 	%----------------------------------------------------------------------------------------
 	%	BIBLIOGRAPHY
 	%----------------------------------------------------------------------------------------
+	
+	\begin{thebibliography}{9}
+		\bibitem{1} 
+		BIP32, Bitcoin Improvement Proposal number 32 \\
+		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki} 
+		
+		\bibitem{2} 
+		BIP39, Bitcoin Improvement Proposal number 39 \\
+		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki} 
+		
+		
+		\bibitem{3} 
+		Electrum Bitcoin Wallet \\
+		\texttt{https://electrum.org}
+		
+		\bibitem{4} 
+		BIP43, Bitcoin Improvement Proposal number 43 \\
+		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki}
+		
+		\bibitem{5} 
+		BIP44, Bitcoin Improvement Proposal number 44 \\
+		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki}
+		
+		\bibitem{6} 
+		BIP49, Bitcoin Improvement Proposal number 49 \\
+		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki}
+		
+		\bibitem{prova5} 
+		Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
+		\textit{The \LaTeX\ Companion}. 
+		Addison-Wesley, Reading, Massachusetts, 1993.
+		
+		\bibitem{prova2} 
+		Albert Einstein. 
+		\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
+		[\textit{On the electrodynamics of moving bodies}]. 
+		Annalen der Physik, 322(10):891–921, 1905.
+		
+		\bibitem{prova3} 
+		Knuth: Computers and Typesetting,
+		\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
+	\end{thebibliography}
+
+%\bibliographystyle{unsrt}
+%\bibliography{bibliography}
 	
 	\printbibliography[heading=bibintoc]
 	
