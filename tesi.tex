@@ -106,7 +106,7 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \thesistitle{Elliptic Curve Hierarchical Deterministic Private Key Sequences: Bitcoin Standards and Best Practices} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Daniele \textsc{Marazzina}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\supervisor{Prof. Daniele \textsc{Marazzina}\\Prof. Ferdinando M. \textsc{Ametrano} } % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Mathematical Engeneering} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
 \author{Daniele \textsc{Fornaro}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
@@ -114,10 +114,10 @@ headsepline, % Uncomment to get a line under the header
 
 \subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
-\university{\href{http://www.university.com}{Politecnico di Milano}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://department.university.com}{Department of Mathematics}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\university{\href{https://www.polimi.it}{Politecnico di Milano}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
+\department{\href{https://www.mate.polimi.it}{Department of Mathematics}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 %\group{\href{http://researchgroup.university.com}{Department of Mathematics}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
-\faculty{\href{http://faculty.university.com}{Industrial and Information Engineering}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
+\faculty{\href{http://www.ingindinf.polimi.it}{Industrial and Information Engineering}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
 	\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -147,16 +147,16 @@ headsepline, % Uncomment to get a line under the header
 			{\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
 			\HRule \\[1.5cm] % Horizontal line
 			
-			\begin{minipage}[t]{0.4\textwidth}
+			\begin{minipage}[t]{0.35\textwidth}
 				\begin{flushleft} \large
 					\emph{Author:}\\
-					\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
+					\href{}{\authorname} % Author name - remove the \href bracket to remove the link
 				\end{flushleft}
 			\end{minipage}
-			\begin{minipage}[t]{0.4\textwidth}
+			\begin{minipage}[t]{0.45\textwidth}
 				\begin{flushright} \large
-					\emph{Supervisor:} \\
-					\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
+					\emph{Supervisors:} \\
+					\href{}{\supname} % Supervisor name - remove the \href bracket to remove the link  
 				\end{flushright}
 			\end{minipage}\\[3cm]
 			
@@ -234,7 +234,10 @@ headsepline, % Uncomment to get a line under the header
 	%----------------------------------------------------------------------------------------
 	%	LIST OF CONTENTS/FIGURES/TABLES PAGES
 	%----------------------------------------------------------------------------------------
-	
+	\hypersetup{%
+		colorlinks = true,
+		linkcolor  = black
+	}
 	\tableofcontents % Prints the main table of contents
 	
 	%	\listoffigures % Prints the list of figures
@@ -305,6 +308,7 @@ headsepline, % Uncomment to get a line under the header
 	\include{Chapters/From_seed_to_xprv}
 	\include{Chapters/mnemonic}
 	\include{Chapters/how_to_use_wallets}
+	\include{Chapters/Conclusion}
 	
 	%----------------------------------------------------------------------------------------
 	%	THESIS CONTENT - APPENDICES
@@ -326,28 +330,28 @@ headsepline, % Uncomment to get a line under the header
 	\begin{thebibliography}{9}
 		\bibitem{1} 
 		BIP32, Bitcoin Improvement Proposal number 32 \\
-		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki} 
+		\href{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki}{\texttt{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki}}
 		
 		\bibitem{2} 
 		BIP39, Bitcoin Improvement Proposal number 39 \\
-		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki} 
+		\href{https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki}{\texttt{https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki}}
 		
 		
 		\bibitem{3} 
 		Electrum Bitcoin Wallet \\
-		\texttt{https://electrum.org}
+		\href{https://electrum.org}{\texttt{https://electrum.org}}
 		
 		\bibitem{4} 
 		BIP43, Bitcoin Improvement Proposal number 43 \\
-		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki}
-		
+		\href{https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki}{\texttt{https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki}}
+
 		\bibitem{5} 
 		BIP44, Bitcoin Improvement Proposal number 44 \\
-		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki}
+		\href{https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki}{\texttt{https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki}}
 		
 		\bibitem{6} 
 		BIP49, Bitcoin Improvement Proposal number 49 \\
-		\texttt{https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki}
+		\href{https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki}{\texttt{https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki}}
 		
 		\bibitem{prova5} 
 		Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
