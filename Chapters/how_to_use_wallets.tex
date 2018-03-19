@@ -2,7 +2,7 @@
 
 \chapter{How to use a HD Wallet} % Main chapter title
 
-\label{bip32} % For referencing the chapter elsewhere, use \ref{Chapter1}
+\label{howto} % For referencing the chapter elsewhere, use \ref{Chapter1}
 
 %----------------------------------------------------------------------------------------
 
@@ -52,14 +52,14 @@ It is useless to specify that children derived from M are normal and not hardene
 
   
 \section{BIP 43}
-This BIP introduces a "Purpose Field" in the Hierarchical deterministic wallet. The first child of the extended master private key specify the purpose of the entire branch.
+This BIP introduces a "Purpose Field" in the Hierarchical deterministic wallet [\cite{4}]. The first child of the extended master private key specify the purpose of the entire branch.
 \begin{equation*}
 m\; \;/\;\; purpose'\;\; /\;\; *
 \end{equation*}
 For example if $purpose=44$ it means that this is a multi coin wallet, if $purpose=49$ it means that the keys generated follow the BIP49 specification (P2WPKH nested in P2SH).
 
 \subsection{Multi-coin wallet BIP 44}
-The derivation scheme for a Multi-coin wallet should be the follow:
+The derivation scheme for a Multi-coin wallet [\cite{5}] should be the follow:
 \begin{equation*}
 m / purpose' / coin\_type' / account' / change / address\_index
 \end{equation*}
@@ -100,7 +100,7 @@ The principal advantage of this BIP is the possibility to easily back up all the
 \subsection{SegWit addresses BIP 49}
 From August 2017 a new way to sign a Bitcoin transaction has been allowed, Segregated Witness: SegWit. It is not the purpose of this thesis to look inside of this topic, but it is important to say that a software not updated is not able to spend coins received in this format. So it is necessary to have a different branch in the derivation scheme just for SegWit addresses, in such a way that only software aware of SegWit are able to spend thus coins.
 \\ \\
-The derivation scheme is the follow:
+The derivation scheme introduced by BIP49 [\cite{6}] is the follow:
 \begin{equation*}
 m / 49' / coin\_type' / account' / change / address\_index
 \end{equation*}
