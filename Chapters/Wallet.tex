@@ -21,8 +21,8 @@ The way used to store keys is essential in private-public keys cryptography. For
 \end{definition}
 There are different type of wallet:
 \begin{itemize}
-	\item Nondeterministic (\textit{random}) Wallet
-	\item Deterministic Wallet
+	\item Nondeterministic (\textit{random}) Wallet.
+	\item Deterministic Wallet.
 \end{itemize}
 
 \begin{remark}
@@ -35,12 +35,12 @@ A nondeterministic wallet is the simplest type of wallet. Each key is randomly a
 \begin{enumerate}[label=(\roman*)]
 	\item Consider a \textit{Discrete Uniform Random Variable}
 	\begin{equation*}
-	X\sim \mathcal{U}(S)
+	X\sim \mathcal{U}(S),
 	\end{equation*}
-	Where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	where $S$ is the finite set of natural number in the range from $1$ to $order$.
 	\item Take some realizations $k_1,k_2...k_n$ of $X$ using enough entropy to make these numbers (\textit{private keys}) impossible to guess.
 	\begin{equation*}
-	k_1=X(\omega_1) \quad  k_2=X(\omega_2) \quad ... \quad k_n=X(\omega_n)
+	k_1=X(\omega_1), \quad  k_2=X(\omega_2), \quad ... \quad k_n=X(\omega_n).
 	\end{equation*}
 	\item Go back to point (i) every time new \textit{private keys} are needed.
 \end{enumerate}
@@ -77,11 +77,11 @@ The use of \textit{random wallet} is strongly discouraged for anything other tha
 A deterministic wallet is a more sophisticated one, in which every key is generated from a common "\textit{seed}". This means that knowing the \textit{seed} leads to know also all the keys in the wallet.\\ \\
 There are different types of deterministic wallets, in this text we will analyze three main types:
 \begin{itemize}
-	\item Deterministic Wallet \textit{type 1}
-	\item Deterministic Wallet \textit{type 2}
-	\item Deterministic Wallet \textit{type 3}
+	\item Deterministic Wallet \textit{type 1}.
+	\item Deterministic Wallet \textit{type 2}.
+	\item Deterministic Wallet \textit{type 3}.
 \end{itemize}
-These wallet are in increasing order of complexity.
+These wallets are in increasing order of complexity.
 
 \subsection{Deterministic Wallet \textit{type-1}}
 The Deterministic Wallet \textit{type-1} is one of the simplest wallet among the deterministic ones. Each key is generated adding a number in a sequential order to the \textit{seed} and then computing an \textit{hash} function, the \textbf{SHA256} function.
@@ -91,12 +91,12 @@ Let's see how to generate the $n^{th}$ private key:
 \begin{enumerate}[label=(\roman*)]
 	\item Generate a \textit{seed} (only once), a random number from a \textit{Discrete Uniform Random Variable}
 	\begin{equation*}
-	seed=X(\omega) \qquad X\sim \mathcal{U}(S)
+	seed=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
-	Where $S$ is the finite set of natural number in the range from $1$ to $order$.
-	\item Consider the numbers $seed$ and $n$ as strings and concatenate $n$ to $seed$, obtaining a $value$
+	where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	\item Consider the numbers $seed$ and $n$ as strings and concatenate $n$ to $seed$, obtaining a $value$:
 	\begin{equation*}
-	value=seed|n
+	value=seed|n.
 	\end{equation*}
 	\item Compute the SHA256 function to $value$ and obtain the $n^{th}$ \textit{private key}.
 	\item Go back to point (ii) every time new \textit{private keys} are needed with $n=n+1$. 
@@ -138,49 +138,49 @@ First let's introduce the necessary ingredients:
 \begin{itemize}[label=$\diamond$]
 	\item \textbf{Master private key} ($mp$): a random number, generated from a \textit{Discrete Uniform Random Variable}
 	\begin{equation*}
-	mp=X(\omega) \qquad X\sim \mathcal{U}(S)
+	mp=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
-	Where $S$ is the finite set of natural number in the range from $1$ to $order$. \\ The master private key must be take \underline{secret}.
+	where $S$ is the finite set of natural number in the range from $1$ to $order$. \\ The master private key must be taken \underline{secret}.
 	\item \textbf{Master public key} ($MP$): a point on the EC, obtained from the $mp$:
 	\begin{equation*}
-	MP=mp\cdot G
+	MP=mp\cdot G,
 	\end{equation*}
-	Where $G$ is the \textit{generator}.\\ This point can be consider \underline{non-secret}.
+	where $G$ is the \textit{generator}.\\ This point can be consider \underline{non-secret}.
 	\item \textbf{Public random number} ($r$): a random number, generated from a \textit{Discrete Uniform Random Variable}
 	\begin{equation*}
-	r=X(\omega) \qquad X\sim \mathcal{U}(S)
+	r=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
 	This number can be consider \underline{non-secret}.
 \end{itemize}
-Let's see how to generate the $n^{th}$ private key: $p_n$
+Let's see how to generate the $n^{th}$ private key: $p_n$.
 
 \begin{enumerate}[label=(\roman*)]
 	\item Compute the SHA256 function to the concatenation of $r$ with $n$, considered as string:
 	\begin{equation*}
-	h_{n|r}=SHA256 (n|r)
+	h_{n|r}=SHA256 (n|r),
 	\end{equation*}
-	$h_{n|r}$ can be consider \underline{non-secret}, from the moment that it is derived from non secret information.
+	where $h_{n|r}$ can be consider \underline{non-secret}, from the moment that it is derived from non secret information.
 	\item Compute the $n^{th}$ \textit{private key} adding $mp$ to $h_{n|r}$:
 	\begin{equation*}
-	p_n=mp+h_{n|r} \qquad \mod (order)
+	p_n=mp+h_{n|r} \qquad \mod (order).
 	\end{equation*}
 \end{enumerate}
 In order to obtain the corresponding \textit{public key} $P_n$, it is possible to compute the standard multiplication:
 \begin{equation*}
-P_n=p_n \cdot G
+P_n=p_n \cdot G.
 \end{equation*}
 It is also possible to compute $P_n$ without knowing $p_n$, using only non-secret information: $h_{n|r}$ and $MP$.
 \begin{enumerate}[label=(\roman*)]
 	\item Compute $V$:
 	\begin{equation*}
-	V=h_{n|r} \cdot G
+	V=h_{n|r} \cdot G,
 	\end{equation*}
-	$V$ can be see as the \textit{public key} of $h_{n|r}$ and can be consider \underline{non-secret}.
+	where $V$ can be see as the \textit{public key} of $h_{n|r}$ and can be consider \underline{non-secret}.
 	\item Add $MP$ to $V$:
 	\begin{equation*}
-	P_n=MP+V
+	P_n=MP+V,
 	\end{equation*}
-	Where the sum in this contest is the one defined between two point in the EC.
+	where the sum in this contest is the one defined between two point in the EC.
 \end{enumerate}
 It is easy to prove that $P_n$ can be computed in these two way:
 \begin{equation*} \label{eq1}
@@ -188,7 +188,7 @@ It is easy to prove that $P_n$ can be computed in these two way:
 P_n & = p_n \cdot G \\
 & = (mp+h_{n|r}) \cdot G \\
 & = (mp \cdot G) + (h_{n|r}\cdot G) \\
-& = MP + V
+& = MP + V.
 \end{split}
 \end{equation*}
 
@@ -218,7 +218,7 @@ Let's focus on the good and bad aspects of this wallet.
 		\hline
 	\end{tabular}
 \end{center}
-The \textit{type-2 deterministic wallet} it is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses, obtained from the public keys, also in a non safe environment, having only $r$ and $MP$. 
+The \textit{type-2 deterministic wallet} is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses, obtained from the public keys, also in a non safe environment, having only $r$ and $MP$. 
 \\ \\
 A thief can only steal your privacy, if he steal only $MP$ and $r$. In fact he is able to see which messages (transaction) have you signed, without the possibility to sign new ones and spend your money.
 
@@ -230,15 +230,15 @@ Let's see roughly how this wallet works:
 \begin{enumerate}[label=(\roman*)]
 	\item Generate a \textit{seed}, a random number from a \textit{Discrete Uniform Random Variable}, unique for each wallet.
 	\begin{equation*}
-	seed=X(\omega) \qquad X\sim \mathcal{U}(S)
+	seed=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
-	Where $S$ is a finite set of natural number.
+	where $S$ is a finite set of natural number.
 	\item Generate a \textit{master private key} from the \textit{seed}, using a stretching function: PBKDF2.
 	\item From this \textit{master private key} it is possible to generate $2^{32}$ \textit{private key} using a irreversible hash function: SHA512
 	\item All of this \textit{private key} "children" can derive $2^{32}$ \textit{private key} and all of these "grandchildren" can derive as many.
 \end{enumerate}
 This procedure can produce a huge number of keys. They seem independent from an outside point of view: it is impossible to guess that two keys are derived from the same \textit{seed}.
 \\ \\ 
-This particular type of Wallet is commonly known as \textbf{Hierarchical Deterministic Wallet}, one of the most used and widespread.
+This particular type of Wallet is commonly known as \textbf{Hierarchical Deterministic Wallet} [\cite{1}], one of the most used and widespread.
 \\ \\
 In the next chapter we will see in detail how it works.

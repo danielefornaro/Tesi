@@ -7,7 +7,7 @@
 
 We have seen how it is possible to generate keys starting from a seed. But a seed is a long number, difficult to remember and not easy to write down on a paper. You may incur typos while transcribing it, and this can compromise the entire wallet.
 \begin{remark}
-	Mistyping a single digit in the seed produce completely different keys
+	Mistyping a single digit in the seed produce completely different keys.
 \end{remark}
 In order to work around this problem, some solution were implemented. Among them, the most widespread and used is the one described by BIP39, \textit{Bitcoin Improvement Proposal} number 39. This is not the only one, in this chapter we will also see another solution proposed by Electrum\footnote{Electrum is a lightweight Bitcoin client, released on November 5, 2011}, one of the most famous Bitcoin wallet.
 \\ \\
@@ -18,18 +18,18 @@ Both these solutions used a \textit{Mnemonic phrase}, from which the seed is obt
 A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that make up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid to insert into the dictionary two words with similar meaning or spelling.
 
 \section{BIP39}
-First we will see how to generate a mnemonic phrase in the framework of BIP39 and then how it is possible to obtain a seed from it.
+First we will see how to generate a mnemonic phrase in the framework of BIP39 [\cite{2}] and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
 In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
 \\ \\
-Call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belongs to a given set:
+Let us call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belong to a given set:
 \begin{equation*}
-	ENT \in \{128,160,192,224,256\}
+	ENT \in \{128,160,192,224,256\}.
 \end{equation*}
 The reason for a given length for the entropy will be clear in a moment.
 \\ \\
-Write the entropy in bytes format, obtaining a string of $ENT/8$ length. Compute the SHA256 algorithm and consider only the first $ENT/32$ bits as a checksum. Finally add these bits to the bottom of the entropy, obtaining an integer number, called \textit{entropy\_checked}, expressed in binary format of length equal to: $ENT+ENT/32$.
+Now we write the entropy in bytes format, obtaining a string of $ENT/8$ length. Then we compute the SHA256 algorithm and consider only the first $ENT/32$ bits as a checksum. Finally add these bits to the bottom of the entropy, obtaining an integer number, called \textit{entropy\_checked}, expressed in binary format of length equal to: $ENT+ENT/32$.
 
 \begin{flushleft}
 	In python:
@@ -42,12 +42,12 @@ entropy_bytes = entropy.to_bytes(int(ENT/8), byteorder='big')
 checksum = sha256(entropy_bytes).digest()
 entropy_checked = entropy_bin + checksum_bin[:int(ENT/32)]
 \end{lstlisting}
-Where \textit{entropy\_bin} and \textit{checksum\_bin} are strings of bits that can be concatenated.
+where \textit{entropy\_bin} and \textit{checksum\_bin} are strings of bits that can be concatenated.
 \\ \\
 Now it is clear the reason for a constraint on the length of the entropy in input: 
 \begin{enumerate}[label=\roman*]
-	\item \textit{ENT} must be a dividend of 32
-	\item $ENT<128$ could be not secure enough.
+	\item \textit{ENT} must be a dividend of 3,
+	\item $ENT<128$ could be not secure enough,
 	\item $ENT>256$ is useless.
 \end{enumerate}
 The point (i) is due to the structure proposed by BIP39. It is only a convention to take the first $ENT/32$ bits as a checksum. However it is essential that the final length of the entropy plus the checksum must be a dividend of 11, from the moment that the dictionary is a set of $2^{11}$ words.
@@ -58,9 +58,9 @@ The point (iii) is another suggestion. A private key is a number smaller then $2
 \\ \\
 Thanks to constraint (i) we obtain that the length of \textit{entropy\_checked} is a dividend of 11:
 \begin{equation*}
-len(entropy\_checked)=ENT+\dfrac{ENT}{32}=\dfrac{33}{32}\cdot ENT=11\cdot \dfrac{3}{32}\cdot ENT
+len(entropy\_checked)=ENT+\dfrac{ENT}{32}=\dfrac{33}{32}\cdot ENT=11\cdot \dfrac{3}{32}\cdot ENT,
 \end{equation*}
-Consider \textit{entropy\_checked} as a string of bits and divide it in substring, each of 11 bits length, obtaining $(\frac{3}{32}\cdot ENT)$ strings of bits.
+Let us consider \textit{entropy\_checked} as a string of bits and then we divide it in substring, each of 11 bits length, obtaining $(\frac{3}{32}\cdot ENT)$ strings of bits.
 \\ \\
 Each of these strings represents an integer number that can take values in the range between 0 and 2047, ie $2^{11}-1$. Associate each of these numbers with a word in the chosen dictionary, suppose to consider the English one sorted alphabetically. Write down all these words, separated by a space and obtain the Mnemonic Phrase.
 \\ \\
@@ -82,9 +82,9 @@ All these steps can be summarize with the follow scheme, ($ENT=128$):
 	\underbrace{10010000000}_{\substack{1152 \\ \Downarrow\\ mosquito}}
 	...
 	\underbrace{01110110010}_{\substack{946 \\ \Downarrow\\ iron}}
-	$
+	$,
 \end{center}
-Obtaining a sequence of 12 words:
+obtaining a sequence of 12 words:
 \begin{center}
 	\textit{useless mosquito atom trust ankle walnut oil across awake bunker domain iron}
 \end{center}
@@ -97,11 +97,11 @@ The function used is the PBKDF2 and it is used in order to avoid brute force att
 \\ \\
 It receives as input:
 \begin{itemize}[label=$\odot$]
-	\item \textbf{Message}: Mnemonic phrase
-	\item \textbf{Salt}: 'mnemonic' + passphrase
-	\item \textbf{Number of iterations}: 2048
-	\item \textbf{Digest-module}: SHA512
-	\item \textbf{Mac-module}: HMAC
+	\item \textbf{Message}: Mnemonic phrase.
+	\item \textbf{Salt}: 'mnemonic' + passphrase.
+	\item \textbf{Number of iterations}: 2048.
+	\item \textbf{Digest-module}: SHA512.
+	\item \textbf{Mac-module}: HMAC.
 \end{itemize}
 Summing up it can be said that it calculates the same hash function (HMAC-SHA512) 2048 times.
 \\ \\
@@ -126,7 +126,7 @@ Where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{p
 \end{remark}
 
 \section{Electrum Mnemonic}
-Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum.
+Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum [\cite{3}].
 \\ \\
 The main difference is in the way that the mnemonic phrase is generated and the purpose of it. Electrum chooses to assign a version to the seed in such a way that is possible to recognize the purpose of the keys and the way to generate them.
 
@@ -139,12 +139,12 @@ The first important difference with BIP39 mnemonic is that the checksum is not p
 \begin{enumerate}
 	\item Divide the \textit{entropy} in string of 11 bits each.
 	\item Associate each string with a word from the chosen dictionary of 2048 words.
-	\item Write down all these words, separated by a space and obtain a \textit{candidate} Mnemonic phrase
+	\item Write down all these words, separated by a space and obtain a \textit{candidate} Mnemonic phrase.
 	\item Compute a particular HASH function on the Mnemonic phrase previously obtained and verify that the first digits correspond to the digits of the chosen version of the seed:
 	\begin{itemize}
-		\item '0x01' for a standard type seed
-		\item '0x100' for a segwit type seed
-		\item '0x101' for a two-factor authenticated type seed
+		\item '0x01' for a standard type seed,
+		\item '0x100' for a segwit type seed,
+		\item '0x101' for a two-factor authenticated type seed.
 	\end{itemize}
 	\item If the initial digits are different, increase entropy by one and then go back to point 1, otherwise you have obtained a valid mnemonic phrase.
 \end{enumerate}
@@ -180,7 +180,7 @@ def generate_mnemonic(entropy, number_words, version, dictionary):
 \end{lstlisting}
 
 \begin{flushleft}
-	Let's see and example: suppose to be looking for a standard type seed, starting with $ENT=132$
+	Let's see and example: suppose to be looking for a standard type seed, starting with $ENT=132$:
 \end{flushleft}
 
 \begin{center} 
@@ -199,7 +199,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 3d5d23737859601eeabe32d1e1...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
 \begin{center}
 	$entropy_{16} = entropy_{16} + 1  = ef938205cd78ab6d876398dcfd65dae33$
 	\\
@@ -216,7 +216,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 2a3b2cf6a0506844a77baf8175...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
 \\ \\
 After other 443 attempts we obtain:
 \begin{center}
@@ -235,7 +235,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 01d133fdcc54bd0da3d717173e0f82127...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ YES
+Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ YES.
 \\ \\
 So we have finally found a valid Mnemonic phrase for the standard type seed.
 

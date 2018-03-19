@@ -25,7 +25,7 @@ The first normal private child derived from \textit{m} will be denoted by the nu
 \begin{equation*}
 m /0
 \end{equation*}
-The fourth normal private child of the first normal private child of the master private key will use the follow notation:
+The fourth normal private child of the first normal private child of the master private key will use the following notation:
 \begin{equation*}
 m /0/3
 \end{equation*}
@@ -66,7 +66,7 @@ m / purpose' / coin\_type' / account' / change / address\_index
 Let's see the meaning of each field:
 \begin{itemize}
 	\item \textit{Purpose}: it must be equal to 44' (or 0x8000002C)  and it indicates that the subtree of this node is used according to this specification. Hardened derivation is used at this level.
-	\item \textit{Coin\_type}: This level creates a separate subtree for every cryptocoin, avoiding reusing addresses across cryptocoins and improving privacy issues. Coin type is a constant, set for each cryptocoin. Hardened derivation is used at this level.
+	\item \textit{Coin\_type}: this level creates a separate subtree for every cryptocoin, avoiding reusing addresses across cryptocoins and improving privacy issues. Coin type is a constant, set for each cryptocoin. Hardened derivation is used at this level.
 	\\ \\
 	Some example:
 	\begin{center}

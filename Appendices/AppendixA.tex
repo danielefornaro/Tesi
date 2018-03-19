@@ -10,14 +10,14 @@ In order to make it easy to store and recognise keys, in the Bitcoin framework s
 In this appendix we will briefly described the possible ways to write down a public key, a private key and finally how it is possible to obtain a Bitcoin addresses (Pay-to-Public-Key-Hash).
 \\ \\
 All the examples below will start from the follow private key (expressed in hexadecimal digits): \\
-2AFEED53F26EF06521E7E825F83CB36A4632791A070A782E353230EAE71EBDD3
+2AFEED53F26EF06521E7E825F83CB36A4632791A070A782E353230EAE71EBDD3.
 
 
 \section{Public Key}
 A public key is a point in the EC and can be represented in two way:
 \begin{itemize}
-	\item \textit{Uncompressed}
-	\item \textit{Compressed}
+	\item \textit{Uncompressed}.
+	\item \textit{Compressed}.
 \end{itemize}
  Both these encodes contains the same information and it is possible to obtain one from the other and \textit{vice versa}. 
 
@@ -25,17 +25,17 @@ A public key is a point in the EC and can be represented in two way:
 An uncompressed public key is a string of hexadecimal digits, obtained by concatenation of the $x$ coordinate with the $y$ coordinate (64 hexadecimal digits both). It is added $04$ at the beginning of the string, obtaining a total of $130$ hexadecimal digits. \\ \\
 Example of an uncompressed public key: \\
 049B7D40BA6BD08C0D1C46048279947AFEA89E6BA5E0C08AEEEBC3472F38C792B
-72EC672B238AD98EECD29A2CD5F2465FEE3BB8205093CEBED8B94C8472FBA15E4
+72EC672B238AD98EECD29A2CD5F2465FEE3BB8205093CEBED8B94C8472FBA15E4.
 
 
 \subsection{Compressed}
-An compressed public key is a string of hexadecimal digits, it is obtained taking the $x$ coordinate and adding $02$ at the begging if the $y$ coordinate is even, $03$ otherwise. Its length will be of $66$ hexadecimal digits.
+A compressed public key is a string of hexadecimal digits, it is obtained taking the $x$ coordinate and adding $02$ at the begging if the $y$ coordinate is even, $03$ otherwise. Its length will be of $66$ hexadecimal digits.
 
 \begin{remark}
 	The symmetry property of the EC allow us to write down only the x coordinate. The y coordinate can be derived by the equation of the EC that give us 2 possible y. The choice between these will be made base on the first two digits on the compressed public key.
 \end{remark}
 Example of a public key compressed:\\
-029B7D40BA6BD08C0D1C46048279947AFEA89E6BA5E0C08AEEEBC3472F38C792B7
+029B7D40BA6BD08C0D1C46048279947AFEA89E6BA5E0C08AEEEBC3472F38C792B7.
 
 
 \section{Private Key}
@@ -51,9 +51,9 @@ In order to obtain a WIF Private Key the following procedure must be used:
 \end{itemize}
 A private key WIF compressed will start with the \textit{K} or \textit{L}, instead a uncompressed one will start with 5.
 \\ \\
-Example of private key WIF compressed: \\ KxfHiqW7h3N2puewVnHWBN4ucmBzK2iupiSUEGKjx1UNT8vvLwvP
+Example of private key WIF compressed: \\ KxfHiqW7h3N2puewVnHWBN4ucmBzK2iupiSUEGKjx1UNT8vvLwvP.
 \\ \\
-Example of the same private key shown above in WIF uncompressed: \\ 5J9DrMWFf5AJBQFwVGhSeEqTshNXCnhm96K1H9TT3VevM4iSudq
+Example of the same private key shown above in WIF uncompressed: \\ 5J9DrMWFf5AJBQFwVGhSeEqTshNXCnhm96K1H9TT3VevM4iSudq.
 
 \begin{remark}
 	The two types of WIF private key give the same information. The only difference is in the public key that is expected to be derived from it. 
@@ -62,8 +62,9 @@ Example of the same private key shown above in WIF uncompressed: \\ 5J9DrMWFf5AJ
 \section{Address}
 Among the Bitcoin transactions, one of the most used is a \textit{Pay-to-Public-Key-Hash}, meaning that in the transaction you will not write directly the public key, but the hash of that public key.
 \\ \\
-The hash function used in this framework is the HASH160, applied to the \textit{compressed} public key. The result is a \textit{PubkeyHash} and from the moment that the HASH160 is an irreversible function, it is infeasible to obtain the public key starting from the \textit{PubkeyHash}. \\ \\
-In order to obtain a valid Bitcoin address, it is needed to encode the \textit{PubkeyHash} in base58:
+The hash function used in this framework is the HASH160, applied to the \textit{compressed} public key. The result is a \textit{PubkeyHash} and from the moment that the HASH160 is an irreversible function, it is infeasible to obtain the public key starting from the \textit{PubkeyHash}. 
+\\ \\
+In order to obtain a valid Bitcoin address, it is needed to encode the \textit{PubkeyHash} in base 58:
 
 \begin{itemize}
 	\item Write down the \textit{PubkeyHash} (160 bits).
@@ -72,7 +73,7 @@ In order to obtain a valid Bitcoin address, it is needed to encode the \textit{P
 	\item Finally compute the Base58Encode, obtaining a 34 digit string.
 \end{itemize}
 Example of an address: \\
-1DFvgrsFE6qVfgX83E35SbLdpjiSFffY2q
+1DFvgrsFE6qVfgX83E35SbLdpjiSFffY2q.
 
 \begin{remark}
 	This is not the only type of address in the Bitcoin framework, but it is the simplest one, derived directly from the public key. 

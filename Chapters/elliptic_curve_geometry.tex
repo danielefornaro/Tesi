@@ -31,7 +31,7 @@ In general a hash function is a mathematical process that takes input data of \t
 \\ \\
 The input data is called \textit{message} and the output data is called \textit{hash value}. 
 \\ \\
-A hash function must have at least these 6 properties:
+A hash function must have at least these six properties:
 \begin{enumerate}[label=(\roman*)]
 	\item It is \textbf{deterministic}: if the message remains unchanged, the hash value is the same.
 	\item It is \textbf{quick}: it should not take too much time to compute the hash value from the message.
@@ -42,7 +42,7 @@ A hash function must have at least these 6 properties:
 \end{enumerate}
 In this thesis we will see hash functions as black-boxes, with all the proprieties described above. 
 \\ \\
-There are various kinds, but for our purpose the main difference lies in the number of bits of the hash value. Among all the possible hash function, in Bitcoin cryptography 3 functions are used:
+There are various kinds, but for our purpose the main difference lies in the number of bits of the hash value. Among all the possible hash function, in Bitcoin cryptography three functions are used:
 \begin{itemize}
 	\item \textbf{SHA256}: Secure Hash Algorithm 256
 	\begin{itemize}
@@ -70,8 +70,8 @@ From the moment that the last operation made to compute the HASH160 function was
 
 There are two other functions that will be heavily used in this thesis:
 \begin{itemize}
-	\item \textbf{HMAC}: Hash-based Message Authentication Code
-	\item \textbf{PBKDF2}: Password-Based Key Derivation Function 2
+	\item \textbf{HMAC}: Hash-based Message Authentication Code,
+	\item \textbf{PBKDF2}: Password-Based Key Derivation Function 2.
 \end{itemize}
 \begin{flushleft}
 	\textbf{HMAC} is a function that made some computation involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}.
@@ -84,21 +84,21 @@ It receives 3 inputs:
 \end{itemize}
 This function compute the following operations:
 \begin{equation*}
-HMAC(H,k,m)=H\, (\, opad(k) \, ||\, H\, (\, ipad(k) \, ||\,  m \, ))
+HMAC(H,k,m)=H\, (\, opad(k) \, ||\, H\, (\, ipad(k) \, ||\,  m \, )),
 \end{equation*}
-Where H is the hash function, k is the key, m is the message, $opad(\bullet)$ and $ipad(\bullet)$ are two padding function, applied to the key k and $||$ is a symbol that denotes concatenation.
+where $H$ is the hash function, $k$ is the key, $m$ is the message, $opad(\bullet)$ and $ipad(\bullet)$ are two padding function, applied to the key $k$ and $||$ is a symbol that denotes concatenation.
 \\ \\
-\textbf{PBKDF2} is a function that applied a hash function to an input (message) along with a salt and repeat the process many times. This algorithm provides more computational work with respect to a single hash function, and so it reduces the risk of a brute force attack.
+\textbf{PBKDF2} is an algorithm that applied a hash function to an input (message) many times. Each of these times a particular string of bytes, called \textit{salt}, is inserted within the computation of the hash. This algorithm provides more computational work with respect to a single hash function, and so it reduces the risk of a brute force attack.
 \\ \\
-It receives 5 inputs:
+It receives five inputs:
 \begin{itemize}[label=$\odot$]
-	\item \textbf{Message}: a sequence of bytes
-	\item \textbf{Salt}: a sequence of bytes
+	\item \textbf{Message}: a sequence of bytes.
+	\item \textbf{Salt}: a sequence of bytes.
 	\item \textbf{Number of iterations}: the number of iteration to be computed.
 	\item \textbf{Digest-module}: a hash function with the properties described above.
 	\item \textbf{Mac-module}: a message authentication code  module (e.g. HMAC).
 \end{itemize}
-Having a salt reduce the ability to use rainbow tables for attack. It is recommends to use at least 64 bits for the salt.
+Having a salt reduce the ability to use rainbow tables for attack, namely tables with precomputed hash value. It is recommends to use at least 64 bits for the salt.
 
 
 
@@ -107,17 +107,17 @@ Having a salt reduce the ability to use rainbow tables for attack. It is recomme
 
 
 \section{Elliptic Curve over $\mathbb{F}_p$}
-Elliptic curve is a \textit{plane algebraic curve} defined by an equation, over a specific field. In cryptography the field is finite.
+Elliptic curve [\cite{7,8,9,10}] is a \textit{plane algebraic curve} defined by an equation, over a specific field. In cryptography the field is finite.
 \\ \\
 A point $Q$, which coordinates are $x$ and $y\in \mathbb{N}$, belong to an Elliptic Curve if and only if $Q$ satisfies the following equation:
 \begin{equation}\label{GeneralEC}
-y^2=x^3+ax+b \quad \textrm{over} \ \mathbb{F}_p
+y^2=x^3+ax+b \quad \textrm{over} \ \mathbb{F}_p,
 \end{equation}
-Where $\mathbb{F}_p$ is the finite field defined over the set of integers modulo $p$ and $a$ and $b$ are the coefficients of the curve. \\ \\
-We can rewrite the equation \ref{GeneralEC} in the following way:
+where $\mathbb{F}_p$ is the finite field defined over the set of integers modulo $p$ and $a$ and $b$ are the coefficients of the curve. \\ \\
+We can rewrite the Equation (\ref{GeneralEC}) in the following way:
 
 \begin{equation}\label{GeneralECmodp}
-y^2=x^3+ax+b \quad \textrm{mod} \ p
+y^2=x^3+ax+b \quad \textrm{mod} \ p.
 \end{equation}
 Figure \ref{fig:EC_ex} shows some examples of Elliptic Curve over $\mathbb{F}_p$ with $a=-7$ and $b=10$
 \begin{figure}[ht!]
@@ -132,23 +132,23 @@ The elliptic curve has an important property: the line $y=p/2$ is an axis of sym
 \\ \\
 This can be shown, by proving that the point $P(x,y)$ belongs to the Elliptic Curve ($EC$) if and only if the point $Q(x,p-y)$ belongs to the curve too:
 \begin{equation*}
-P(x,y) \in EC \iff Q(x,p-y) \in EC
+P(x,y) \in EC \iff Q(x,p-y) \in EC.
 \end{equation*}
 \textit{Proof}:
 \\ \\
 First analyze the implication in the right direction: ($\implies $).
 \\ \\
-From equation \ref{GeneralECmodp} and from the hypothesis we have that:
+From Equation (\ref{GeneralECmodp}) and from the hypothesis we have that:
 \begin{equation*}
-P(x,y) \in EC \implies y^2=x^3+ax+b \quad \textrm{mod} \ p
+P(x,y) \in EC \implies y^2=x^3+ax+b \quad \textrm{mod} \ p,
 \end{equation*}
-But we know also that: 
+but we know also that: 
 \begin{equation*}
-Q(x,p-y) \in EC \iff (p-y)^2=x^3+ax+b \quad \textrm{mod} \ p
+Q(x,p-y) \in EC \iff (p-y)^2=x^3+ax+b \quad \textrm{mod} \ p.
 \end{equation*}
 From the moment that the right hand side of both the equations are equal, we only need to prove that:
 \begin{equation*}
-(p-y)^2=y^2 \quad \textrm{mod} \ p
+(p-y)^2=y^2 \quad \textrm{mod} \ p.
 \end{equation*}
 This is true, indeed:
 \begin{align*}
@@ -159,7 +159,7 @@ This is true, indeed:
 \end{align*}
 This is due to the fact that 
 \begin{equation*}
-p\cdot k =0 \quad \textrm{mod} \ p \qquad \forall k\in \mathbb{N}
+p\cdot k =0 \quad \textrm{mod} \ p \qquad \forall k\in \mathbb{N}.
 \end{equation*}
 The other implication ($\impliedby$) is almost the same and follow the same logic.
 \begin{flushright}
@@ -167,16 +167,16 @@ The other implication ($\impliedby$) is almost the same and follow the same logi
 \end{flushright}
 Once shown the symmetry property, it can be useful to denote the point $P(x,y)$ as the opposite of $Q(x,p-y)$:
 \begin{equation*}
-P=-Q \implies P+Q=0
+P=-Q \implies P+Q=0,
 \end{equation*}
-Where the $+$ operator between two point in the EC will be explained below.
+where the $+$ operator between two point in the EC will be explained below.
 
 \subsection{Point addition}
 Once defined a point on the elliptic curve, let's introduce the addition between two point on this finite field.
 \\ \\
 We need to change our definition of addition in order to make it works in $\mathbb{F}_p$. In this framework we claim that if some points are aligned over the finite field $\mathbb{F}_p$, then they have zero sum.
 \\ \\
-So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense shown in figure \ref{fig:EC_aligned}
+So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense shown in Figure \ref{fig:EC_aligned}
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=9cm]{Figures/EC_aligned.jpg}
@@ -190,25 +190,25 @@ So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense shown in f
 Suppose that \textit{A} and \textit{B} belong to the Elliptic Curve.
 
 \begin{center}
-	$ A=(x_1,y_1) \quad B=(x_2,y_2)$
+	$ A=(x_1,y_1) \quad B=(x_2,y_2)$.
 \end{center}
 Let's defined $ A+B :=(x_3,y_3) $ 
 \\ \\
 When $x_1=x_2$ but $y_1 \neq y_2$, it is the case in which $A$ and $B$ are symmetric point and so the sum is zero: 
 \begin{equation*}
-A+B=0
+A+B=0 .
 \end{equation*}
 In all the other case we have:
 
 
 
 \begin{center} 
-	$s=\begin{cases} \dfrac{y_2-y_1}{x_2-x_1}, & \mbox{if } x_1\neq x_2, \; y_1\neq y_2 \;\rightarrow \; \text{point addition}\\ \\ \dfrac{3x_1^2+a}{2y_1}, & \mbox{if } x_1= x_2, \; y_1= y_2 \;\rightarrow \; \text{point doubling} \end{cases}$ 
+	$s=\begin{cases} \dfrac{y_2-y_1}{x_2-x_1}, & \mbox{if } x_1\neq x_2, \; y_1\neq y_2 \;\rightarrow \; \text{point addition},\\ \\ \dfrac{3x_1^2+a}{2y_1}, & \mbox{if } x_1= x_2, \; y_1= y_2 \;\rightarrow \; \text{point doubling}, \end{cases}$
 \end{center}
-Where $s$ is a dummy variable, used to compute $x_3$ and $y_3$. It can be computed in two different way if we are performing a "real" point addition, when $A\neq B$ or if we are looking for the double of a point, when $A= B$.
+where $s$ is a dummy variable, used to compute $x_3$ and $y_3$. It can be computed in two different way if we are performing a "real" point addition, when $A\neq B$ or if we are looking for the double of a point, when $A= B$.
 \begin{center} 
-	$ x_3=s^2-x_1-x_2  \quad$ mod $p$\\
-	$y_3=s(x_1-x_3)-y_1  \quad$mod $p$
+	$ x_3=s^2-x_1-x_2  \quad$ mod $p$,\\
+	$y_3=s(x_1-x_3)-y_1  \quad$mod $p$.
 \end{center}
 Once we have $s$ the value $x_3$ and $y_3$ are obtained followed this simple formula.
 
@@ -218,11 +218,11 @@ Once defined the addition, any multiplication between a scalar and a point on th
 \begin{center} 
 	$ nP=\underbrace{
 		P+P+\cdot \cdot \cdot+P
-	}_{n\text{ times}}$
+	}_{n\text{ times}}$.
 \end{center}
 When $n$ is a very large number can be difficult or even infeasible to compute $nP$ in this way, but we can use the \textit{double and add algorithm} in order to perform multiplication in $\mathcal{O}(\log{}n)$ steps. Let's see and example:
 \\ \\
-Suppose that we need to compute $53 \cdot P$ where P is a point on the EC:
+Suppose that we need to compute $53 \cdot P$ where $P$ is a point on the EC:
 \begin{equation*}
 53 \cdot P = 110101_{base\, 2} \cdot P = 2^{5}\cdot P + 2^{4}\cdot P + 2^{2}\cdot P + P
 \end{equation*}
@@ -231,9 +231,9 @@ Computing the common sub-terms only once we obtain a total of 5 doubling and 3 a
 \subsection{Discrete Logarithm Problem}
 Once we have described the multiplication between a scalar and a point, let's see if it is possible to make the inverse operation. Let's suppose that:
 \begin{equation*}
-Q = n \cdot P
+Q = n \cdot P,
 \end{equation*}
-Where $Q$ and $P$ are point on the EC and $n$ is a scalar number. 
+where $Q$ and $P$ are point on the EC and $n$ is a scalar number. 
 \\ \\ 
 Let's suppose to know $Q$ and $P$. With these information it exists only one possible $n \in \mathbb{N}$, such that $0<n<p$ and that the equation above holds true. Even so this number $n$ is infeasible to find for large value of $p$.
 \\ \\
@@ -255,7 +255,7 @@ Let's consider a generic point $G$, we have:
 	\underbrace{
 		G+\cdot \cdot \cdot+G
 	}_{n+m\text{ times}} = 
-	(n+m)G$
+	(n+m)G$.
 \end{center}
 So multiples of $G$ are closed under addition and this is enough to prove that the set of the multiples of $G$ is a cyclic subgroup of the group formed by the elliptic curve.
 \\ \\
@@ -276,14 +276,12 @@ All these preliminary information are needed in order to introduce the private-p
 
 \subsection{Bitcoin private-public key cryptography}
 
-Bitcoin uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$. \\ \\
-The equation \ref{GeneralEC} becomes:
-
+Bitcoin [\cite{11}] uses a specific Elliptic Curve defined over the finite field of the natural numbers, where $a=0$ and $b=7$.\\ \\
+The Equation (\ref{GeneralEC}) becomes:
 \begin{equation}\label{BitcoinEC}
-y^2=x^3+7 \quad \textrm{mod} \ p
+y^2=x^3+7 \quad \textrm{mod} \ p,
 \end{equation}
-
-The \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$.
+where the \textit{mod p} (modulo prime number) indicates that this curve is over a finite field of prime order $p=2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1$.
 \\ \\
 The \textit{order} of this Elliptic Curve is a very large prime number, close to $2^{256}$, but smaller then $p$. \\ \\
 Let's consider a particular point $G$, called generator, expressed in hexadecimal digits:
@@ -295,15 +293,15 @@ From the moment that the order of the group is a prime number, the order of any 
 \\ \\
 We have now all the elements necessary to define the private and the public key.
 \begin{definition}
-	A private key is a number chosen in the range between 1 and \textbf{order}.
+	A private key is a number chosen in the range between 1 and order.
 \end{definition}
 
 \begin{definition}
 	A public key $W$ is a point in the Bitcoin EC, derived from a private key $k$ in the following way: \\
 	\begin{equation}
-	W=k\cdot G
+	W=k\cdot G,
 	\end{equation}
-	Where the multiplication between k and G is defined in the previous chapter.
+	where the multiplication between k and G is defined in the previous chapter.
 \end{definition}
 This is a \textit{one way} function, in the sense that computing the scalar multiplication, knowing the private key is simple, but make the reverse is infeasible.
 \begin{remark}
