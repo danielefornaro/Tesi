@@ -1,2 +1,2 @@
-# Tesi
-Elliptic Curve Hierarchically Deterministic Private Key Sequences: Bitcoin Standards and Best Practices
+# Thesis
+Elliptic Curve Hierarchical Deterministic Private Key Sequences: Bitcoin Standards and Best Practices
