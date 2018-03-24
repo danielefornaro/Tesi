@@ -17,8 +17,8 @@
 
 In order to have a clear understanding of this thesis, it is necessary to know the basic concepts of:
 \begin{itemize}[label=$\checkmark$]
-	\item HASH function
-	\item Elliptic Curve
+	\item HASH function.
+	\item Elliptic Curve.
 \end{itemize}
 Only these two elements together can describe all the cryptography behind Bitcoin.
 
@@ -62,7 +62,7 @@ There are various kinds, but for our purpose the main difference lies in the num
 \end{itemize}
 One important hash function used in the Bitcoin cryptography is the so called HASH160. It is simple the concatenation of SHA256 and RIPEDM160:
 \begin{equation*}
-HASH160 \, (\, msg\, ) = RIPEDM160\, (\, SHA256 \, (\, msg \, ))
+HASH160 \, (\, msg\, ) = RIPEDM160\, (\, SHA256 \, (\, msg \, )).
 \end{equation*}
 From the moment that the last operation made to compute the HASH160 function was the RIPEDM160 function, the output size is 160 bits.
 
@@ -74,7 +74,7 @@ There are two other functions that will be heavily used in this thesis:
 	\item \textbf{PBKDF2}: Password-Based Key Derivation Function 2.
 \end{itemize}
 \begin{flushleft}
-	\textbf{HMAC} is a function that made some computation involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}.
+	\textbf{HMAC} is a function that made some computation, involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}, namely attack in which the length of the input message is know and all the possible combination of the input are tried.
 \end{flushleft}
 It receives 3 inputs:
 \begin{itemize}[label=$\odot$]
@@ -169,7 +169,7 @@ Once shown the symmetry property, it can be useful to denote the point $P(x,y)$ 
 \begin{equation*}
 P=-Q \implies P+Q=0,
 \end{equation*}
-where the $+$ operator between two point in the EC will be explained below.
+where the $+$ operator between two point in the EC will be explained below and the $0$ in this contest is the \textit{point at infinity}.
 
 \subsection{Point addition}
 Once defined a point on the elliptic curve, let's introduce the addition between two point on this finite field.
@@ -194,9 +194,9 @@ Suppose that \textit{A} and \textit{B} belong to the Elliptic Curve.
 \end{center}
 Let's defined $ A+B :=(x_3,y_3) $ 
 \\ \\
-When $x_1=x_2$ but $y_1 \neq y_2$, it is the case in which $A$ and $B$ are symmetric point and so the sum is zero: 
+When $x_1=x_2$ but $y_1 \neq y_2$, it is the case in which $A$ and $B$ are symmetric point and so the sum is a particular point, called \textit{point at infinity}: 
 \begin{equation*}
-A+B=0 .
+A+B=0=	(inf,inf) .
 \end{equation*}
 In all the other case we have:
 
@@ -205,7 +205,7 @@ In all the other case we have:
 \begin{center} 
 	$s=\begin{cases} \dfrac{y_2-y_1}{x_2-x_1}, & \mbox{if } x_1\neq x_2, \; y_1\neq y_2 \;\rightarrow \; \text{point addition},\\ \\ \dfrac{3x_1^2+a}{2y_1}, & \mbox{if } x_1= x_2, \; y_1= y_2 \;\rightarrow \; \text{point doubling}, \end{cases}$
 \end{center}
-where $s$ is a dummy variable, used to compute $x_3$ and $y_3$. It can be computed in two different way if we are performing a "real" point addition, when $A\neq B$ or if we are looking for the double of a point, when $A= B$.
+where $s$ is a dummy variable, used to compute $x_3$ and $y_3$. It can be computed in two different way: if we are performing a "real" point addition, when $A\neq B$ or if we are looking for the double of a point, when $A= B$.
 \begin{center} 
 	$ x_3=s^2-x_1-x_2  \quad$ mod $p$,\\
 	$y_3=s(x_1-x_3)-y_1  \quad$mod $p$.
@@ -242,7 +242,7 @@ This is due to the fact that there is not an efficient algorithm that is able to
 \subsection{Group order}
 An elliptic curve defined over a finite field is a group and so it has a finite number of points. This number is called \textit{order} of the group.
 \\ \\
-If $p$ is a very large number, it is impossible to count all the point in that field, but there is an algorithm that allows to calculate the \textit{order} of a group in a fast and efficient way: \textit{Schoof's algorithm}.
+If $p$ is a very large number, it is impossible to count all the points in that field, but there is an algorithm that allows to calculate the \textit{order} of a group in a fast and efficient way: \textit{Schoof's algorithm}.
 \\ \\
 Let's consider a generic point $G$, we have:
 \begin{center} 
@@ -303,7 +303,7 @@ We have now all the elements necessary to define the private and the public key.
 	\end{equation}
 	where the multiplication between k and G is defined in the previous chapter.
 \end{definition}
-This is a \textit{one way} function, in the sense that computing the scalar multiplication, knowing the private key is simple, but make the reverse is infeasible.
+This is a \textit{one way} function: it is simple to compute the scalar multiplication, knowing the private key, but it is infeasible to do the opposite.
 \begin{remark}
 	It is infeasible to calculate a private key knowing the public key.
 \end{remark}
@@ -315,7 +315,7 @@ Let's suppose to have a message that is needed to be signed, in Bitcoin this mes
 	\item A message is signed using a \textbf{private key}.
 	\item Knowing the \textbf{public key} associated to the private key that sign the message, it is possible to verify that the message is signed using the corresponding private key (without knowing it).
 \end{itemize}
-For this reason the keys are called private and public, the private one is suppose to be kept \textbf{secret}, because it is able to sign a message, instead the other one is suppose to be \textbf{shared}, in order to let everyone else knows that who signs the message is in possession of the corresponding private key.
+For this reason the keys are called private and public, the former is suppose to be kept \textbf{secret}, because it is able to sign a message, instead the latter is suppose to be \textbf{shared}, in order to let everyone else knows that who signs the message is in possession of the corresponding private key.
 
 
 
