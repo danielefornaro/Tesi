@@ -14,11 +14,10 @@
 %\newcommand{\option}[1]{\texttt{\itshape#1}}
 
 %----------------------------------------------------------------------------------------
-
-In this chapter we will see how an HD wallet [\cite{1}] works.
+The Hierarchical Deterministic Wallet is defined by BIP32, \textit{bitcoin improvement proposal} number 32 [\cite{1}] and in this chapter we will see in detail how it works.
 
 \section{Elements}
-Let's focus on the main elements of the Wallet:
+First let us focus on the main elements of the Wallet:
 \begin{itemize}[label=$\diamond$]
 	\item Seed.
 	\item Extended keys.
@@ -37,11 +36,11 @@ This is an example of seed expressed in hexadecimal format: \\
 \textit{seed}=fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999 \\ 693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542 
 
 \subsection{Extended Key}
-An Extended Key is a sequence of bytes, encoded in base 58. It contains all the information necessary derive the keys. When the derivation is made for the first time from the seed, the extended key is called master key.\\ \\
+An Extended Key is a sequence of bytes, encoded in base 58. It contains all the information necessary to derive the keys. When the derivation is made for the first time from the seed, the extended key is called master key.\\ \\
 Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and order:
 \begin{itemize}[label=$\circledast$]
 	\item 4 bytes are used to specified the \textbf{version}.
-	\item 1 byte is used to specified the \textbf{depth} in the hierarchical tree: the extended key derived directly from the seed has $depth=0$, its first children have $depth=1$, grandchildren have $depth=2$ and so on.
+	\item 1 byte is used to specified the \textbf{depth} in the hierarchical tree: the (master) extended key derived directly from the seed has $depth=0$, its first children have $depth=1$, grandchildren have $depth=2$ and so on.
 	\item 4 bytes are used for the \textbf{fingerprint}. It is a unique value that identify the parent. Compute the HASH160 function on the "parent" public key in a compressed form and then take the first 4 bytes:
 	\begin{equation*}
 	fingerprint=HASH160(\text{parent public key})[0:4],
@@ -55,14 +54,15 @@ Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and 
 \end{itemize}
 An extended key is called \textbf{Extended Private Key} if the lasts 33 bytes are used to specify the private key; it is called \textbf{Extended Public Key} if they are used to specify the public key.
 \\ \\
-For the Bitcoin mainnet it is used for the \textbf{version}: $0x0488ADE4$ for an extended private key, $0x0488B21E$ for an extended public key. When this bytes are encoded in base58, they returns \textit{xprv} and \textit{xpub} respectively.
+For the Bitcoin mainnet it is used for the \textbf{version}: $0x0488ADE4$ for an extended private key, $0x0488B21E$ for an extended public key. When this bytes are encoded in base 58, they returns \textit{xprv} and \textit{xpub} respectively.
 
 \begin{remark}
 	Obviously it is possible to calculate the extended public key starting from the extended private key, but it is infeasible to do the opposite. The only difference between the two extended keys are the \textbf{key bytes} and the \textbf{version bytes}, all the others elements remain the same.
 \end{remark}
 
 \section{From SEED to Master Private Key}
-In this section we will see in detail how it is possible to switch from a \textit{seed} to a \textit{master private key}. \\ \\
+In this section we will see in detail how it is possible to obtain a \textit{master private key} starting from a \textit{seed}.
+\\ \\
 First of all we need to convert the seed into a string of bytes, where the most significant bytes come first (big endian). In order to do so, we need to know the length of the string of bytes. \\ \\
 Let's see a practical example:
 \begin{equation*}
@@ -132,7 +132,7 @@ This is an example of Master Extended Private Key: \\
 xprv9s21ZrQH143K3wEaiSJZ8jYCuZF1oJoXHiwFcx2WwXqQHD4ZLdyEAFZ22M4 BmQT82HRbWssLArj53YDQTj6vSN4iH6nTiSQ61C5CckxUtDq.
 
 \begin{remark}
-	The SHA512 is an irreversible function, so it is infeasible to obtained the seed, knowing the Extended Key. (It is also useless because with the master key you can derive all the keys in the wallet).
+	The SHA512 is an irreversible function, so it is infeasible to obtained the seed, knowing the master key. (It is also useless because with the master key you can derive all the keys in the wallet).
 \end{remark}
 
 \begin{flushleft}
@@ -148,7 +148,7 @@ xprv9s21ZrQH143K3wEaiSJZ8jYCuZF1oJoXHiwFcx2WwXqQHD4ZLdyEAFZ22M4 BmQT82HRbWssLArj
 
 
 \section{Child Key derivation}
-From any extended private key it is possible to obtain different child keys. There are two method used in order to do so:
+In this section we will see how it is possible to derive different child key from a single extended private key. There are two methods:
 \begin{itemize}
 	\item Normal.
 	\item Hardened.
@@ -160,11 +160,11 @@ For both the method the derivation starts from an extended private key. From thi
 	\item Chain code.
 	\item Private key.
 \end{itemize}
-It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any Extended Key there are 4 bytes used to specify the index of the child:
+It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any extended key there are 4 bytes used to specify the index of the child:
 \begin{equation*}
 max \; index=(FF\;FF\;FF\;FF)_{base \; 16} = 2^{32} = 4294967295.
 \end{equation*}
-In fact it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding Extended Key in the format described above.
+In fact it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding extended key in the format described above.
 
 
 \subsection{Normal derivation}
@@ -179,8 +179,8 @@ After that we concatenate this 33 byte string to the 4 byte string representing 
 \begin{equation*}
 msg = compressed \; public\;key \;|\; index,
 \end{equation*}
-where $msg$ is a string of $37$ bytes. \\ \\
-Finally we apply the HMAC algorithm with the following input:
+where $msg$ is now a string of $37$ bytes. \\ \\
+Finally we apply the HMAC algorithm with the following inputs:
 
 \begin{itemize}[label=$\odot$]
 	\item \textbf{Hash function}: SHA512.
@@ -221,7 +221,7 @@ child_private_key = (q + parent_private_key) % order
 
 \subsection{Hardened derivation}
 This method is similar to the previous one, the only difference is that as input of the \textit{hash} function the private key is used instead of the public one. \\ \\
-First we concatenate the 33 bytes of parent private key, considering also the $00$ byte, with the 4 byte string representing the index number:
+First we concatenate the 33 bytes of parent private key, considering also the $00$ byte, with the 4 byte string representing the index number.
 
 \begin{remark}
 In order to better distinguish the hardened derivation from the normal one, the numbering of the indices starts from the number $2^{31}.$
@@ -229,8 +229,8 @@ In order to better distinguish the hardened derivation from the normal one, the 
 \begin{equation*}
 msg = 00 \;|\; private\;key \;|\; index,
 \end{equation*}
-where $msg$ is a string of $37$ bytes. \\ \\
-Then we apply the HMAC algorithm with the following input:
+where $msg$ is now a string of $37$ bytes. \\ \\
+Then we apply the HMAC algorithm with the following inputs:
 
 \begin{itemize}[label=$\odot$]
 	\item \textbf{Hash function}: SHA512.
@@ -282,26 +282,23 @@ In order to compute this particular derivation, the only essential elements are 
 	\item Chain code.
 	\item Index.
 \end{itemize}
-First we apply the HMAC algorithm to the same input used for the normal derivation:
-\\ \\
-Then we concatenate the 33 byte string of the public key to the 4 byte string representing the index number:
-
-\begin{equation*}
-msg = compressed \; public\;key \;|\; index
-\end{equation*}
-After that we apply the HMAC algorithm with the following input:
-
+First we apply the HMAC algorithm to the same inputs used for the normal derivation:
 \begin{itemize}[label=$\odot$]
-	\item \textbf{Hash function}: SHA512.
-	\item \textbf{Key}: chain code.
-	\item \textbf{Message}: $msg$.
+	\item \textbf{Hash function}: SHA512;
+	\item \textbf{Key}: chain code;
+	\item \textbf{Message}: $msg$;
 \end{itemize}
-The output of this function is the same of the normal derivation with the extended private key. The last 32 bytes formed the child chain code, instead the first 32 bytes can be read as a special number: $q$. \\ \\
-Now we multiply the generator $G$ to the integer number $q$ and obtain $Q$, a point on the EC:
+where $msg$ is obtained as before:
+\begin{equation*}
+msg = compressed \; public\;key \;|\; index.
+\end{equation*}
+The output of this function is the same of the normal derivation with the extended private key. The last 32 bytes formed the child chain code, instead the first 32 bytes can be read as a special number: $q$. 
+\\ \\
+Now we multiply the generator $G$ to the integer number $q$ and we obtain $Q$, a point on the EC:
 \begin{equation*}
 Q=q\cdot G.
 \end{equation*}
-Finally we compute the sum between two point on the elliptic curve: $Q$ and $P_{parent}$, where $P_{parent}$ is the parent public key.
+Finally we compute the sum between two points on the elliptic curve: $Q$ and $P_{parent}$, where $P_{parent}$ is the parent public key.
 \begin{equation*}
 Q+P_{parent}=P_{child},
 \end{equation*}
@@ -331,14 +328,14 @@ Graphically this derivation can be shown in Figure \ref{fig:pubtopub}.
 \end{figure}
 
 \subsection{Weakness of Normal Derivation}
-As shown above the normal derivation present a great advantage, but also a weakness. It is possible to derive the \textbf{parent extended private key} knowing the \textbf{parent extended public key} and only one of the \textbf{child extended private key}.
+As shown above the normal derivation presents a great advantage, but also a weakness. It is possible to derive the \textbf{parent extended private key} knowing the \textbf{parent extended public key} and only one of the \textbf{child extended private key}.
 \\ \\
-The HMAC-SHA256 function has as input three elements: the parent chain code, the parent public key and the child index. The firsts two information can be taken from the parent extended public key, instead the child index can be taken from the child extended private key.
+The HMAC-SHA256 function has as inputs three elements: the parent chain code, the parent public key and the child index. The firsts two information can be taken from the parent extended public key, instead the child index can be taken from the child extended private key.
 
 \begin{equation*}
 msg = compressed \;parent\; public\;key \;|\;child\; index.
 \end{equation*}
-Then we apply the HMAC algorithm with the usual input:
+Now we apply the HMAC algorithm with the usual inputs:
 
 \begin{itemize}[label=$\odot$]
 	\item \textbf{Hash function}: SHA512.
@@ -348,7 +345,7 @@ Then we apply the HMAC algorithm with the usual input:
 After that we consider the first 32 bytes of the result of this function and consider it as an integer number, $q$.
 \\ \\
 Remembering that to get the child private key it is needed to compute a sum with the parent private key, it is possible to reverse the process. \\ \\
-Let's call $p_{child}$ and $p_{parent}$ the private keys of the child and the father respectively.
+Let's call $p_{child}$ and $p_{parent}$ the private keys of the child and the parent respectively.
 \begin{equation}\label{eq3}
 \begin{split}
 p_{child} &= q+p_{parent} \qquad \mod (order) \\
@@ -371,17 +368,17 @@ So we have derived the private key of the parent. Graphically this derivation ca
 \section{Advantages and disadvantages}
 We have seen that public-to-public operation is possible using the normal derivation. This is impossible with the hardened one.
 \\ \\
-In fact the input of HMAC-SHA512 are different for the two derivations. If for the normal derivation only the information in the public extended key is sufficient, for the hardened derivation the parent private key is needed. This makes impossible to obtain a public from a public, but also it makes impossible to derive the private key of the parent knowing the private key of the child and the public of the parent.
+In fact the inputs of HMAC-SHA512 are different for the two derivations. If for the normal derivation only the information in the public extended key is sufficient, for the hardened derivation the parent private key is needed. This makes impossible to obtain a public from a public, but also it makes impossible to derive the private key of the parent knowing the private key of the child and the public of the parent.
 \\ \\
-Knowing strengths and weaknesses of the two methods, it is advisable to use each of the two methods in the appropriate situations.
+It is advisable to use each of the two methods in the appropriate situations.
 
-\subsection{When use Normal Derivation?}
-Normal derivation should be used whenever all the child keys are collected in the same digital place and you should never give one key to someone else. As already mention a leak of a single private key can compromise the entire wallet.
+\subsection{When to use Normal Derivation?}
+Normal derivation should be used whenever all the child keys are collected in the same digital place and you should never give one key to someone else. As already mentioned a leak of a single private key can compromise the entire wallet.
 \\ \\
-However if all the child keys are used by the same person and you need to generate different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment to yours public keys, but it is impossible to spend those coins as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all the UTXOs associated with that wallet.
+However if all the child keys are used by the same person and you need to generate different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment to yours public keys, but it is impossible to spend those coins as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all transactions signed with the private keys associated with the public keys of the wallet, but it is impossible to sign new transactions without having the private keys.
 
 
-\subsection{When use Hardened Derivation?}
+\subsection{When to use Hardened Derivation?}
 Hardened derivation should be used whenever all the keys generated are used for different purpose or are stored in different places. With this procedure it is possible to yield a branch of the tree to someone else in order to manage part of your money, without the risk to lose all the others keys in the wallet.
 \\ \\
 As a best practice it is always advisable to use the hardened method for the first derivation from the extended master private key. An hardened key should have both hardened or normal children, but from a normal child it is not reasonable to derive an hardened one, because it make no sense to increase the security of the wallet at the last level.

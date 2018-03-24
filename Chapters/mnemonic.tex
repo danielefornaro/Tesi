@@ -15,13 +15,13 @@ Both these solutions used a \textit{Mnemonic phrase}, from which the seed is obt
 \begin{flushleft}
 	\textbf{What is a Mnemonic phrase?}
 \end{flushleft}
-A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that make up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid to insert into the dictionary two words with similar meaning or spelling.
+A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that makes up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid inserting into the dictionary two words with similar meaning or spelling.
 
 \section{BIP39}
 First we will see how to generate a mnemonic phrase in the framework of BIP39 [\cite{2}] and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
-In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many softwares provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
+In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many software provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
 \\ \\
 Let us call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belong to a given set:
 \begin{equation*}
@@ -58,7 +58,7 @@ The point (iii) is another suggestion. A private key is a number smaller then $2
 \\ \\
 Thanks to constraint (i) we obtain that the length of \textit{entropy\_checked} is a dividend of 11:
 \begin{equation*}
-len(entropy\_checked)=ENT+\dfrac{ENT}{32}=\dfrac{33}{32}\cdot ENT=11\cdot \dfrac{3}{32}\cdot ENT,
+len(entropy\_checked)=ENT+\dfrac{ENT}{32}=\dfrac{33}{32}\cdot ENT=11\cdot \dfrac{3}{32}\cdot ENT.
 \end{equation*}
 Let us consider \textit{entropy\_checked} as a string of bits and then we divide it in substring, each of 11 bits length, obtaining $(\frac{3}{32}\cdot ENT)$ strings of bits.
 \\ \\
@@ -107,7 +107,7 @@ Summing up it can be said that it calculates the same hash function (HMAC-SHA512
 \\ \\
 In order to introduce more complexity in the seed computation a \textit{Salt} is introduced. If not specified the standard salt is simply the world 'mnemonic', otherwise it could be extended with an optional \textit{passphrase}.
 \\ \\
-Although it is true that a human being is a scarce source of randomness, the passphrase is usually chosen by the user. This is due to the fact that it has a different purpose to the mnemonic phrase. We will analyze some useful applications in the next chapter. 
+Although it is true that a human being is a scarce source of randomness, the passphrase is usually chosen by the user. This is due to the fact that it should not introduce more entropy, but it prevents an attack with rainbow tables and gives the possibility to the user to have different wallet with the same mnemonic phrase.
 \begin{remark}
 	The randomness should be guaranteed by the input entropy used to generate the mnemonic phrase, not by the passphrase.
 \end{remark}
@@ -119,7 +119,7 @@ import hmac
 
 seed = PBKDF2(mnemonic, 'mnemonic' + passphrase, iterations = 2048, macmodule = hmac, digestmodule = sha512).read(64)
 \end{lstlisting}
-Where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{passphrase} is chosen by the user (if not specified it is empty).
+where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{passphrase} is chosen by the user (if not specified it is empty).
 
 \begin{remark}
 	With this procedure we always produce a seed of specific length: 512 bits. It will always be enough because every private key can take value from a smaller set of value (1 to \textit{order}).
@@ -263,7 +263,7 @@ seed = PBKDF2(mnemonic, 'electrum' + passphrase, iterations = 2048, macmodule = 
 
 
 \section{Comparison}
-Once described how to generate the Mnemonic phrase for each of the two principal proposals, let's analyse the advantages and disadvantages.
+Once described how to generate the Mnemonic phrase for each of the two principal proposals, let's analyze the advantages and disadvantages.
 \\ \\
 Both BIP39 and Electrum are secure from a so called \textit{brute force attack}, from the moment that the function PBKDF2 is used to generate the seed from the mnemonic phrase and so it is infeasible to guess a Mnemonic randomly generated by another user. In fact each time  a valid phrase has been found, it is required to compute the seed, then the first child keys and then look at the public ledger, the blockchain, in order to see if some of this private keys are used to sign a transaction. All these passages are computational consuming and it would take too much time to try even a small part of all the possible combination. Even with all the most powerful computers in the world working together, it will take a time of many order of magnitude greater then the age of the universe itself.
 \\ \\

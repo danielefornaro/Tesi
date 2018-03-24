@@ -52,14 +52,14 @@ It is useless to specify that children derived from M are normal and not hardene
 
   
 \section{BIP 43}
-This BIP introduces a "Purpose Field" in the Hierarchical deterministic wallet [\cite{4}]. The first child of the extended master private key specify the purpose of the entire branch.
+This BIP introduces a "Purpose Field" in the Hierarchical Deterministic wallet [\cite{4}]. The first child of the extended master private key specify the purpose of the entire branch.
 \begin{equation*}
 m\; \;/\;\; purpose'\;\; /\;\; *
 \end{equation*}
-For example if $purpose=44$ it means that this is a multi coin wallet, if $purpose=49$ it means that the keys generated follow the BIP49 specification (P2WPKH nested in P2SH).
+For example if $purpose=44$ it means that this is a multi-coin wallet, if $purpose=49$ it means that the keys generated follow the BIP49 specification (P2WPKH nested in P2SH).
 
 \subsection{Multi-coin wallet BIP 44}
-The derivation scheme for a Multi-coin wallet [\cite{5}] should be the follow:
+The derivation scheme for a multi-coin wallet [\cite{5}] should be the follow:
 \begin{equation*}
 m / purpose' / coin\_type' / account' / change / address\_index
 \end{equation*}
@@ -86,14 +86,14 @@ Let's see the meaning of each field:
 			\hline
 		\end{tabular}
 	\end{center}
-	A list with the complete set of cryptocoin is available and in continuous update: \\ \url{https://github.com/satoshilabs/slips/blob/master/slip-0044.md }
+	A list with the complete set of cryptocoins is available and in continuous update: \\ \url{https://github.com/satoshilabs/slips/blob/master/slip-0044.md }
 	
-	\item \textit{Account}: This level splits the key space into independent user identities, so the wallet never mixes the coins across different accounts.
+	\item \textit{Account}: this level splits the key space into independent user identities, so the wallet never mixes the coins across different accounts.
 	Users can use these accounts to organize the funds in the same fashion as bank accounts; for donation purposes, for saving purposes, for common expenses etc.
 	Hardened derivation is used at this level.
-	\item \textit{Change}: It can take only two value: 0 and 1. 0 is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments). 1 is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.
-	Public derivation is used at this level.
-	\item \textit{Index}: This is the last derivation, used to have many keys for each cryptocoin. It can take values from 0 in sequentially increasing manner. Public derivation is used at this level.
+	\item \textit{Change}: it can take only two value: 0 and 1. 0 is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments). 1 is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.
+	Normal derivation is used at this level.
+	\item \textit{Index}: this is the last derivation, used to have many keys for each cryptocoin. It can take values from 0 in sequentially increasing manner. Normal derivation is used at this level.
 \end{itemize}
 The principal advantage of this BIP is the possibility to easily back up all the cryptocoins of the user just by remembering a particular set of world (BIP39 mnemonic phrase). If these method is used to store more then one coins, keep attention in not to lose the master private key, otherwise all coins were lost.
 
