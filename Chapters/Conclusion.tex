@@ -8,13 +8,13 @@
 
 % Define some commands to keep the formatting separated from the content 
 %----------------------------------------------------------------------------------------
-The main purpose of this thesis was the analysis of the principal methods used to generate private and public keys and to store the seed. 
+The main purpose of this work has been the analysis of methods used to generate a sequence of private and public keys and to store the seed from which the sequence is derived. 
 \\ \\
-First we briefly described some simple deterministic derivation, then we analyzed the Hierarchical Deterministic Wallet. It was possible to derive an extended key in two way: normal and hardened. The use of the normal derivation allowed the user to derive also the public key from an extended public key, but the entire wallet could be compromised if the parent extended public key and a child extended private key were stolen. The use of the hardened derivation prevented this problem, with the cons to not allow the public to public derivation. 
+First, we have briefly described some simple deterministic derivation, then we have analyzed the Hierarchical Deterministic Wallet. It is possible to derive an extended key in two way: normal and hardened. The use of the normal derivation allows public-to-public derivation, that is the derivation of a sequence of public keys from an extended public key, without access to any private key; anyway the entire wallet is compromised if both a parent extended public key and a child extended private key are stolen. The use of the hardened derivation prevented this problem, but it does not allow public-to-public derivation. 
 \\ \\
-Then we focused on the two methods mostly used to generate the seed: the version proposed by BIP39 and the one proposed by Electrum. Both of them started from a given entropy, from which a mnemonic phrase was generated and from the latter, the seed was obtained. This two method were very similar, but they had some subtle differences. In this thesis, these differences were deeply analyzed, showing all the pros and cons of each method. 
+Then we focused on the two methods mostly used to generate the seed: the version proposed by BIP39 and the one proposed by Electrum. Both of them start from a given entropy to generate a mnemonic phrase, which is then used to obtain a seed. The two methods are very similar, but with some subtle differences. In this thesis these differences have been analyzed, showing pros and cons of each method. 
 \\ \\
-It is not the purpose of this work to point out a better proposal, but to give a complete and detailed overview of the various way to generate your keys. 
+It was not a goal of this work to point out a better proposal, but to provide a complete and detailed overview of the various way to generate asymmetric cryptographic keys.
 \vfill
 \textit{"We often fear what we do not understand. Our best defense is knowledge."}
 \begin{flushright}
