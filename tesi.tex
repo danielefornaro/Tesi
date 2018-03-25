@@ -218,8 +218,7 @@ headsepline, % Uncomment to get a line under the header
 	
 	\begin{abstract}
 		\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-
-		The cryptography used by most of the cryptocurrencies is mainly based on the private-public key pair. The method used to generate private keys is therefore fundamental: it must be efficient, secure and suitable for the situation. Among alternative methods, the Hierarchical Deterministic Wallet has emerged as standard, described in the Bitcoin Improvemnt Proposal #32 (BIP32). Starting from a random number, called SEED, picked up in a sufficiently large range, it is possible to generate numerous private keys in a hierarchical and deterministic way through particular HASH functions and thanks to the elliptic curve properties. Several wallets also use a special algorithm to store the seed and to be able to back it up in a readable form, through the use of a mnemonic phrase, words selected from a specific dictionary. Consensus on a single standard for the mnemonic phrase as not been reached among all major players in the industry yet. This work aims to clarify the various techniques used for the derivation of the keys, with particular attention to the HD wallet. It will also be analyzed the two principal way of encoding the seed, the one described into BIP39 as opposed to the proposal of Electrum, one of the main Bitcoin Wallet, highlighting their respective advantages and disadvantages.
+		The cryptography used by most of the cryptocurrencies is mainly based on the private-public key pair. The method used to generate private keys is therefore fundamental: it must be efficient, secure and suitable for the situation. Among alternative methods, the Hierarchical Deterministic Wallet has emerged as standard, described in the Bitcoin Improvement Proposal \#32 (BIP32). Starting from a random number, called SEED, picked up in a sufficiently large range, it is possible to generate numerous private keys in a hierarchical and deterministic way through particular HASH functions and thanks to the elliptic curve properties. Several wallets also use a special algorithm to store the seed and to be able to back it up in a readable form, through the use of a mnemonic phrase, words selected from a specific dictionary. Consensus on a single standard for the mnemonic phrase as not been reached among all major players in the industry yet. This work aims to clarify the various techniques used for the derivation of the keys, with particular attention to the HD wallet. It will also be analyzed the two principal way of encoding the seed, the one described into BIP39 as opposed to the proposal of Electrum, one of the main Bitcoin Wallet, highlighting their respective advantages and disadvantages.
 		
 	\end{abstract}
 	
@@ -332,7 +331,7 @@ headsepline, % Uncomment to get a line under the header
 	%	BIBLIOGRAPHY
 	%----------------------------------------------------------------------------------------
 	
-	\begin{thebibliography}{12}
+	\begin{thebibliography}{13}
 		\bibitem{1}
 		\href{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki}{BIP32, Bitcoin Improvement Proposal number 32 \\ \texttt{https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki}}
 		
@@ -369,6 +368,9 @@ headsepline, % Uncomment to get a line under the header
 		
 		\bibitem{12} 
 		\href{https://bitcoincore.org}{Bitcoin Core, \texttt{https://bitcoincore.org}}
+		
+		\bibitem{13} 
+		\href{https://github.com/fametrano/BitcoinBlockchainTechnology}{Ferdinando M. Ametrano, \textit{Material for the Bitcoin \& Blockchain Technology course}, \\ \texttt{https://github.com/fametrano/BitcoinBlockchainTechnology}}
 		
 
 	\end{thebibliography}
