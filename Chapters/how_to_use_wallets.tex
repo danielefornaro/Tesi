@@ -14,7 +14,7 @@
 %\newcommand{\option}[1]{\texttt{\itshape#1}}
 
 %----------------------------------------------------------------------------------------
-As already mentioned there are various way to use a Hierarchical Deterministic Wallet. It is possible to use this sequence of keys also for a non-monetary purpose, outside the cryptocurrency world. In fact these keys are simple number and they can be used for every possible purpose. Here we will focus only on the cryptocurrency application, in particular Bitcoin.
+As already mentioned there are various ways to use a Hierarchical Deterministic Wallet. It is possible to use this sequence of keys also for a non-monetary purpose, outside the cryptocurrency world. In fact, these keys are simple numbers and they can be used for every possible purpose. Here we will focus only on the cryptocurrency application, in particular, Bitcoin.
 
 \section{Derivation path}
 In order to easily recognize the path of a particular derivation, a common notion was introduced for the Hierarchical Deterministic Wallet.
@@ -33,7 +33,7 @@ In order to indicate a hardened child, the number of the index is followed by an
 \begin{equation*}
 m /0' 
 \end{equation*}
-It is possible to mix hardened and normal derivation. For example the $15^{th}$ hardened child of the $37^{th}$ normal child of the $6^{th}$ normal child of the $1019^{th}$ hardened child of \textit{m} will be represented in the following way:
+It is possible to mix hardened and normal derivation. For example, the $15^{th}$ hardened child of the $37^{th}$ normal child of the $6^{th}$ normal child of the $1019^{th}$ hardened child of \textit{m} will be represented in the following way:
 \begin{equation*}
 m /1018'/5/36/14'
 \end{equation*}
@@ -41,7 +41,7 @@ m /1018'/5/36/14'
 \begin{remark}
 	Although it is not recommended to use hardened derivation after a normal derivation, it is always possible to do so.
 \end{remark}
-This nomenclature can be used also to represent extended public keys. In fact it is possible to derive, with the normal derivation, an extended public key from the parent extended public key. The notation will be the usual one: for example the third public key derived from the sixth public key derived from \textit{M} will be represented in this way:
+This nomenclature can be used also to represent extended public keys. In fact, it is possible to derive, with the normal derivation, an extended public key from the parent extended public key. The notation will be the usual one: for example, the third public key derived from the sixth public key derived from \textit{M} will be represented in this way:
 \begin{equation*}
 M /2/5
 \end{equation*}
@@ -52,14 +52,14 @@ It is useless to specify that children derived from M are normal and not hardene
 
   
 \section{BIP 43}
-This BIP introduces a "Purpose Field" in the Hierarchical Deterministic wallet [\cite{4}]. The first child of the extended master private key specify the purpose of the entire branch.
+This BIP introduces a "Purpose Field" in the Hierarchical Deterministic wallet [\cite{4}]. The first child of the extended master private key specifies the purpose of the entire branch.
 \begin{equation*}
 m\; \;/\;\; purpose'\;\; /\;\; *
 \end{equation*}
-For example if $purpose=44$ it means that this is a multi-coin wallet, if $purpose=49$ it means that the keys generated follow the BIP49 specification (P2WPKH nested in P2SH).
+For example, if $purpose=44$ it means that this is a multi-coin wallet, if $purpose=49$ it means that the keys generated follow the BIP49 specification (P2WPKH nested in P2SH).
 
 \subsection{Multi-coin wallet BIP 44}
-The derivation scheme for a multi-coin wallet [\cite{5}] should be the follow:
+The derivation scheme for a multi-coin wallet [\cite{5}] should be the following:
 \begin{equation*}
 m / purpose' / coin\_type' / account' / change / address\_index
 \end{equation*}
@@ -95,12 +95,12 @@ Let's see the meaning of each field:
 	Normal derivation is used at this level.
 	\item \textit{Index}: this is the last derivation, used to have many keys for each cryptocoin. It can take values from 0 in sequentially increasing manner. Normal derivation is used at this level.
 \end{itemize}
-The principal advantage of this BIP is the possibility to easily back up all the cryptocoins of the user just by remembering a particular set of world (BIP39 mnemonic phrase). If these method is used to store more then one coins, keep attention in not to lose the master private key, otherwise all coins were lost.
+The principal advantage of this BIP is the possibility to easily back up all the cryptocoins of the user just by remembering a particular set of worlds (BIP39 mnemonic phrase). If this method is used to store more then one coin, keep attention not to lose the master private key, otherwise, all coins were lost.
 
 \subsection{SegWit addresses BIP 49}
 From August 2017 a new way to sign a Bitcoin transaction has been allowed, Segregated Witness: SegWit. It is not the purpose of this thesis to look inside of this topic, but it is important to say that a software not updated is not able to spend coins received in this format. So it is necessary to have a different branch in the derivation scheme just for SegWit addresses, in such a way that only software aware of SegWit are able to spend thus coins.
 \\ \\
-The derivation scheme introduced by BIP49 [\cite{6}] is the follow:
+The derivation scheme introduced by BIP49 [\cite{6}] is the following:
 \begin{equation*}
 m / 49' / coin\_type' / account' / change / address\_index
 \end{equation*}

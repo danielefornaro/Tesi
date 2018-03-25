@@ -2,18 +2,18 @@
 
 \label{wallet}
 
-The way used to store keys is essential in private-public keys cryptography. For this reason different type of wallet were designed.
+The way used to store keys is essential in private-public keys cryptography. For this reason, different types of wallets were designed.
 \begin{definition}
-	A wallet is a software used to store keys. It is able also to sign messages with the private key, but in this framework we will only consider wallets as key containers. 
+	A wallet is a software used to store keys. It is able also to sign messages with the private key, but in this framework, we will only consider wallets as key containers. 
 \end{definition}
-There are different type of wallet:
+There are different types of wallet:
 \begin{itemize}
 	\item Nondeterministic (\textit{random}) Wallet.
 	\item Deterministic Wallet.
 \end{itemize}
 
 \begin{remark}
-	Bitcoin wallets contains keys, not coins. Coins are in the Blockchain.
+	Bitcoin wallets contain keys, not coins. Coins are in the Blockchain.
 \end{remark}
 
 \section{Nondeterministic (\textit{random}) Wallet}
@@ -71,7 +71,7 @@ There are different types of deterministic wallets, in this text we will analyze
 These wallets are in increasing order of complexity.
 
 \subsection{Deterministic Wallet \textit{type-1}}
-The Deterministic Wallet \textit{type-1} is one of the simplest wallet among the deterministic ones. Each key is generated adding a number in a sequential order to the \textit{seed} and then computing a \textit{hash} function, the \textbf{SHA256}.
+The Deterministic Wallet \textit{type-1} is one of the simplest wallets among the deterministic ones. Each key is generated adding a number in a sequential order to the \textit{seed} and then computing a \textit{hash} function, the \textbf{SHA256}.
 \\ \\
 Let's see how to generate the $n^{th}$ private key:
 
@@ -105,7 +105,7 @@ Let's focus on the good and bad aspects of this wallet.
 		\end{center}\\
 		\hline
 		\begin{itemize}
-			\item In order to make a back up of the entire wallet it is needed to store the \textit{seed} only. All \textit{private keys} can be derived from it.
+			\item In order to make a back up of the entire wallet, it is needed to store the \textit{seed} only. All \textit{private keys} can be derived from it.
 			\item A single back up is needed.
 			\item The \textit{seed} can be stored easily also in a \textit{non digital way}, in a paper for example.
 		\end{itemize} &
@@ -194,7 +194,7 @@ Let's focus on the good and bad aspects of this wallet.
 		\end{center}\\
 		\hline
 		\begin{itemize}
-			\item In order to make a back up of the entire wallet it is needed to store the \textit{master private key} and the random number $r$. All \textit{private keys} can be derived from them.
+			\item In order to make a back up of the entire wallet, it is needed to store the \textit{master private key} and the random number $r$. All \textit{private keys} can be derived from them.
 			\item A single back up is needed.
 			\item The \textit{master private key} can be stored easily also in a \textit{non digital way}, in a paper for example.
 			\item It is possible to derive a new \textit{public key} using only non-secret information, with the procedure above.
@@ -207,7 +207,7 @@ Let's focus on the good and bad aspects of this wallet.
 \end{center}
 The \textit{type-2 deterministic wallet} is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses, obtained from the public keys, also in a non safe environment, having only $r$ and $MP$. 
 \\ \\
-A thief can only steal your privacy, if he steal only $MP$ and $r$. In fact he is able to see which messages (transaction) have you signed, without the possibility to sign new ones and spend your coins.
+A thief can only steal your privacy, if he steals only $MP$ and $r$. In fact, he is able to see which messages (transaction) have you signed, without the possibility to sign new ones and spend your coins.
 
 \subsection{Deterministic Wallet \textit{type-3}}
 Deterministic Wallet \textit{type-3} is the most elaborate among the ones considered. Starting from a \textit{seed} it is possible to obtain different \textit{keys} in a hierarchical way, with a structure similar to a tree. 
@@ -228,4 +228,4 @@ This procedure can produce a huge number of keys. They seem independent from an 
 \\ \\ 
 This particular type of Wallet is commonly known as \textbf{Hierarchical Deterministic Wallet} [\cite{1}], one of the most used and widespread.
 \\ \\
-In the next chapter we will see in detail how it works.
+In the next chapter, we will see in detail how it works.
