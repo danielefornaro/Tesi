@@ -9,19 +9,19 @@ We have seen how it is possible to generate keys starting from a seed. But a see
 \begin{remark}
 	Mistyping a single digit in the seed produce completely different keys.
 \end{remark}
-In order to work around this problem, some solution were implemented. Among them, the most widespread and used is the one described by BIP39, \textit{Bitcoin Improvement Proposal} number 39. This is not the only one, in this chapter we will also see another solution proposed by Electrum\footnote{Electrum is a lightweight Bitcoin client, released on November 5, 2011}, one of the most famous Bitcoin wallet.
+In order to work around this problem, some solutions were implemented. Among them, the most widespread and used is the one described by BIP39, \textit{Bitcoin Improvement Proposal} number 39. This is not the only one, in this chapter, we will also see another solution proposed by Electrum\footnote{Electrum is a lightweight Bitcoin client, released on November 5, 2011}, one of the most famous Bitcoin wallet.
 \\ \\
-Both these solutions used a \textit{Mnemonic phrase}, from which the seed is obtained. This phrase is designed to avoid typing errors while maintaining the same level of security and entropy.
+Both these solutions use a \textit{Mnemonic phrase}, from which the seed is obtained. This phrase is designed to avoid typing errors while maintaining the same level of security and entropy.
 \begin{flushleft}
 	\textbf{What is a Mnemonic phrase?}
 \end{flushleft}
 A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that makes up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid inserting into the dictionary two words with similar meaning or spelling.
 
 \section{BIP39}
-First we will see how to generate a mnemonic phrase in the framework of BIP39 [\cite{2}] and then how it is possible to obtain a seed from it.
+First, we will see how to generate a mnemonic phrase in the framework of BIP39 [\cite{2}] and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
-In order to generate a Mnemonic phrase we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many software provide a function that generate entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
+In order to generate a Mnemonic phrase, we will start from a given entropy, that can be seen as a large integer number. The way to obtain it can be left free to the user: he can obtain it by inserting arbitrarily chosen numbers (poor choice of randomness), roll a dice many times or with any other method he considers suitable. Many software provide a function that generates entropy with quite randomness, but if someone is skeptical about the reliability of software randomness, he must provide himself with such integer number.
 \\ \\
 Let us call \textit{ENT} the number of binary digits of the given entropy. Then \textit{ENT} should belong to a given set:
 \begin{equation*}
@@ -50,11 +50,11 @@ Now it is clear the reason for a constraint on the length of the entropy in inpu
 	\item $ENT<128$ could be not secure enough,
 	\item $ENT>256$ is useless.
 \end{enumerate}
-The point (i) is due to the structure proposed by BIP39. It is only a convention to take the first $ENT/32$ bits as a checksum. However it is essential that the final length of the entropy plus the checksum must be a dividend of 11, from the moment that the dictionary is a set of $2^{11}$ words.
+The point (i) is due to the structure proposed by BIP39. It is only a convention to take the first $ENT/32$ bits as a checksum. However, it is essential that the final length of the entropy plus the checksum must be a dividend of 11, from the moment that the dictionary is a set of $2^{11}$ words.
 \\ \\
-The point (ii) is just a suggestion because taking less entropy could bring to a leak of security. It will be easier for an attacker to guess your mnemonic phrase by trying out all the possible combinations if less words are involved. It is important to remember that adding even a single bit of entropy, doubles the difficulty of guessing it.
+The point (ii) is just a suggestion because taking less entropy could bring to a leak of security. It will be easier for an attacker to guess your mnemonic phrase by trying out all the possible combinations if fewer words are involved. It is important to remember that adding even a single bit of entropy, doubles the difficulty of guessing it.
 \\ \\
-The point (iii) is another suggestion. A private key is a number smaller then $2^{256}$ therefore it would be useless to generate a seed starting from an entropy with more then 256 bits.
+The point (iii) is another suggestion. A private key is a number smaller than $2^{256}$, therefore, it would be useless to generate a seed starting from an entropy with more than 256 bits.
 \\ \\
 Thanks to constraint (i) we obtain that the length of \textit{entropy\_checked} is a dividend of 11:
 \begin{equation*}
@@ -64,7 +64,7 @@ Let us consider \textit{entropy\_checked} as a string of bits and then we divide
 \\ \\
 Each of these strings represents an integer number that can take values in the range between 0 and 2047, ie $2^{11}-1$. Associate each of these numbers with a word in the chosen dictionary, suppose to consider the English one sorted alphabetically. Write down all these words, separated by a space and obtain the Mnemonic Phrase.
 \\ \\
-All these steps can be summarize with the follow scheme, ($ENT=128$):
+All these steps can be summarized with the following scheme, ($ENT=128$):
 \begin{center} 
 	$ entropy_{16} = f012003974d093eda670121023cd03bb $ 
 	\\
@@ -91,7 +91,7 @@ obtaining a sequence of 12 words:
 
 
 \subsection{From Mnemonic to Seed}
-Once obtaining the Mnemonic phrase we need to derive the seed. In order to do so an hash function is used. So it will be infeasible to derive the Mnemonic phrase from the seed.
+Once obtaining the Mnemonic phrase we need to derive the seed. In order to do so, a hash function is used. So it will be infeasible to derive the Mnemonic phrase from the seed.
 \\ \\
 The function used is the PBKDF2 and it is used in order to avoid brute force attack, from the moment that the output has exactly the same length of a standard hash function, but it will take more times to calculate it from the moment that it will compute the same hash function many times.
 \\ \\
@@ -105,13 +105,13 @@ It receives as input:
 \end{itemize}
 Summing up it can be said that it calculates the same hash function (HMAC-SHA512) 2048 times.
 \\ \\
-In order to introduce more complexity in the seed computation a \textit{Salt} is introduced. If not specified the standard salt is simply the world 'mnemonic', otherwise it could be extended with an optional \textit{passphrase}.
+In order to introduce more complexity in the seed computation a \textit{Salt} is introduced. If not specified the standard salt is simply the world 'mnemonic', otherwise, it could be extended with an optional \textit{passphrase}.
 \\ \\
-Although it is true that a human being is a scarce source of randomness, the passphrase is usually chosen by the user. This is due to the fact that it should not introduce more entropy, but it prevents an attack with rainbow tables and gives the possibility to the user to have different wallet with the same mnemonic phrase.
+Although it is true that a human being is a scarce source of randomness, the passphrase is usually chosen by the user. This is due to the fact that it should not introduce more entropy, but it prevents an attack with rainbow tables and gives the possibility to the user to have different wallets with the same mnemonic phrase.
 \begin{remark}
 	The randomness should be guaranteed by the input entropy used to generate the mnemonic phrase, not by the passphrase.
 \end{remark}
-The python code is the follow:
+The python code is the following:
 \begin{lstlisting}[language=Python]
 from hashlib import sha512
 from pbkdf2 import PBKDF2
@@ -126,14 +126,14 @@ where \textit{mnemonic} is the mnemonic phrase previously computed and \textit{p
 \end{remark}
 
 \section{Electrum Mnemonic}
-Even if BIP39 is proposed, it is not the only solution adopted among the practitioners. One example is the one proposed by Electrum [\cite{3}].
+Even if BIP39 is proposed, it is not the only solution adopted by the practitioners. One example is the one proposed by Electrum [\cite{3}].
 \\ \\
 The main difference is in the way that the mnemonic phrase is generated and the purpose of it. Electrum chooses to assign a version to the seed in such a way that is possible to recognize the purpose of the keys and the way to generate them.
 
 \subsection{Mnemonic Generation}
-Whenever a new mnemonic phrase is required, Electrum starts from some entropy, generated through a random function. Obviously it is possible to generate a valid mnemonic phrase with an entropy chosen by the user, if he is skeptical or doesn't want to relay on the reliability of the randomness of random function.
+Whenever a new mnemonic phrase is required, Electrum starts from some entropy, generated through a random function. Obviously, it is possible to generate a valid mnemonic phrase with an entropy chosen by the user, if he is skeptical or doesn't want to rely on the reliability of the randomness of the random function.
 \\ \\
-To be consistent with the BIP39 section, consider the entropy as a large integer number and call \textit{ENT} the number of its binary digits. Then \textit{ENT} must be a multiple of 11, if the chosen dictionary is the same of BIP39. However the choice of dictionary is not binding.
+To be consistent with the BIP39 section, consider the entropy as a large integer number and call \textit{ENT} the number of its binary digits. Then \textit{ENT} must be a multiple of 11, if the chosen dictionary is the same of BIP39. However, the choice of the dictionary is not binding.
 \\ \\
 The first important difference with BIP39 mnemonic is that the checksum is not performed on the entropy but on the Mnemonic phrase directly. In order to obtain a valid mnemonic phrase, the following instruction must be followed:
 \begin{enumerate}
@@ -146,7 +146,7 @@ The first important difference with BIP39 mnemonic is that the checksum is not p
 		\item '0x100' for a segwit type seed,
 		\item '0x101' for a two-factor authenticated type seed.
 	\end{itemize}
-	\item If the initial digits are different, increase entropy by one and then go back to point 1, otherwise you have obtained a valid mnemonic phrase.
+	\item If the initial digits are different, increase entropy by one and then go back to point 1, otherwise, you have obtained a valid mnemonic phrase.
 \end{enumerate}
 Point 5. has the simple effect, most of the time, of changing a single word of the mnemonic phrase and this will lead to a complete different HASH. Do this over and over again, until the first digits match the version digits required.
 \\ \\ 
@@ -180,7 +180,7 @@ def generate_mnemonic(entropy, number_words, version, dictionary):
 \end{lstlisting}
 
 \begin{flushleft}
-	Let's see and example: suppose to be looking for a standard type seed, starting with $ENT=132$:
+	Let's see an example: suppose to be looking for a standard type seed, starting with $ENT=132$:
 \end{flushleft}
 
 \begin{center} 
@@ -199,7 +199,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 3d5d23737859601eeabe32d1e1...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
+Does \textit{HASH}(Mnemonic) start with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
 \begin{center}
 	$entropy_{16} = entropy_{16} + 1  = ef938205cd78ab6d876398dcfd65dae33$
 	\\
@@ -216,7 +216,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 2a3b2cf6a0506844a77baf8175...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
+Does \textit{HASH}(Mnemonic) start with '01'? $\Rightarrow$ NO $\Rightarrow$ add 1 to the \textit{entropy}.
 \\ \\
 After other 443 attempts we obtain:
 \begin{center}
@@ -235,7 +235,7 @@ Mnemonic = \textit{usage orchard lift online melt replace budget indoor table tw
 \begin{center}
 	\textit{HASH}(Mnemonic) $= 01d133fdcc54bd0da3d717173e0f82127...$
 \end{center}
-Does \textit{HASH}(Mnemonic) starts with '01'? $\Rightarrow$ YES.
+Does \textit{HASH}(Mnemonic) start with '01'? $\Rightarrow$ YES.
 \\ \\
 So we have finally found a valid Mnemonic phrase for the standard type seed.
 
@@ -243,9 +243,9 @@ So we have finally found a valid Mnemonic phrase for the standard type seed.
 \subsection{From Mnemonic to Seed}
 Once obtaining the Mnemonic phrase the seed is derived in the same way described in BIP39, with only one exception:
 \\ \\
-The \textbf{Salt} used for the PBKDF2 function does not contain the word 'mnemonic', instead it contains the word 'electrum'. It is always concatenate with a \textit{passphrase}, chosen by the user.
+The \textbf{Salt} used for the PBKDF2 function does not contain the word 'mnemonic', instead, it contains the word 'electrum'. It is always concatenated with a \textit{passphrase}, chosen by the user.
 \\ \\
-The python code it is therefore the following:  
+The python code it is, therefore, the following:  
 
 \begin{lstlisting}[language=Python]
 from hashlib import sha512
@@ -265,9 +265,9 @@ seed = PBKDF2(mnemonic, 'electrum' + passphrase, iterations = 2048, macmodule = 
 \section{Comparison}
 Once described how to generate the Mnemonic phrase for each of the two principal proposals, let's analyze the advantages and disadvantages.
 \\ \\
-Both BIP39 and Electrum are secure from a so called \textit{brute force attack}, from the moment that the function PBKDF2 is used to generate the seed from the mnemonic phrase and so it is infeasible to guess a Mnemonic randomly generated by another user. In fact each time  a valid phrase has been found, it is required to compute the seed, then the first child keys and then look at the public ledger, the blockchain, in order to see if some of this private keys are used to sign a transaction. All these passages are computational consuming and it would take too much time to try even a small part of all the possible combination. Even with all the most powerful computers in the world working together, it will take a time of many order of magnitude greater then the age of the universe itself.
+Both BIP39 and Electrum are secure from a so-called \textit{brute force attack}, from the moment that the function PBKDF2 is used to generate the seed from the mnemonic phrase and so it is infeasible to guess a Mnemonic randomly generated by another user. In fact, each time a valid phrase has been found, it is required to compute the seed, then the first child keys and then look at the public ledger, the blockchain, in order to see if some of this private keys are used to sign a transaction. All these passages are computational consuming and it would take too much time to try even a small part of all the possible combination. Even with all the most powerful computers in the world working together, it will take a time of many order of magnitude greater than the age of the universe itself.
 \\ \\
-These two methods are both secure, but there is a difference. Suppose to be looking for a 12 words mnemonic already used: for BIP39 it is "only" needed to try 128 bits of entropy and then the others 4 bits, the checksum, are obtained through a HASH function, instead with Electrum it is needed to try all the 132 bits of entropy and then check, through an HASH function, if they are valid. With this example the difference is in 4 bits, but it increase with the number of words:
+These two methods are both secure, but there is a difference. Suppose to be looking for a 12 words mnemonic already used: for BIP39 it is "only" needed to try 128 bits of entropy and then the others 4 bits, the checksum, are obtained through a HASH function, instead with Electrum it is needed to try all the 132 bits of entropy and then check, through a HASH function, if they are valid. With this example, the difference is in 4 bits, but it increases with the number of words:
 
 \begin{center}
 	\begin{tabular}{|| c | c | c | c ||} 
@@ -286,17 +286,17 @@ These two methods are both secure, but there is a difference. Suppose to be look
 		\hline
 	\end{tabular}
 \end{center}
-The first column represents the number of words in a mnemonic phrase, the second and the third represent respectively the bits of entropy needed to be checked in order to find a specific BIP39 or Electrum mnemonic phrase. The last column is simply the difference between the previous two. Although this additional difficulty is not necessary, the difference between the two methods is not negligible. In fact, to find a specific Electrum phrase with 12 words you have to do 16 $(2^4)$ times the attempts needed to find the same number of words in BIP39 framework. If the words become 24 the number of attempts would be 256 $(2^8)$ times.
+The first column represents the number of words in a mnemonic phrase, the second and the third represent respectively the bits of entropy needed to be checked in order to find a specific BIP39 or Electrum mnemonic phrase. The last column is simply the difference between the previous two. Although this additional difficulty is not necessary, the difference between the two methods is not negligible. In fact, to find a specific Electrum phrase with 12 words you have to do 16 $(2^4)$ times the attempts needed to find the same number of words in the BIP39 framework. If the words become 24 the number of attempts would be 256 $(2^8)$ times.
 \\ \\ 
-Another difference is in the way that a phrase is consider valid. BIP39 used a checksum based on the input entropy. This means that the knowledge of the mnemonic phrase alone is not enough to know if it is valid or not. A fixed dictionary is always required. On the other side for Electrum it is useless the knowledge of the dictionary, because the validation is based directly on the HASH of the mnemonic phrase. Furthermore Electrum allows the use of any kind of dictionary and not only the standard ones.
+Another difference is in the way that a phrase is considered valid. BIP39 used a checksum based on the input entropy. This means that the knowledge of the mnemonic phrase alone is not enough to know if it is valid or not. A fixed dictionary is always required. On the other side for Electrum it is useless the knowledge of the dictionary because the validation is based directly on the HASH of the mnemonic phrase. Furthermore, Electrum allows the use of any kind of dictionary and not only the standard ones.
 \\ \\
-Finally the most important difference is the Electrum introduction of version type for the seed. While BIP39 only check if a mnemonic is valid, Electrum check the validity of phrase looking if it correspond to a specific version. Directly from the Mnemonic, with Electrum, it is possible to understand how to derive all the keys required and their purpose. On the other side, with BIP39, it is impossible to say \textit{a priori} the purpose of keys derived from that seed. 
+Finally, the most important difference is the Electrum introduction of version type for the seed. While BIP39 only check if a mnemonic is valid, Electrum checks the validity of phrase looking if it corresponds to a specific version. Directly from the Mnemonic, with Electrum, it is possible to understand how to derive all the keys required and their purpose. On the other side, with BIP39, it is impossible to say \textit{a priori} the purpose of keys derived from that seed. 
 \\ \\
 To avoid this problem a new BIP was proposed: BIP43. In order to identify a particular purpose for a bunch of keys, a particular derivation scheme was used:
 \begin{equation*}
 m\; \;/\;\; purpose'\;\; /\;\; *
 \end{equation*}
-Changing the derivation path, will change also the purpose of the keys. For more information see the next chapter.
+Changing the derivation path will change also the purpose of the keys. For more information see the next chapter.
 
 
 
