@@ -22,16 +22,12 @@ In order to have a clear understanding of this thesis, it is necessary to know t
 \end{itemize}
 Only these two elements together can describe all the cryptography behind Bitcoin.
 
-%\section{Introduction}
-%Bitcoin security is based on public and private key cryptography. The main concept is that it is simple to compute the public key, knowing the private, but it is infeasible to calculate the private key, knowing the public. \\ \\
-%In order to obtain this result a particular Elliptic Curve is used.
-
 \section{HASH function}
-In general a hash function is a mathematical process that takes input data of \textit{any} size, performs an operation on it, and returns output data of a \textit{fixed} size.
+In general, a hash function is a mathematical process that takes input data of \textit{any} size, performs an operation on it, and returns output data of a \textit{fixed} size.
 \\ \\
 The input data is called \textit{message} and the output data is called \textit{hash value}. 
 \\ \\
-A hash function must have at least these six properties:
+A good and secure hash function must have at least these six properties:
 \begin{enumerate}[label=(\roman*)]
 	\item It is \textbf{deterministic}: if the message remains unchanged, the hash value is the same.
 	\item It is \textbf{quick}: it should not take too much time to compute the hash value from the message.
@@ -40,9 +36,9 @@ A hash function must have at least these six properties:
 	\item It has the \textbf{avalanche effect}: a very small change in the input message, even flipping a single bit, produces a completely different hash value.
 	\item It has \textbf{fixed size} output and could have input messages of \textbf{any size}.
 \end{enumerate}
-In this thesis we will see hash functions as black-boxes, with all the proprieties described above. 
+In this thesis, we will see hash functions as black-boxes, with all the proprieties described above. 
 \\ \\
-There are various kinds, but for our purpose the main difference lies in the number of bits of the hash value. Among all the possible hash function, in Bitcoin cryptography three functions are used:
+There are various kinds, but for our purpose, the main difference lies in the number of bits of the hash value. Among all the possible hash functions, in Bitcoin cryptography three functions are used:
 \begin{itemize}
 	\item \textbf{SHA256}: Secure Hash Algorithm 256
 	\begin{itemize}
@@ -60,7 +56,7 @@ There are various kinds, but for our purpose the main difference lies in the num
 		\item output size: 160 bits.
 	\end{itemize}
 \end{itemize}
-One important hash function used in the Bitcoin cryptography is the so called HASH160. It is simple the concatenation of SHA256 and RIPEDM160:
+One important hash function used in the Bitcoin cryptography is the so-called HASH160. It is simply the concatenation of SHA256 and RIPEDM160:
 \begin{equation*}
 HASH160 \, (\, msg\, ) = RIPEDM160\, (\, SHA256 \, (\, msg \, )).
 \end{equation*}
@@ -74,7 +70,7 @@ There are two other functions that will be heavily used in this thesis:
 	\item \textbf{PBKDF2}: Password-Based Key Derivation Function 2.
 \end{itemize}
 \begin{flushleft}
-	\textbf{HMAC} is a function that made some computation, involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}, namely attack in which the length of the input message is know and all the possible combination of the input are tried.
+	\textbf{HMAC} is a function that made some computation, involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}, namely attack in which the length of the input message is known and all the possible combinations of the input are tried.
 \end{flushleft}
 It receives 3 inputs:
 \begin{itemize}[label=$\odot$]
@@ -82,7 +78,7 @@ It receives 3 inputs:
 	\item \textbf{Key}: a sequence of bytes.
 	\item \textbf{Message}: a sequence of bytes.
 \end{itemize}
-This function compute the following operations:
+This function computes the following operations:
 \begin{equation*}
 HMAC(H,k,m)=H\, (\, opad(k) \, ||\, H\, (\, ipad(k) \, ||\,  m \, )),
 \end{equation*}
@@ -98,7 +94,7 @@ It receives five inputs:
 	\item \textbf{Digest-module}: a hash function with the properties described above.
 	\item \textbf{Mac-module}: a message authentication code  module (e.g. HMAC).
 \end{itemize}
-Having a salt reduce the ability to use rainbow tables for attack, namely tables with precomputed hash value. It is recommends to use at least 64 bits for the salt.
+Having a salt reduces the ability to use rainbow tables for attacks, namely tables with precomputed hash value. It is recommended to use at least 64 bits for the salt.
 
 
 
@@ -161,7 +157,7 @@ This is due to the fact that
 \begin{equation*}
 p\cdot k =0 \quad \textrm{mod} \ p \qquad \forall k\in \mathbb{N}.
 \end{equation*}
-The other implication ($\impliedby$) is almost the same and follow the same logic.
+The other implication ($\impliedby$) is almost the same and it follows the same logic.
 \begin{flushright}
 	\textit{c.v.d.}
 \end{flushright}
@@ -169,12 +165,12 @@ Once shown the symmetry property, it can be useful to denote the point $P(x,y)$ 
 \begin{equation*}
 P=-Q \implies P+Q=0,
 \end{equation*}
-where the $+$ operator between two point in the EC will be explained below and the $0$ in this contest is the \textit{point at infinity}.
+where the $+$ operator between two points in the EC will be explained below and the $0$ in this contest is the \textit{point at infinity}.
 
 \subsection{Point addition}
-Once defined a point on the elliptic curve, let's introduce the addition between two point on this finite field.
+Once defined a point on the elliptic curve, let's introduce the addition between two points on this finite field.
 \\ \\
-We need to change our definition of addition in order to make it works in $\mathbb{F}_p$. In this framework we claim that if some points are aligned over the finite field $\mathbb{F}_p$, then they have zero sum.
+We need to change our definition of addition in order to make it works in $\mathbb{F}_p$. In this framework, we claim that if some points are aligned over the finite field $\mathbb{F}_p$, then they have zero-sum.
 \\ \\
 So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense shown in Figure \ref{fig:EC_aligned}
 \begin{figure}[ht!]
@@ -185,20 +181,20 @@ So $P+Q=R$ if and only if $P$, $Q$ and $-R$ are aligned, in the sense shown in F
 \end{figure}
 
 \begin{flushleft}
-	After defined when points in the EC have zero sum, it is possible to calculate the equations for point addition:
+	After defined when points in the EC have zero-sum, it is possible to calculate the equations for point addition:
 \end{flushleft}
 Suppose that \textit{A} and \textit{B} belong to the Elliptic Curve.
 
 \begin{center}
 	$ A=(x_1,y_1) \quad B=(x_2,y_2)$.
 \end{center}
-Let's defined $ A+B :=(x_3,y_3) $ 
+Let's define $ A+B :=(x_3,y_3) $ 
 \\ \\
 When $x_1=x_2$ but $y_1 \neq y_2$, it is the case in which $A$ and $B$ are symmetric point and so the sum is a particular point, called \textit{point at infinity}: 
 \begin{equation*}
 A+B=0=	(inf,inf) .
 \end{equation*}
-In all the other case we have:
+In all the other cases we have:
 
 
 
@@ -210,7 +206,7 @@ where $s$ is a dummy variable, used to compute $x_3$ and $y_3$. It can be comput
 	$ x_3=s^2-x_1-x_2  \quad$ mod $p$,\\
 	$y_3=s(x_1-x_3)-y_1  \quad$mod $p$.
 \end{center}
-Once we have $s$ the value $x_3$ and $y_3$ are obtained followed this simple formula.
+Once we have $s$ the value $x_3$ and $y_3$ are obtained following this simple formula.
 
 
 \subsection{Scalar multiplication}
@@ -220,7 +216,7 @@ Once defined the addition, any multiplication between a scalar and a point on th
 		P+P+\cdot \cdot \cdot+P
 	}_{n\text{ times}}$.
 \end{center}
-When $n$ is a very large number can be difficult or even infeasible to compute $nP$ in this way, but we can use the \textit{double and add algorithm} in order to perform multiplication in $\mathcal{O}(\log{}n)$ steps. Let's see and example:
+When $n$ is a very large number can be difficult or even infeasible to compute $nP$ in this way, but we can use the \textit{double and add algorithm} in order to perform multiplication in $\mathcal{O}(\log{}n)$ steps. Let's see an example:
 \\ \\
 Suppose that we need to compute $53 \cdot P$ where $P$ is a point on the EC:
 \begin{equation*}
@@ -233,11 +229,11 @@ Once we have described the multiplication between a scalar and a point, let's se
 \begin{equation*}
 Q = n \cdot P,
 \end{equation*}
-where $Q$ and $P$ are point on the EC and $n$ is a scalar number. 
+where $Q$ and $P$ are points on the EC and $n$ is a scalar number. 
 \\ \\ 
 Let's suppose to know $Q$ and $P$. With these information it exists only one possible $n \in \mathbb{N}$, such that $0<n<p$ and that the equation above holds true. Even so this number $n$ is infeasible to find for large value of $p$.
 \\ \\
-This is due to the fact that there is not an efficient algorithm that is able to compute $n$ given $P$ and $Q$. The only way to find $n$ is by trying. As already mention, this could became infeasible if the number of value that $n$ can assume ($p-1$) is too large.
+This is due to the fact that there is not an efficient algorithm that is able to compute $n$ given $P$ and $Q$. The only way to find $n$ is by trying. As already mentioned, this could become infeasible if the number of value that $n$ can assume ($p-1$) is too large.
 
 \subsection{Group order}
 An elliptic curve defined over a finite field is a group and so it has a finite number of points. This number is called \textit{order} of the group.
@@ -289,7 +285,7 @@ Let's consider a particular point $G$, called generator, expressed in hexadecima
 	$ x=79BE667E F9DCBBAC 55A06295 CE870B07 029BFCDB 2DCE28D9 59F2815B 16F81798$\\
 	$y=483ADA77 26A3C465 5DA4FBFC 0E1108A8 FD17B448 A6855419 9C47D08F FB10D4B8$
 \end{center}
-From the moment that the order of the group is a prime number, the order of any subgroup is equal to the order of the entire group. In particular the order of the subgroup generated by $G$ is equal to \textit{order}.
+From the moment that the order of the group is a prime number, the order of any subgroup is equal to the order of the entire group. In particular, the order of the subgroup generated by $G$ is equal to \textit{order}.
 \\ \\
 We have now all the elements necessary to define the private and the public key.
 \begin{definition}
@@ -313,9 +309,9 @@ Let's suppose to have a message that is needed to be signed, in Bitcoin this mes
 
 \begin{itemize}
 	\item A message is signed using a \textbf{private key}.
-	\item Knowing the \textbf{public key} associated to the private key that sign the message, it is possible to verify that the message is signed using the corresponding private key (without knowing it).
+	\item Knowing the \textbf{public key} associated with the private key that signs the message, it is possible to verify that the message is signed using the corresponding private key (without knowing it).
 \end{itemize}
-For this reason the keys are called private and public, the former is suppose to be kept \textbf{secret}, because it is able to sign a message, instead the latter is suppose to be \textbf{shared}, in order to let everyone else knows that who signs the message is in possession of the corresponding private key.
+For this reason the keys are called private and public, the former is suppose to be kept \textbf{secret} because it is able to sign a message, instead the latter is suppose to be \textbf{shared}, in order to let everyone else knows that who signs the message is in possession of the corresponding private key.
 
 
 
