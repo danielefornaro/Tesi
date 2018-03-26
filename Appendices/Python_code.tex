@@ -1,0 +1,284 @@
+% Appendix B
+\chapter{Python code}% Main appendix title
+\label{AppendixB} % For referencing this appendix elsewhere, use 
+This appendix shows the most relevant parts of the python code. These are extracts of code, they only work if inserted in the repository of the professor Ferdinando M. Ametrano [\cite{13}], from the moment that other functions are called from that repository.
+ 
+
+\section{Deterministic Wallet \textit{type-1}}
+
+\begin{lstlisting}[language=Python]
+from secp256k1 import order, G, modInv, pointAdd, pointMultiply
+from hashlib import sha256
+import random
+
+# secret random number
+r = random.randint(0, order-1)
+print('\nr =', hex(r), '\n')
+
+# number of key pairs to generate
+nKeys = 3
+p = [0] * nKeys
+P = [(0,0)] * nKeys
+
+for i in range(0, nKeys):
+	# H(i|r)
+	H_i_r = int(sha256((hex(i)+hex(r)).encode()).hexdigest(), 16) %order
+	p[i] = H_i_r
+	P[i] = pointMultiply(p[i], G)
+	print('prKey#', i, ':\n', hex(p[i]), sep='')
+	print('PubKey#', i, ':\n', hex(P[i][0]), '\n',hex(P[i][1]),'\n', sep='')
+\end{lstlisting}
+
+
+\section{Deterministic Wallet \textit{type-2}}
+
+
+
+\begin{lstlisting}[language=Python]
+from secp256k1 import order, G, modInv, pointAdd, pointMultiply
+from hashlib import sha256
+import random
+
+
+# secret master private key
+mp = random.randint(0, order-1)
+print('\nsecret master private key:\n', hex(mp),'\n')
+
+# public random number
+r = random.randint(0, order-1)
+print('public ephemeral key:\n', hex(r))
+
+# Master PublicKey:
+MP = pointMultiply(mp, G)
+print('Master Public Key:\n', hex(MP[0]), '\n', hex(MP[1]), '\n')
+
+# number of key pairs to generate
+nKeys = 3
+p = [0] * nKeys
+P = [(0,0)] * nKeys
+
+# PubKeys can be calculated without using privKeys
+for i in range(0, nKeys):
+	# H(i|r)
+	H_i_r = int(sha256((hex(i)+hex(r)).encode()).hexdigest(), 16) %order
+	P[i] = pointAdd(MP, pointMultiply(H_i_r, G))                 
+
+# check that PubKeys match with privKeys
+for i in range(0, nKeys):
+	# H(i|r)
+	H_i_r = int(sha256((hex(i)+hex(r)).encode()).hexdigest(), 16) %order
+	p[i] = (mp + H_i_r) %order
+	assert P[i] == pointMultiply(p[i], G)
+	print('prKey#', i, ':\n', hex(p[i]), sep='')
+	print('PubKey#', i, ':\n', hex(P[i][0]), '\n',hex(P[i][1]),'\n', sep='')
+\end{lstlisting}
+
+
+
+
+\section{Hierarchical Deterministic Wallet - BIP32}
+
+\begin{lstlisting}[language=Python]
+from secp256k1 import order, G, pointMultiply, pointAdd, a, b, prime
+from hmac import HMAC
+from hashlib import new as hnew
+from hashlib import sha512, sha256
+from base58 import b58encode_check, b58decode_check
+from FiniteFields import modular_sqrt
+
+BITCOIN_PRIVATE = b'\x04\x88\xAD\xE4'
+BITCOIN_PUBLIC = b'\x04\x88\xB2\x1E'
+TESTNET_PRIVATE = b'\x04\x35\x83\x94'
+TESTNET_PUBLIC = b'\x04\x35\x87\xCF'
+BITCOIN_SEGWIT_PRIVATE = b'\x04\xb2\x43\x0c'
+BITCOIN_SEGWIT_PUBLIC = b'\x04\xb2\x47\x46'
+PRIVATE = [BITCOIN_PRIVATE, TESTNET_PRIVATE, BITCOIN_SEGWIT_PRIVATE]
+PUBLIC  = [BITCOIN_PUBLIC,  TESTNET_PUBLIC, BITCOIN_SEGWIT_PUBLIC]
+
+def h160(inp):
+	h1 = sha256(inp).digest()
+	return hnew('ripemd160', h1).digest()
+
+def bip32_isvalid_xkey(vbytes, depth, fingerprint, index, chain_code,key):
+	assert len(key) == 33, "wrong length for key"
+	if (vbytes in PUBLIC):
+		assert key[0] in (2, 3)
+	elif (vbytes in PRIVATE):
+		assert key[0] == 0
+	else:
+		raise Exception("invalix key[0] prefix '%s'" % type(key[0]).__name__)
+	assert int.from_bytes(key[1:33], 'big') < order, "invalid key"
+	assert len(depth) == 1, "wrong length for depth"
+	assert len(fingerprint) == 4, "wrong length for fingerprint"
+	assert len(index) == 4, "wrong length for index"
+	assert len(chain_code) == 32, "wrong length for chain_code"
+
+def bip32_parse_xkey(xkey):
+	decoded = b58decode_check(xkey)
+	assert len(decoded) == 78, "wrong length for decoded xkey"
+	info = {"vbytes": decoded[:4],
+					"depth": decoded[4:5],
+					"fingerprint" : decoded[5:9],
+					"index" : decoded[9:13],
+					"chain_code" : decoded[13:45],
+					"key" : decoded[45:]
+					}
+	bip32_isvalid_xkey(info["vbytes"], info["depth"], info["fingerprint"], \
+	info["index"], info["chain_code"], info["key"])
+	return info
+
+def bip32_compose_xkey(vbytes, depth, fingerprint, index, chain_code,key):
+	bip32_isvalid_xkey(vbytes, depth, fingerprint, index, chain_code, key)
+	xkey = vbytes + \
+ 				 depth + \
+ 				 fingerprint + \
+ 				 index + \
+ 				 chain_code + \
+ 				 key
+	return b58encode_check(xkey)
+
+def bip32_xprvtoxpub(xprv):
+	decoded = b58decode_check(xprv)
+	assert decoded[45] == 0, "not a private key"
+	p = int.from_bytes(decoded[46:], 'big')
+	P = pointMultiply(p, G)
+	P_bytes = (b'\x02' if (P[1] % 2 == 0) else b'\x03') + P[0].to_bytes(32, 'big')
+	network = PRIVATE.index(decoded[:4])
+	xpub = PUBLIC[network] + decoded[4:45] + P_bytes
+	return b58encode_check(xpub)
+
+def bip32_master_key(seed, seed_bytes, vbytes = PRIVATE[0]):
+	hashValue = HMAC(b"Bitcoin seed", seed.to_bytes(seed_bytes, 'big'), sha512).digest()
+	p_bytes = hashValue[:32]
+	p = int(p_bytes.hex(), 16) % order
+	p_bytes = b'\x00' + p.to_bytes(32, 'big')
+	chain_code = hashValue[32:]
+	xprv = bip32_compose_xkey(vbytes, b'\x00', b'\x00\x00\x00\x00', b'\x00\x00\x00\x00', chain_code, p_bytes)
+	return xprv
+
+# Child Key Derivation
+def bip32_ckd(extKey, child_index):
+	parent = bip32_parse_xkey(extKey)
+	depth = (int.from_bytes(parent["depth"], 'big') + 1).to_bytes(1, 'big')
+	if parent["vbytes"] in PRIVATE:
+		network = PRIVATE.index(parent["vbytes"])
+		parent_prvkey = int.from_bytes(parent["key"][1:], 'big')
+		P = pointMultiply(parent_prvkey, G)
+		parent_pubkey = (b'\x02' if (P[1] % 2 == 0) else b'\x03') + P[0].to_bytes(32, 'big')
+	else:
+		network = PUBLIC.index(parent["vbytes"])
+		parent_pubkey = parent["key"]
+	fingerprint = h160(parent_pubkey)[:4]
+	index = child_index.to_bytes(4, 'big')
+	if (index[0] >= 0x80): #private (hardened) derivation
+		assert parent["vbytes"] in PRIVATE, "Cannot do private (hardened) derivation from Pubkey"
+		parent_key = parent["key"]
+	else:
+		parent_key = parent_pubkey
+	hashValue = HMAC(parent["chain_code"], parent_key + index, sha512).digest()
+	chain_code = hashValue[32:]
+	p = int(hashValue[:32].hex(), 16)
+	if parent["vbytes"] in PRIVATE:
+		p = (p + parent_prvkey) % order
+		p_bytes = b'\x00' + p.to_bytes(32, 'big')
+		return bip32_compose_xkey(PRIVATE[network], depth, fingerprint, index, chain_code, p_bytes)
+	else:
+		P = pointMultiply(p, G)
+		X = int.from_bytes(parent_pubkey[1:], 'big')
+		Y_2 = X**3 + a*X + b
+		Y = modular_sqrt(Y_2, prime)
+		if (Y % 2 == 0):
+			if (parent_pubkey[0] == 3):
+				Y = prime - Y
+		else:
+			if (parent_pubkey[0] == 2):
+				Y = prime - Y
+		parentPoint = (X, Y)
+		P = pointAdd(P, parentPoint)
+		P_bytes = (b'\x02' if (P[1] % 2 == 0) else b'\x03') + P[0].to_bytes(32, 'big')
+		return bip32_compose_xkey(PUBLIC[network], depth, fingerprint, index, chain_code, P_bytes)
+\end{lstlisting}
+
+\section{Mnemonic phrase - BIP39}
+
+\begin{lstlisting}[language=Python]
+from hashlib import sha256, sha512
+from pbkdf2 import PBKDF2
+import hmac
+
+def from_entropy_to_mnemonic_int(entropy, ENT):  
+	entropy_bytes = entropy.to_bytes(int(ENT/8), byteorder='big')
+	checksum = sha256(entropy_bytes).digest()
+	checksum_int = int.from_bytes(checksum, byteorder='big')
+	checksum_bin = bin(checksum_int)
+	while len(checksum_bin)<258:
+		checksum_bin = '0b0' + checksum_bin[2:]
+	entropy_bin = bin(entropy)
+	while len(entropy_bin)<ENT+2:
+		entropy_bin = '0b0' + entropy_bin[2:]
+	entropy_checked = entropy_bin[2:] + checksum_bin[2:2+int(ENT/32)]
+	number_mnemonic = (ENT/32 + ENT)/11
+	assert number_mnemonic %1 == 0
+	number_mnemonic = int(number_mnemonic)
+	mnemonic_int = [0]*number_mnemonic
+	for i in range(0,number_mnemonic):
+		mnemonic_int[i] = int(entropy_checked[i*11:(i+1)*11],2)
+	return mnemonic_int
+
+def from_mnemonic_int_to_mnemonic(mnemonic_int, dictionary_txt):
+	dictionary  = open(dictionary_txt, 'r').readlines()
+	mnemonic = ''
+	for j in mnemonic_int:
+		mnemonic = mnemonic + ' ' +  dictionary[j][:-1]
+	mnemonic = mnemonic[1:]
+	return mnemonic
+
+def from_mnemonic_to_seed(mnemonic, passphrase='TREZOR'):
+	PBKDF2_ROUNDS = 2048
+	return PBKDF2(mnemonic, 'mnemonic' + passphrase, iterations = PBKDF2_ROUNDS, macmodule = hmac, digestmodule = sha512).read(64).hex())
+\end{lstlisting}
+
+
+\section{Mnemonic phrase - Electrum}
+
+\begin{lstlisting}[language=Python]
+from hashlib import sha512
+from pbkdf2 import PBKDF2
+import hmac
+import binascii
+
+def from_entropy_to_mnemonic_int_electrum(entropy, number_words):
+	assert entropy < 2**(11*number_words)
+	entropy_bin = bin(entropy)
+	while len(entropy_bin)< number_words*11+2:
+		entropy_bin = '0b0' + entropy_bin[2:]
+	entropy_checked = entropy_bin[2:]
+	mnemonic_int = [0]*number_words
+	for i in range(0,number_words):
+		mnemonic_int[i] = int(entropy_checked[i*11:(i+1)*11],2)
+	return mnemonic_int
+
+def from_mnemonic_int_to_mnemonic_electrum(mnemonic_int, dictionary_txt):
+	dictionary  = open(dictionary_txt, 'r').readlines()
+	mnemonic = ''
+	for j in mnemonic_int:
+		mnemonic = mnemonic + ' ' +  dictionary[j][:-1]
+	mnemonic = mnemonic[1:]
+	return mnemonic
+
+def from_mnemonic_to_seed_eletrcum(mnemonic, passphrase=''):
+	PBKDF2_ROUNDS = 2048
+	return PBKDF2(mnemonic, 'electrum' + passphrase, iterations = PBKDF2_ROUNDS, macmodule = hmac, digestmodule = sha512).read(64).hex()
+
+def bh2u(x):
+	return binascii.hexlify(x).decode('ascii')
+
+def verify_mnemonic_electrum(mnemonic, version = "standard"):
+	s = bh2u(hmac.new(b"Seed version", mnemonic.encode('utf8'), sha512).digest()) 
+	if s[0:2] == '01':
+		return version == "standard"
+	elif s[0:3] == '100':
+		return version == "segwit"
+	else:
+		return False
+\end{lstlisting}
