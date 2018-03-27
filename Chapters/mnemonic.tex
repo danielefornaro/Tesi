@@ -167,7 +167,6 @@ def verify_mnemonic(mnemonic, version = "standard"):
 		return version == "2FA"
 	else:
 		return False
-	return True
 
 def generate_mnemonic(entropy, number_words, version, dictionary):	
 	is_verify = False

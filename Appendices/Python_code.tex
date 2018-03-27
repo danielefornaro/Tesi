@@ -1,11 +1,19 @@
 % Appendix B
 \chapter{Python code}% Main appendix title
 \label{AppendixB} % For referencing this appendix elsewhere, use 
-This appendix shows the most relevant parts of the python code. These are extracts of code, they only work if inserted in the repository of the professor Ferdinando M. Ametrano [\cite{13}], from the moment that other functions are called from that repository.
- 
+This appendix shows the most relevant parts of the Python code made for this thesis. 
 
-\section{Deterministic Wallet \textit{type-1}}
+\begin{remark}
+	These scripts only work if they are inserted in the repository of the professor Ferdinando M. Ametrano [\cite{13}].
+\end{remark}
 
+\section{Deterministic Wallet} 
+First, let's show the Python code related to the first two type of Deterministic Wallet.
+
+\subsection{Type-1}
+\begin{flushleft}
+	This is the script used to generate private and public key, using the first type of deterministic derivation.
+\end{flushleft}
 \begin{lstlisting}[language=Python]
 from secp256k1 import order, G, modInv, pointAdd, pointMultiply
 from hashlib import sha256
@@ -30,15 +38,15 @@ for i in range(0, nKeys):
 \end{lstlisting}
 
 
-\section{Deterministic Wallet \textit{type-2}}
 
-
-
+\subsection{Type-2}
+\begin{flushleft}
+	This is the script used to generate private and public key, using the second type of deterministic derivation.
+\end{flushleft}
 \begin{lstlisting}[language=Python]
 from secp256k1 import order, G, modInv, pointAdd, pointMultiply
 from hashlib import sha256
 import random
-
 
 # secret master private key
 mp = random.randint(0, order-1)
@@ -74,9 +82,11 @@ for i in range(0, nKeys):
 \end{lstlisting}
 
 
+\section{Hierarchical Deterministic Wallet - BIP 32}
 
-
-\section{Hierarchical Deterministic Wallet - BIP32}
+\begin{flushleft}
+	This section shows the Python code related to the Hierarchical Deterministic Wallet, defined by BIP 32.
+\end{flushleft}
 
 \begin{lstlisting}[language=Python]
 from secp256k1 import order, G, pointMultiply, pointAdd, a, b, prime
@@ -199,7 +209,17 @@ def bip32_ckd(extKey, child_index):
 		return bip32_compose_xkey(PUBLIC[network], depth, fingerprint, index, chain_code, P_bytes)
 \end{lstlisting}
 
-\section{Mnemonic phrase - BIP39}
+\section{Mnemonic phrase}
+
+In this last section there are shown the Python code related to the generation of the Mnemonic phrase from a given entropy and the way to obtain a seed from that set of words. 
+\\ \\
+Both the methods seen in this thesis have been implemented.
+
+
+\subsection{BIP 39}
+\begin{flushleft}
+	These are the functions used to generate a valid BIP 39 Mnemonic phrase and the related seed.
+\end{flushleft}
 
 \begin{lstlisting}[language=Python]
 from hashlib import sha256, sha512
@@ -232,14 +252,24 @@ def from_mnemonic_int_to_mnemonic(mnemonic_int, dictionary_txt):
 		mnemonic = mnemonic + ' ' +  dictionary[j][:-1]
 	mnemonic = mnemonic[1:]
 	return mnemonic
+	
+def generate_mnemonic_bip39(entropy, number_words = 24, dictionary = 'English_dictionary.txt'):
+	ENT = int(number_words*32/3)
+	mnemonic_int = from_entropy_to_mnemonic_int(entropy, ENT)
+	mnemonic = from_mnemonic_int_to_mnemonic(mnemonic_int, dictionary)
+	return mnemonic
 
-def from_mnemonic_to_seed(mnemonic, passphrase='TREZOR'):
+def from_mnemonic_to_seed(mnemonic, passphrase = ''):
 	PBKDF2_ROUNDS = 2048
 	return PBKDF2(mnemonic, 'mnemonic' + passphrase, iterations = PBKDF2_ROUNDS, macmodule = hmac, digestmodule = sha512).read(64).hex())
 \end{lstlisting}
 
 
-\section{Mnemonic phrase - Electrum}
+\subsection{Electrum}
+
+\begin{flushleft}
+	These are the functions used to generate a valid Electrum Mnemonic phrase for a chosen version and the related seed.
+\end{flushleft}
 
 \begin{lstlisting}[language=Python]
 from hashlib import sha512
@@ -266,10 +296,6 @@ def from_mnemonic_int_to_mnemonic_electrum(mnemonic_int, dictionary_txt):
 	mnemonic = mnemonic[1:]
 	return mnemonic
 
-def from_mnemonic_to_seed_eletrcum(mnemonic, passphrase=''):
-	PBKDF2_ROUNDS = 2048
-	return PBKDF2(mnemonic, 'electrum' + passphrase, iterations = PBKDF2_ROUNDS, macmodule = hmac, digestmodule = sha512).read(64).hex()
-
 def bh2u(x):
 	return binascii.hexlify(x).decode('ascii')
 
@@ -279,6 +305,23 @@ def verify_mnemonic_electrum(mnemonic, version = "standard"):
 		return version == "standard"
 	elif s[0:3] == '100':
 		return version == "segwit"
+	elif s[0:3] == '101':
+		return version == "2FA"
 	else:
 		return False
+		
+def generate_mnemonic_electrum(entropy, number_words = 24, version = "standard", dictionary = 'English_dictionary.txt'):
+	is_verify = False
+	while not is_verify:
+		mnemonic_int = from_entropy_to_mnemonic_int_electrum(entropy, number_words)
+		mnemonic = from_mnemonic_int_to_mnemonic_electrum(mnemonic_int, dictionary)
+		is_verify = verify_mnemonic_electrum(mnemonic, version)
+		if not is_verify:
+			entropy = entropy + 1
+	return mnemonic
+	
+def from_mnemonic_to_seed_eletrcum(mnemonic, passphrase=''):
+	PBKDF2_ROUNDS = 2048
+	return PBKDF2(mnemonic, 'electrum' + passphrase, iterations = PBKDF2_ROUNDS, macmodule = hmac, digestmodule = sha512).read(64).hex()
 \end{lstlisting}
+
