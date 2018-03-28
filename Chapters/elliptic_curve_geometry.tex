@@ -20,7 +20,7 @@ In order to have a clear understanding of this thesis, it is necessary to know t
 	\item HASH function.
 	\item Elliptic Curve.
 \end{itemize}
-Only these two elements together can describe all the cryptography behind Bitcoin.
+Only these two elements together can describe most of the cryptography behind Bitcoin.
 
 \section{HASH function}
 In general, a hash function is a mathematical process that takes input data of \textit{any} size, performs an operation on it, and returns output data of a \textit{fixed} size.
@@ -31,7 +31,7 @@ A good and secure hash function must have at least these six properties:
 \begin{enumerate}[label=(\roman*)]
 	\item It is \textbf{deterministic}: if the message remains unchanged, the hash value is the same.
 	\item It is \textbf{quick}: it should not take too much time to compute the hash value from the message.
-	\item It is a \textbf{ONE-WAY function}: it is infeasible to find a message, knowing the hash value. The only way to find the message must be to try randomly all the possible combination.
+	\item It is a \textbf{one-way function}: knowing the hash value, it is infeasible to find a message. The only way to find the message must be to try randomly all the possible combination.
 	\item It is \textbf{collision free}: it is infeasible to find two messages with the same hash value, even if it is theoretically possible.
 	\item It has the \textbf{avalanche effect}: a very small change in the input message, even flipping a single bit, produces a completely different hash value.
 	\item It has \textbf{fixed size} output and could have input messages of \textbf{any size}.
@@ -70,7 +70,7 @@ There are two other functions that will be heavily used in this thesis:
 	\item \textbf{PBKDF2}: Password-Based Key Derivation Function 2.
 \end{itemize}
 \begin{flushleft}
-	\textbf{HMAC} is a function that made some computation, involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}, namely attack in which the length of the input message is known and all the possible combinations of the input are tried.
+	\textbf{HMAC} is a function that makes some computation, involving also a hash function. This algorithm provides better immunity against \textit{length extension attacks}, namely attack in which the length of the input message is known and all the possible combinations of the input are tried.
 \end{flushleft}
 It receives 3 inputs:
 \begin{itemize}[label=$\odot$]
@@ -84,7 +84,7 @@ HMAC(H,k,m)=H\, (\, opad(k) \, ||\, H\, (\, ipad(k) \, ||\,  m \, )),
 \end{equation*}
 where $H$ is the hash function, $k$ is the key, $m$ is the message, $opad(\bullet)$ and $ipad(\bullet)$ are two padding function, applied to the key $k$ and $||$ is a symbol that denotes concatenation.
 \\ \\
-\textbf{PBKDF2} is an algorithm that applied a hash function to an input (message) many times. Each of these times a particular string of bytes, called \textit{salt}, is inserted within the computation of the hash. This algorithm provides more computational work with respect to a single hash function, and so it reduces the risk of a brute force attack.
+\textbf{PBKDF2} is an algorithm that applies a hash function to an input (message) many times. Each of these times a particular string of bytes, called \textit{salt}, is inserted within the computation of the hash. This algorithm provides more computational work with respect to a single hash function, and so it reduces the risk of a brute force attack.
 \\ \\
 It receives five inputs:
 \begin{itemize}[label=$\odot$]
@@ -103,7 +103,7 @@ Having a salt reduces the ability to use rainbow tables for attacks, namely tabl
 
 
 \section{Elliptic Curve over $\mathbb{F}_p$}
-Elliptic curve [\cite{7,8,9,10}] is a \textit{plane algebraic curve} defined by an equation, over a specific field. In cryptography the field is finite.
+Elliptic curve [\cite{7,8,9,10}] is a \textit{plane algebraic curve} defined by an equation, over a specific field. In cryptography the field is often finite.
 \\ \\
 A point $Q$, which coordinates are $x$ and $y\in \mathbb{N}$, belong to an Elliptic Curve if and only if $Q$ satisfies the following equation:
 \begin{equation}\label{GeneralEC}
@@ -165,10 +165,10 @@ Once shown the symmetry property, it can be useful to denote the point $P(x,y)$ 
 \begin{equation*}
 P=-Q \implies P+Q=0,
 \end{equation*}
-where the $+$ operator between two points in the EC will be explained below and the $0$ in this contest is the \textit{point at infinity}.
+where the $+$ is a  binary operation between two points in the EC and it will be explained below. The $0$ in this contest is the \textit{point at infinity}.
 
 \subsection{Point addition}
-Once defined a point on the elliptic curve, let's introduce the addition between two points on this finite field.
+After defined a point on the elliptic curve, let's introduce the addition between two points on this finite field.
 \\ \\
 We need to change our definition of addition in order to make it works in $\mathbb{F}_p$. In this framework, we claim that if some points are aligned over the finite field $\mathbb{F}_p$, then they have zero-sum.
 \\ \\
@@ -188,7 +188,7 @@ Suppose that \textit{A} and \textit{B} belong to the Elliptic Curve.
 \begin{center}
 	$ A=(x_1,y_1) \quad B=(x_2,y_2)$.
 \end{center}
-Let's define $ A+B :=(x_3,y_3) $ 
+Let's define $ A+B :=(x_3,y_3) $.
 \\ \\
 When $x_1=x_2$ but $y_1 \neq y_2$, it is the case in which $A$ and $B$ are symmetric point and so the sum is a particular point, called \textit{point at infinity}: 
 \begin{equation*}
@@ -212,7 +212,7 @@ Once we have $s$ the value $x_3$ and $y_3$ are obtained following this simple fo
 \subsection{Scalar multiplication}
 Once defined the addition, any multiplication between a scalar and a point on the elliptic curve can be defined as:
 \begin{center} 
-	$ nP=\underbrace{
+	$ n \cdot P=\underbrace{
 		P+P+\cdot \cdot \cdot+P
 	}_{n\text{ times}}$.
 \end{center}
@@ -231,18 +231,18 @@ Q = n \cdot P,
 \end{equation*}
 where $Q$ and $P$ are points on the EC and $n$ is a scalar number. 
 \\ \\ 
-Let's suppose to know $Q$ and $P$. With these information it exists only one possible $n \in \mathbb{N}$, such that $0<n<p$ and that the equation above holds true. Even so this number $n$ is infeasible to find for large value of $p$.
+Let's suppose to know $Q$ and $P$. With these information it exists only one possible $n \in \mathbb{N}$, such that $ n<order$, where $order$ will be defined below, and that the equation above holds true. Even so this number $n$ is infeasible to find for large value of $order$.
 \\ \\
-This is due to the fact that there is not an efficient algorithm that is able to compute $n$ given $P$ and $Q$. The only way to find $n$ is by trying. As already mentioned, this could become infeasible if the number of value that $n$ can assume ($p-1$) is too large.
+This is due to the fact that there is not an efficient algorithm that is able to compute $n$ given $P$ and $Q$. The only way to find $n$ is by trying. As already mentioned, this could become infeasible if the number of value that $n$ can assume ($order$) is too large.
 
 \subsection{Group order}
 An elliptic curve defined over a finite field is a group and so it has a finite number of points. This number is called \textit{order} of the group.
 \\ \\
-If $p$ is a very large number, it is impossible to count all the points in that field, but there is an algorithm that allows to calculate the \textit{order} of a group in a fast and efficient way: \textit{Schoof's algorithm}.
+If $p$ is a very large number, it is not trivial to count all the points in that field, but there is an algorithm that allows to calculate the \textit{order} of a group in a fast and efficient way, like \textit{Schoof's algorithm}.
 \\ \\
-Let's consider a generic point $G$, we have:
+Let's consider a generic point on the curve $G$, we have:
 \begin{center} 
-	$ nG+mG=\underbrace{
+	$ n\cdot G+m\cdot G=\underbrace{
 		G+\cdot \cdot \cdot+G
 	}_{n\text{ times}}+
 	\underbrace{
@@ -251,7 +251,7 @@ Let's consider a generic point $G$, we have:
 	\underbrace{
 		G+\cdot \cdot \cdot+G
 	}_{n+m\text{ times}} = 
-	(n+m)G$.
+	(n+m)\cdot G$.
 \end{center}
 So multiples of $G$ are closed under addition and this is enough to prove that the set of the multiples of $G$ is a cyclic subgroup of the group formed by the elliptic curve.
 \\ \\
@@ -289,7 +289,7 @@ From the moment that the order of the group is a prime number, the order of any 
 \\ \\
 We have now all the elements necessary to define the private and the public key.
 \begin{definition}
-	A private key is a number chosen in the range between 1 and order.
+	A private key is a number chosen in the range between 1 and $(order-1)$.
 \end{definition}
 
 \begin{definition}

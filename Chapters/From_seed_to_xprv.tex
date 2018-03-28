@@ -33,7 +33,7 @@ Once it is decoded we will obtain exactly 78 bytes, with a specific meaning and 
 	\begin{equation*}
 	fingerprint=HASH160(\text{parent public key})[0:4],
 	\end{equation*}
-	where $[0:4]$ is a python notation.\\
+	where $[0:4]$ is a Python notation.\\
 	For the master key the fingerprint is formed by 4 zeros bytes: $fingerprint=0000000000$.
 	\item 4 bytes are used to specified the \textbf{index} of the child. \\
 	For the master key the index is formed by 4 zeros bytes: $index=0000000000$.
@@ -60,17 +60,17 @@ First of all we need to convert the seed into a string of bytes, where the most 
 Let's see a practical example:
 \begin{equation*}
 \begin{split}
-&byte\_string_1=00\; 00\; 00 \; 01, \\
-&byte\_string_2=00\; 00\; 01, \\
-&byte\_string_3=00\; 01, \\
-&byte\_string_4=01.
+&byte\_string_1=00\; 00\; 00 \; 07, \\
+&byte\_string_2=00\; 00\; 07, \\
+&byte\_string_3=00\; 07, \\
+&byte\_string_4=07.
 \end{split}
 \end{equation*}
-These $4$ byte strings are obtained from the same seed: $seed=1$ and the only difference is the length of the string.
+These $4$ byte strings are obtained from the same seed: $seed=7$ and the only difference is the length of the string.
 \begin{remark}
 	Different length of the string produces a different master private key, even if the seed is the same number.
 \end{remark}
-In python:
+In Python:
 \begin{lstlisting}[language=Python]
 byte_string = seed.to_bytes(seed_bytes, 'big')
 \end{lstlisting}
@@ -78,7 +78,7 @@ where $seed$ is an integer number, \textit{seed\_bytes} is the number of bytes t
 \\ \\
 It is essential to specify the length of the byte string, otherwise, there will be obtained different wallets. 
 \\ \\
-Once we obtain a string of bytes, we will compute the HMAC algorithm. The hash function used for HMAC is the SHA512 and the \textit{key} is a particular string of bytes: \textit{b"Bitcoin seed"}. In python the implementation is the following:
+Once we obtain a string of bytes, we will compute the HMAC algorithm. The hash function used for HMAC is the SHA512 and the \textit{key} is a particular string of bytes: \textit{b"Bitcoin seed"}. In Python the implementation is the following:
 
 \begin{lstlisting}[language=Python]
 from hashlib import sha512
@@ -88,7 +88,7 @@ hashValue = HMAC(b"Bitcoin seed", byte_string, sha512).digest()
 \end{lstlisting}
 where \textit{.digest()} is used in order to return a string of bytes.
 \\ \\
-Now we have obtained a \textit{hashValue} of $512$ bits, so $64$ bytes. Consider the firsts $32$ bytes as the master private key and the next $32$ bytes as the master chain code. A python implementation is the following:
+Now we have obtained a \textit{hashValue} of $512$ bits, so $64$ bytes. Consider the firsts $32$ bytes as the master private key and the next $32$ bytes as the master chain code. A Python implementation is the following:
 
 \begin{lstlisting}[language=Python]
 private_key_bytes = hashValue[0:32]
@@ -97,7 +97,7 @@ chain_code_bytes = hashValue[32:64]
 \begin{flushleft}
 	Now we have two-byte strings, one for the master private key and the other for the master chain code.
 \end{flushleft}
-It is important to remember that a private key must be in the range between $1$ and $order$, so the byte string for the private key should be converted in \textit{int} and then take the \textit{mod order}. In python we have:
+It is important to remember that a private key must be in the range between $1$ and $order$, so the byte string for the private key should be converted in \textit{int} and then take the \textit{mod order}. In Python we have:
 
 \begin{lstlisting}[language=Python]
 private_key = int(private_key_bytes.hex(), 16) % order
@@ -156,7 +156,7 @@ For both the method the derivation starts from an extended private key. From thi
 \end{itemize}
 It is also required a number, used in order to specify the \textbf{index} of the child. This number should be in the range between $0$ and $4294967295$. This is due to the fact that in any extended key there are 4 bytes used to specify the index of the child:
 \begin{equation*}
-max \; index=(FF\;FF\;FF\;FF)_{base \; 16} = 2^{32} = 4294967295.
+max \; index=(FF\;FF\;FF\;FF)_{base \; 16} = 2^{32}-1 = 4294967295.
 \end{equation*}
 In fact, it is possible to generate even a greater number of children from the same parent, but it would not be possible to write the corresponding extended key in the format described above.
 
@@ -193,7 +193,7 @@ hashValue = HMAC(parent_chain_code, msg, sha512).digest()
 	The result is a string of 64 bytes: \textit{hashValue}.
 \end{flushleft}
 Now we split this string of bytes in two: the last 32 are the child chain code. Then we take the first 32 bytes, convert them into an integer number and sum it to the parent private key (mod \textit{order}), obtaining the child private key.\\ \\
-This is the python code:
+This is the Python code:
 
 \begin{lstlisting}[language=Python]
 child_chain_code = hashValue[32:]
@@ -243,7 +243,7 @@ hashValue = HMAC(parent_chain_code, msg, sha512).digest()
 	The result is a string of 64 bytes: \textit{hashValue}. In this code the $parent\_private\_key$ already has the first $00$ byte, because it is taken directly from the parent extended private key.
 \end{flushleft}
 Now we split this string of bytes in two (in the same way as the normal method): the last 32 are the child chain code. Finally, we take the first 32 bytes, convert them into an integer number and sum it to the parent private key (mod \textit{order}), obtaining the child private key.\\ \\
-This is the python code:
+This is the Python code:
 
 \begin{lstlisting}[language=Python]
 child_chain_code = hashValue[32:]
@@ -369,7 +369,7 @@ It is advisable to use each of the two methods in the appropriate situations.
 \subsection{When to use Normal Derivation?}
 Normal derivation should be used whenever all the child keys are collected in the same digital place and you should never give one key to someone else. As already mentioned a leak of a single private key can compromise the entire wallet.
 \\ \\
-However, if all the child keys are used by the same person and you need to generate a different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment to yours public keys, but it is impossible to spend those coins as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all transactions signed with the private keys associated with the public keys of the wallet, but it is impossible to sign new transactions without having the private keys.
+However, if all the child keys are used by the same person and you need to generate a different public key, with this derivation it is possible to do so even in a "hot place". Let's suppose to have stored only the extended public key in a device, you can then receive payment to your public keys, but it is impossible to spend those coins as long as the private keys are hidden. If someone stole your device the only problem is a leak of privacy, because it is possible, by examining the blockchain, to discover all transactions signed with the private keys associated with the public keys of the wallet, but it is impossible to sign new transactions without having the private keys.
 
 
 \subsection{When to use Hardened Derivation?}

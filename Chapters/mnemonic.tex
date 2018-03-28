@@ -15,9 +15,9 @@ Both these solutions use a \textit{Mnemonic phrase}, from which the seed is obta
 \begin{flushleft}
 	\textbf{What is a Mnemonic phrase?}
 \end{flushleft}
-A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them from 3 to 9 letters. The set of words that makes up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid inserting into the dictionary two words with similar meaning or spelling.
+A Mnemonic phrase is a set of words taken from a specific dictionary. Although the choice of the dictionary is not binding, the most commonly used among the practitioners is the English one, defined by BIP39. It contains 2048 common words of the English language, each of them has from 3 to 9 letters. The set of words that makes up the dictionary must be chosen in such a way that the words within it are easy to remember and difficult to misinterpret with one another. It is better to avoid inserting into the dictionary two words with similar meaning or spelling.
 
-\section{BIP39}
+\section{BIP 39}
 First, we will see how to generate a mnemonic phrase in the framework of BIP39 [\cite{2}] and then how it is possible to obtain a seed from it.
 
 \subsection{Mnemonic Generation}
@@ -32,7 +32,7 @@ The reason for a given length for the entropy will be clear in a moment.
 Now we write the entropy in bytes format, obtaining a string of $ENT/8$ length. Then we compute the SHA256 algorithm and consider only the first $ENT/32$ bits as a checksum. Finally add these bits to the bottom of the entropy, obtaining an integer number, called \textit{entropy\_checked}, expressed in binary format of length equal to: $ENT+ENT/32$.
 
 \begin{flushleft}
-	In python:
+	In Python:
 \end{flushleft}
 
 \begin{lstlisting}[language=Python]
@@ -45,7 +45,7 @@ entropy_checked = entropy_bin + checksum_bin[:int(ENT/32)]
 where \textit{entropy\_bin} and \textit{checksum\_bin} are strings of bits that can be concatenated.
 \\ \\
 Now it is clear the reason for a constraint on the length of the entropy in input: 
-\begin{enumerate}[label=\roman*]
+\begin{enumerate}[label=(\roman*)]
 	\item \textit{ENT} must be a dividend of 3,
 	\item $ENT<128$ could be not secure enough,
 	\item $ENT>256$ is useless.
@@ -68,7 +68,7 @@ All these steps can be summarized with the following scheme, ($ENT=128$):
 \begin{center} 
 	$ entropy_{16} = f012003974d093eda670121023cd03bb $ 
 	\\
-	$\Downarrow $
+	$\Updownarrow $
 	\\
 	$entropy_{2}= \underbrace{1111000000010010000000...0111011}_{\substack{SHA256\\ \Downarrow\\ \underbrace{0010}_{\substack{check \;sum}}\underbrace{010001000001001...}_{\substack{ignored}}} } $
 	\\
@@ -76,12 +76,12 @@ All these steps can be summarized with the following scheme, ($ENT=128$):
 	\\
 	$entropy\;checked = 11110000000 10010000000...0111011\; | \; 0010$
 	\\
-	$\Downarrow $
+	$\Updownarrow $
 	\\
-	$\underbrace{11110000000}_{\substack{1920 \\ \Downarrow\\ useless} }
-	\underbrace{10010000000}_{\substack{1152 \\ \Downarrow\\ mosquito}}
+	$\underbrace{11110000000}_{\substack{1920 \\ \Updownarrow\\ useless} }
+	\underbrace{10010000000}_{\substack{1152 \\ \Updownarrow\\ mosquito}}
 	...
-	\underbrace{01110110010}_{\substack{946 \\ \Downarrow\\ iron}}
+	\underbrace{01110110010}_{\substack{946 \\ \Updownarrow\\ iron}}
 	$,
 \end{center}
 obtaining a sequence of 12 words:
@@ -111,7 +111,7 @@ Although it is true that a human being is a scarce source of randomness, the pas
 \begin{remark}
 	The randomness should be guaranteed by the input entropy used to generate the mnemonic phrase, not by the passphrase.
 \end{remark}
-The python code is the following:
+The Python code is the following:
 \begin{lstlisting}[language=Python]
 from hashlib import sha512
 from pbkdf2 import PBKDF2
@@ -150,7 +150,7 @@ The first important difference with BIP39 mnemonic is that the checksum is not p
 \end{enumerate}
 Point 5. has the simple effect, most of the time, of changing a single word of the mnemonic phrase and this will lead to a complete different HASH. Do this over and over again, until the first digits match the version digits required.
 \\ \\ 
-This procedure can be shown with the following python instruction:
+This procedure can be shown with the following Python instruction:
 \begin{lstlisting}[language=Python]
 import binascii
 import hmac
@@ -185,13 +185,13 @@ def generate_mnemonic(entropy, number_words, version, dictionary):
 \begin{center} 
 	$ entropy_{16} = ef938205cd78ab6d876398dcfd65dae32 $ 
 	\\
-	$\Downarrow $
+	$\Updownarrow $
 	\\
-	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
-	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
-	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Updownarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Updownarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Updownarrow\\ lift}}
 	...
-	\underbrace{11000110010}_{\substack{1586 \\ \Downarrow\\ shock}}  $
+	\underbrace{11000110010}_{\substack{1586 \\ \Updownarrow\\ shock}}  $
 \end{center}
 Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue shock}
 
@@ -202,13 +202,13 @@ Does \textit{HASH}(Mnemonic) start with '01'? $\Rightarrow$ NO $\Rightarrow$ add
 \begin{center}
 	$entropy_{16} = entropy_{16} + 1  = ef938205cd78ab6d876398dcfd65dae33$
 	\\
-	$\Downarrow $
+	$\Updownarrow $
 	\\
-	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
-	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
-	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Updownarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Updownarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Updownarrow\\ lift}}
 	...
-	\underbrace{11000110011}_{\substack{1587 \\ \Downarrow\\ shoe}}  $
+	\underbrace{11000110011}_{\substack{1587 \\ \Updownarrow\\ shoe}}  $
 \end{center}
 Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue shoe}
 
@@ -221,13 +221,13 @@ After other 443 attempts we obtain:
 \begin{center}
 	$entropy_{16} =ef938205cd78ab6d876398dcfd65dafee$
 	\\
-	$\Downarrow $
+	$\Updownarrow $
 	\\
-	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Downarrow\\ usage} }
-	\underbrace{10011100000}_{\substack{1248 \\ \Downarrow\\ orchard}}
-	\underbrace{10000001011}_{\substack{1035 \\ \Downarrow\\ lift}}
+	$entropy_{2}= \underbrace{11101111100}_{\substack{1916 \\ \Updownarrow\\ usage} }
+	\underbrace{10011100000}_{\substack{1248 \\ \Updownarrow\\ orchard}}
+	\underbrace{10000001011}_{\substack{1035 \\ \Updownarrow\\ lift}}
 	...
-	\underbrace{11111101110}_{\substack{2030 \\ \Downarrow\\ worry}}  $
+	\underbrace{11111101110}_{\substack{2030 \\ \Updownarrow\\ worry}}  $
 \end{center}
 Mnemonic = \textit{usage orchard lift online melt replace budget indoor table twenty issue worry}
 
@@ -244,7 +244,7 @@ Once obtaining the Mnemonic phrase the seed is derived in the same way described
 \\ \\
 The \textbf{Salt} used for the PBKDF2 function does not contain the word 'mnemonic', instead, it contains the word 'electrum'. It is always concatenated with a \textit{passphrase}, chosen by the user.
 \\ \\
-The python code it is, therefore, the following:  
+The Python code it is, therefore, the following:  
 
 \begin{lstlisting}[language=Python]
 from hashlib import sha512

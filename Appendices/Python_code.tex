@@ -8,11 +8,11 @@ This appendix shows the most relevant parts of the Python code made for this the
 \end{remark}
 
 \section{Deterministic Wallet} 
-First, let's show the Python code related to the first two type of Deterministic Wallet.
+First, let's show the Python code related to the first two type of Deterministic Wallets.
 
 \subsection{Type-1}
 \begin{flushleft}
-	This is the script used to generate private and public key, using the first type of deterministic derivation.
+	This is the script used to generate private and public keys, using the first type of deterministic derivation.
 \end{flushleft}
 \begin{lstlisting}[language=Python]
 from secp256k1 import order, G, modInv, pointAdd, pointMultiply
@@ -41,7 +41,7 @@ for i in range(0, nKeys):
 
 \subsection{Type-2}
 \begin{flushleft}
-	This is the script used to generate private and public key, using the second type of deterministic derivation.
+	This is the script used to generate private and public keys, using the second type of deterministic derivation.
 \end{flushleft}
 \begin{lstlisting}[language=Python]
 from secp256k1 import order, G, modInv, pointAdd, pointMultiply

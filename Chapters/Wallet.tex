@@ -24,7 +24,7 @@ A nondeterministic wallet is the simplest type of wallet. Each key is randomly a
 	\begin{equation*}
 	X\sim \mathcal{U}(S),
 	\end{equation*}
-	where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	where $S$ is the finite set of natural number in the range from $1$ to $(order-1)$.
 	\item Take some realizations $k_1,k_2...k_n$ of $X$ using enough entropy to make these numbers (\textit{private keys}) impossible to guess.
 	\begin{equation*}
 	k_1=X(\omega_1), \quad  k_2=X(\omega_2), \quad ... \quad k_n=X(\omega_n).
@@ -58,15 +58,15 @@ Let's focus on the good and bad aspects of this wallet.
 		\hline
 	\end{tabular}
 \end{center}
-The use of \textit{random wallet} is strongly discouraged for anything other than simple test.
+The use of \textit{random wallet} is strongly discouraged for anything other than simple tests.
 
 \section{Deterministic Wallets}
-A deterministic wallet is a more sophisticated one, in which every key is generated from a common "\textit{seed}", a natural number. This means that knowing the \textit{seed} leads to know also all the keys in the wallet.\\ \\
+A deterministic wallet is a more sophisticated software, in which every key is generated from a common "\textit{seed}", a natural number. This means that knowing the \textit{seed} leads to know also all the keys in the wallet.\\ \\
 There are different types of deterministic wallets, in this text we will analyze three main types:
 \begin{itemize}
-	\item Deterministic Wallet \textit{type 1}.
-	\item Deterministic Wallet \textit{type 2}.
-	\item Deterministic Wallet \textit{type 3}.
+	\item Deterministic Wallet \textit{type-1}.
+	\item Deterministic Wallet \textit{type-2}.
+	\item Deterministic Wallet \textit{type-3}.
 \end{itemize}
 These wallets are in increasing order of complexity.
 
@@ -80,12 +80,12 @@ Let's see how to generate the $n^{th}$ private key:
 	\begin{equation*}
 	seed=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
-	where $S$ is the finite set of natural number in the range from $1$ to $order$.
+	where $S$ is the finite set of natural number in the range from $1$ to $(order-1)$.
 	\item Consider the numbers $seed$ and $n$ as strings and concatenate $n$ to $seed$, obtaining a $value$:
 	\begin{equation*}
 	value=seed|n.
 	\end{equation*}
-	\item Compute the SHA256 function to $value$ and obtain the $n^{th}$ \textit{private key}.
+	\item Apply the SHA256 function to $value$ and obtain the $n^{th}$ \textit{private key}.
 	\item Go back to point (ii) every time new \textit{private keys} are needed with $n=n+1$. 
 \end{enumerate}
 With this procedure it is impossible to compute the \textit{public key} without having already computed the \textit{private key}.
@@ -127,7 +127,7 @@ First let's introduce the necessary ingredients:
 	\begin{equation*}
 	mp=X(\omega), \qquad X\sim \mathcal{U}(S),
 	\end{equation*}
-	where $S$ is the finite set of natural number in the range from $1$ to $order$. \\ The master private key must be taken \underline{secret}.
+	where $S$ is the finite set of natural number in the range from $1$ to $(order-1)$. \\ The master private key must be kept \underline{secret}.
 	\item \textbf{Master public key} ($MP$): a point on the EC, obtained from the $mp$:
 	\begin{equation*}
 	MP=mp\cdot G,
@@ -207,7 +207,7 @@ Let's focus on the good and bad aspects of this wallet.
 \end{center}
 The \textit{type-2 deterministic wallet} is an improvement of the \textit{type-1} because it has the same benefits (except for the need to back up two number instead of only one), but with a great advantage: it is possible to generate new addresses, obtained from the public keys, also in a non safe environment, having only $r$ and $MP$. 
 \\ \\
-A thief can only steal your privacy, if he steals only $MP$ and $r$. In fact, he is able to see which messages (transaction) have you signed, without the possibility to sign new ones and spend your coins.
+A thief can only steal your privacy, if he steals only $MP$ and $r$. In fact, he is able to see which messages (transactions) have you signed, without the possibility to sign new ones and spend your coins.
 
 \subsection{Deterministic Wallet \textit{type-3}}
 Deterministic Wallet \textit{type-3} is the most elaborate among the ones considered. Starting from a \textit{seed} it is possible to obtain different \textit{keys} in a hierarchical way, with a structure similar to a tree. 
